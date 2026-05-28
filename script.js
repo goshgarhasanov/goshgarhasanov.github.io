@@ -1,20 +1,78 @@
 (() => {
   const root = document.documentElement;
-  const KEY = 'cv-theme';
-  const stored = localStorage.getItem(KEY);
+
+  /* ---------- Theme ---------- */
+  const T_KEY = 'cv-theme';
+  const storedTheme = localStorage.getItem(T_KEY);
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  const initial = stored || (prefersLight ? 'light' : 'dark');
-  root.setAttribute('data-theme', initial);
+  root.setAttribute('data-theme', storedTheme || (prefersLight ? 'light' : 'dark'));
 
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', next);
-    localStorage.setItem(KEY, next);
+    localStorage.setItem(T_KEY, next);
   });
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  /* ---------- i18n ---------- */
+  const L_KEY = 'cv-lang';
+  const SUPPORTED = ['en', 'az', 'ru', 'tr'];
+  const detect = () => {
+    const stored = localStorage.getItem(L_KEY);
+    if (stored && SUPPORTED.includes(stored)) return stored;
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return SUPPORTED.includes(browser) ? browser : 'en';
+  };
 
-  // Animate skill bars when they scroll into view
+  const applyLang = (lang) => {
+    const dict = (window.I18N && window.I18N[lang]) || window.I18N.en;
+    root.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-html');
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    document.getElementById('langCurrent').textContent = lang.toUpperCase();
+    document.querySelectorAll('.lang-menu li').forEach((li) => {
+      li.classList.toggle('active', li.dataset.lang === lang);
+    });
+  };
+
+  applyLang(detect());
+
+  const btn = document.getElementById('langBtn');
+  const menu = document.getElementById('langMenu');
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+  menu.addEventListener('click', (e) => {
+    const li = e.target.closest('li[data-lang]');
+    if (!li) return;
+    const lang = li.dataset.lang;
+    localStorage.setItem(L_KEY, lang);
+    applyLang(lang);
+    closeMenu();
+  });
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) closeMenu();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+  /* ---------- Skill bar animation ---------- */
   const bars = document.querySelectorAll('.skill-fill');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
