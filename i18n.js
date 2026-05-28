@@ -16,6 +16,7 @@ window.I18N = {
 
     "skills.title": "Tech Stack",
     "skills.subhead": "Desktop & Mobile",
+    "skills.ai": "AI · Vibe Coding",
 
     "expertise.title": "What I do",
     "card.frontend.title": "Frontend",
@@ -84,6 +85,7 @@ window.I18N = {
 
     "skills.title": "Texnologiyalar",
     "skills.subhead": "Desktop və Mobil",
+    "skills.ai": "AI · Vibe Coding",
 
     "expertise.title": "Nə işlərlə məşğulam",
     "card.frontend.title": "Frontend",
@@ -152,6 +154,7 @@ window.I18N = {
 
     "skills.title": "Технологии",
     "skills.subhead": "Desktop и Mobile",
+    "skills.ai": "AI · Vibe Coding",
 
     "expertise.title": "Чем я занимаюсь",
     "card.frontend.title": "Frontend",
@@ -220,6 +223,7 @@ window.I18N = {
 
     "skills.title": "Teknolojiler",
     "skills.subhead": "Masaüstü ve Mobil",
+    "skills.ai": "AI · Vibe Coding",
 
     "expertise.title": "Neler yapıyorum",
     "card.frontend.title": "Frontend",
