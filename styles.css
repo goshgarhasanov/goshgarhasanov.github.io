@@ -476,6 +476,31 @@ footer {
   font-size: 13px;
   text-align: center;
 }
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin-bottom: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.vc-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.vc-item svg { color: var(--accent); }
+.vc-item b {
+  color: var(--text);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.vc-sep { color: var(--border); }
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {

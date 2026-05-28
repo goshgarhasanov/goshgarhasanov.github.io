@@ -72,6 +72,33 @@
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
+  /* ---------- Visitor counter ---------- */
+  const counterEl = document.getElementById('visitorCounter');
+  const todayEl = document.getElementById('vcToday');
+  const totalEl = document.getElementById('vcTotal');
+  const NS = 'goshgar-cv-2026';
+  const today = new Date();
+  const todayKey = 'd' + today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+  const fmt = (n) => Number(n).toLocaleString();
+
+  const visitedKey = 'cv-visited-' + todayKey;
+  const alreadyCounted = sessionStorage.getItem(visitedKey) === '1';
+
+  const action = alreadyCounted ? '' : '/up';
+  const callCounter = (key) =>
+    fetch(`https://api.counterapi.dev/v1/${NS}/${key}${action}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null);
+
+  Promise.all([callCounter('total'), callCounter(todayKey)]).then(([total, todayData]) => {
+    const totalCount = total && (total.count ?? total.value);
+    const todayCount = todayData && (todayData.count ?? todayData.value);
+    if (totalCount != null) totalEl.textContent = fmt(totalCount);
+    if (todayCount != null) todayEl.textContent = fmt(todayCount);
+    if (totalCount != null || todayCount != null) counterEl.hidden = false;
+    if (!alreadyCounted) sessionStorage.setItem(visitedKey, '1');
+  });
+
   /* ---------- Skill bar animation ---------- */
   const bars = document.querySelectorAll('.skill-fill');
   if ('IntersectionObserver' in window) {

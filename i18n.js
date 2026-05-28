@@ -50,6 +50,9 @@ window.I18N = {
     "contact.email": "Email",
     "contact.phone": "Phone",
 
+    "vc.today": "Today",
+    "vc.total": "Total",
+
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Built with HTML, CSS &amp; a little JS · Hosted on GitHub Pages"
   },
 
@@ -103,6 +106,9 @@ window.I18N = {
     "contact.lead": "Maraqlı Fullstack imkanları və frilans layihələrə açığam. Mənə çatmağın ən sürətli yolu e-poçtdur.",
     "contact.email": "E-poçt",
     "contact.phone": "Telefon",
+
+    "vc.today": "Bu gün",
+    "vc.total": "Ümumi",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov · HTML, CSS və bir az JS ilə hazırlanıb · GitHub Pages-də yerləşdirilib"
   },
@@ -158,6 +164,9 @@ window.I18N = {
     "contact.email": "Эл. почта",
     "contact.phone": "Телефон",
 
+    "vc.today": "Сегодня",
+    "vc.total": "Всего",
+
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Сделано на HTML, CSS и немного JS · Размещено на GitHub Pages"
   },
 
@@ -211,6 +220,9 @@ window.I18N = {
     "contact.lead": "İlgi çekici Fullstack fırsatlarına ve freelance projelere açığım. Bana ulaşmanın en hızlı yolu e-posta.",
     "contact.email": "E-posta",
     "contact.phone": "Telefon",
+
+    "vc.today": "Bugün",
+    "vc.total": "Toplam",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov · HTML, CSS ve biraz JS ile hazırlandı · GitHub Pages üzerinde yayında"
   }
