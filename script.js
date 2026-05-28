@@ -50,7 +50,18 @@
   };
 
   /* ---------- Date / Time / Greeting ---------- */
-  const localeMap = { en: 'en-US', az: 'az-AZ', ru: 'ru-RU', tr: 'tr-TR' };
+  const MONTHS = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    az: ['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'],
+    ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+    tr: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+  };
+  const WEEKDAYS = {
+    en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    az: ['bazar','bazar ertəsi','çərşənbə axşamı','çərşənbə','cümə axşamı','cümə','şənbə'],
+    ru: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+    tr: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+  };
   const greetings = {
     en: { morning: 'Good morning', day: 'Good afternoon', evening: 'Good evening', night: 'Good night' },
     az: { morning: 'Sabahınız xeyir', day: 'Günortanız xeyir', evening: 'Axşamınız xeyir', night: 'Gecəniz xeyir' },
@@ -65,22 +76,31 @@
     return g.night;
   };
 
+  const formatDate = (now, lang) => {
+    const day = now.getDate();
+    const month = (MONTHS[lang] || MONTHS.en)[now.getMonth()];
+    const year = now.getFullYear();
+    const weekday = (WEEKDAYS[lang] || WEEKDAYS.en)[now.getDay()];
+    switch (lang) {
+      case 'az': return `${day} ${month.toUpperCase()} ${year}, ${weekday}`;
+      case 'tr': return `${day} ${month} ${year} ${weekday}`;
+      case 'ru': return `${day} ${month} ${year} г., ${weekday}`;
+      default:   return `${weekday}, ${month} ${day}, ${year}`;
+    }
+  };
+
   let currentLang = 'en';
   const dtGreetingEl = document.getElementById('dtGreeting');
   const dtDateEl = document.getElementById('dtDate');
   const dtTimeEl = document.getElementById('dtTime');
 
+  const pad = (n) => String(n).padStart(2, '0');
   const renderDateTime = () => {
     const now = new Date();
-    const locale = localeMap[currentLang] || 'en-US';
     if (dtTimeEl) {
-      const t = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-      dtTimeEl.textContent = t;
+      dtTimeEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     }
-    if (dtDateEl) {
-      const d = now.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      dtDateEl.textContent = d.charAt(0).toUpperCase() + d.slice(1);
-    }
+    if (dtDateEl) dtDateEl.textContent = formatDate(now, currentLang);
     if (dtGreetingEl) dtGreetingEl.textContent = greetingFor(now.getHours(), currentLang);
   };
 

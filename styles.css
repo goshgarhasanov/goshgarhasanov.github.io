@@ -73,24 +73,63 @@ body {
   position: relative;
   overflow-x: hidden;
 }
-body::before {
+
+/* ========== Ambient animated background ==========
+   Two separate orbs animated independently so colors don't muddy.
+   Light mode: warm pastel drift (peach + mint, lavender + sky).
+   Dark mode:  cool cosmic aurora (violet + cyan), slower, deeper.
+=================================================== */
+body::before,
+body::after {
   content: "";
   position: fixed;
-  inset: -10%;
   z-index: -2;
-  background-image:
-    radial-gradient(900px 600px at 92% -10%, var(--t-rose), transparent 60%),
-    radial-gradient(800px 500px at -10% 8%, var(--t-mint), transparent 60%),
-    radial-gradient(800px 600px at 50% 110%, var(--t-lavender), transparent 65%),
-    radial-gradient(700px 500px at 70% 60%, var(--t-sky), transparent 55%),
-    radial-gradient(700px 500px at 20% 70%, var(--t-sun), transparent 55%);
-  animation: bgDrift 22s ease-in-out infinite alternate;
+  border-radius: 50%;
+  filter: blur(90px);
   pointer-events: none;
+  will-change: transform;
 }
-@keyframes bgDrift {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-2%, 1%) scale(1.04); }
-  100% { transform: translate(2%, -1%) scale(1.02); }
+
+/* Orb 1 — top-right */
+body::before {
+  width: 56vw; height: 56vw;
+  top: -20vw; right: -18vw;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 184, 77, 0.55), rgba(255, 107, 107, 0.35) 50%, transparent 75%);
+  animation: orbDriftA 26s ease-in-out infinite alternate;
+}
+/* Orb 2 — bottom-left */
+body::after {
+  width: 58vw; height: 58vw;
+  bottom: -22vw; left: -18vw;
+  background: radial-gradient(circle at 65% 65%, rgba(139, 92, 246, 0.45), rgba(59, 130, 246, 0.30) 50%, transparent 75%);
+  animation: orbDriftB 32s ease-in-out infinite alternate;
+}
+
+/* Dark mode — cooler, deeper, slower, more contrast */
+html[data-theme="dark"] body::before {
+  background: radial-gradient(circle at 35% 35%, rgba(139, 92, 246, 0.55), rgba(236, 72, 153, 0.32) 55%, transparent 80%);
+  filter: blur(110px);
+  animation: orbDriftA 38s ease-in-out infinite alternate;
+}
+html[data-theme="dark"] body::after {
+  background: radial-gradient(circle at 65% 65%, rgba(20, 184, 166, 0.40), rgba(59, 130, 246, 0.28) 55%, transparent 80%);
+  filter: blur(110px);
+  animation: orbDriftB 44s ease-in-out infinite alternate;
+}
+
+@keyframes orbDriftA {
+  0%   { transform: translate(0, 0)        scale(1)    rotate(0deg); }
+  50%  { transform: translate(-4vw, 5vw)   scale(1.10) rotate(8deg); }
+  100% { transform: translate(3vw, -2vw)   scale(1.05) rotate(-5deg); }
+}
+@keyframes orbDriftB {
+  0%   { transform: translate(0, 0)        scale(1)    rotate(0deg); }
+  50%  { transform: translate(5vw, -4vw)   scale(1.12) rotate(-7deg); }
+  100% { transform: translate(-3vw, 3vw)   scale(1.06) rotate(5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none; }
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
