@@ -2,9 +2,11 @@
   const root = document.documentElement;
 
   /* ---------- Theme ---------- */
-  const T_KEY = 'cv-theme';
-  const storedTheme = localStorage.getItem(T_KEY);
-  root.setAttribute('data-theme', storedTheme || 'light');
+  const T_KEY = 'cv-theme-v3';
+  // Inline head script already applied the theme; this just keeps it consistent.
+  if (!root.getAttribute('data-theme')) {
+    root.setAttribute('data-theme', localStorage.getItem(T_KEY) === 'dark' ? 'dark' : 'light');
+  }
 
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';

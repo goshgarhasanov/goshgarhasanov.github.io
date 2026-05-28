@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    // Set theme before paint to prevent flash. Defaults to LIGHT.
+    (function () {
+      var t = localStorage.getItem('cv-theme-v3');
+      document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Goshgar Hasanov — Fullstack Developer. JavaScript, Node.js, React, Next.js, Python, PostgreSQL, MongoDB, Redis, Linux." />
   <meta property="og:title" content="Goshgar Hasanov — Fullstack Developer" />
