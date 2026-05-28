@@ -45,9 +45,52 @@
     document.querySelectorAll('.lang-menu li').forEach((li) => {
       li.classList.toggle('active', li.dataset.lang === lang);
     });
+
+    updateDateTime(lang);
   };
 
+  /* ---------- Date / Time / Greeting ---------- */
+  const localeMap = { en: 'en-US', az: 'az-AZ', ru: 'ru-RU', tr: 'tr-TR' };
+  const greetings = {
+    en: { morning: 'Good morning', day: 'Good afternoon', evening: 'Good evening', night: 'Good night' },
+    az: { morning: 'Sabahınız xeyir', day: 'Günortanız xeyir', evening: 'Axşamınız xeyir', night: 'Gecəniz xeyir' },
+    ru: { morning: 'Доброе утро', day: 'Добрый день', evening: 'Добрый вечер', night: 'Доброй ночи' },
+    tr: { morning: 'Günaydın', day: 'İyi günler', evening: 'İyi akşamlar', night: 'İyi geceler' },
+  };
+  const greetingFor = (hour, lang) => {
+    const g = greetings[lang] || greetings.en;
+    if (hour >= 5 && hour < 12) return g.morning;
+    if (hour >= 12 && hour < 18) return g.day;
+    if (hour >= 18 && hour < 23) return g.evening;
+    return g.night;
+  };
+
+  let currentLang = 'en';
+  const dtGreetingEl = document.getElementById('dtGreeting');
+  const dtDateEl = document.getElementById('dtDate');
+  const dtTimeEl = document.getElementById('dtTime');
+
+  const renderDateTime = () => {
+    const now = new Date();
+    const locale = localeMap[currentLang] || 'en-US';
+    if (dtTimeEl) {
+      const t = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      dtTimeEl.textContent = t;
+    }
+    if (dtDateEl) {
+      const d = now.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      dtDateEl.textContent = d.charAt(0).toUpperCase() + d.slice(1);
+    }
+    if (dtGreetingEl) dtGreetingEl.textContent = greetingFor(now.getHours(), currentLang);
+  };
+
+  function updateDateTime(lang) {
+    currentLang = lang;
+    renderDateTime();
+  }
+
   applyLang(detect());
+  setInterval(renderDateTime, 1000);
 
   const btn = document.getElementById('langBtn');
   const menu = document.getElementById('langMenu');
@@ -113,16 +156,16 @@
   const photoModal = document.getElementById('photoModal');
   const pmClose = document.getElementById('pmClose');
 
-  if (photoModal) photoModal.hidden = false; // visibility handled by .open class
-
   const openModal = () => {
     if (!photoModal) return;
     photoModal.classList.add('open');
+    photoModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
   const closeModal = () => {
     if (!photoModal) return;
     photoModal.classList.remove('open');
+    photoModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   };
 

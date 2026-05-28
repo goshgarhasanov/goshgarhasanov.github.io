@@ -44,6 +44,20 @@
   </div>
 
   <main class="container">
+    <!-- Date / Time banner -->
+    <section class="datetime" id="datetime">
+      <div class="dt-bg"></div>
+      <div class="dt-inner">
+        <div class="dt-left">
+          <p class="dt-greeting" id="dtGreeting">—</p>
+          <p class="dt-date" id="dtDate">—</p>
+        </div>
+        <div class="dt-right">
+          <div class="dt-time" id="dtTime">--:--:--</div>
+        </div>
+      </div>
+    </section>
+
     <!-- Hero -->
     <section class="hero">
       <div class="hero-bg"></div>
@@ -299,7 +313,7 @@
   </main>
 
   <!-- Photo modal -->
-  <div class="photo-modal" id="photoModal" hidden aria-modal="true" role="dialog">
+  <div class="photo-modal" id="photoModal" aria-modal="true" role="dialog" aria-hidden="true">
     <div class="pm-backdrop" data-close></div>
     <div class="pm-content">
       <button class="pm-close" id="pmClose" type="button" aria-label="Close">
