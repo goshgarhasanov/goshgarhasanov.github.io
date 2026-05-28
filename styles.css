@@ -415,6 +415,20 @@ html[data-theme="light"] .skill > i.devicon-nextjs-original { color: #000; }
   border: 1px solid var(--border);
   border-radius: 999px;
 }
+.tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-2);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.08);
+}
+.timeline { display: flex; flex-direction: column; gap: 14px; }
 .edu-right h3 { font-size: 18px; margin-bottom: 4px; }
 .edu-degree { color: var(--accent-warm); font-weight: 500; margin-bottom: 10px; }
 .edu-right p { color: var(--text-dim); }
@@ -464,6 +478,8 @@ html[data-theme="light"] .skill > i.devicon-nextjs-original { color: #000; }
   color: var(--accent);
   flex: 0 0 22px;
 }
+.contact-item.wa svg { color: #25d366; }
+.contact-item.wa:hover { border-color: #25d366; }
 .contact-item b { display: block; font-size: 14px; }
 .contact-item span { color: var(--text-dim); font-size: 13px; word-break: break-all; }
 
