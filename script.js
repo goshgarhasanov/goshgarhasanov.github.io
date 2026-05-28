@@ -4,8 +4,7 @@
   /* ---------- Theme ---------- */
   const T_KEY = 'cv-theme';
   const storedTheme = localStorage.getItem(T_KEY);
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  root.setAttribute('data-theme', storedTheme || (prefersLight ? 'light' : 'dark'));
+  root.setAttribute('data-theme', storedTheme || 'light');
 
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
