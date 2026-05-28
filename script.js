@@ -84,14 +84,22 @@
 
   const visitedKey = 'cv-visited-' + todayKey;
   const alreadyCounted = sessionStorage.getItem(visitedKey) === '1';
-  const verb = alreadyCounted ? 'get' : 'hit';
 
-  const call = (key) =>
+  const abacus = (verb, key) =>
     fetch(`https://abacus.jasoncameron.dev/${verb}/${NS}/${key}`)
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
 
-  Promise.all([call('total'), call(todayKey)]).then(([total, day]) => {
+  // For unseen counters, GET returns 404 — fall back to HIT to create them.
+  const fetchCount = async (key) => {
+    if (alreadyCounted) {
+      const got = await abacus('get', key);
+      if (got && (got.value ?? got.count) != null) return got;
+    }
+    return abacus('hit', key);
+  };
+
+  Promise.all([fetchCount('total'), fetchCount(todayKey)]).then(([total, day]) => {
     const totalCount = total && (total.value ?? total.count);
     const todayCount = day && (day.value ?? day.count);
     if (totalCount != null) totalEl.textContent = fmt(totalCount);
