@@ -113,15 +113,17 @@
   const photoModal = document.getElementById('photoModal');
   const pmClose = document.getElementById('pmClose');
 
+  if (photoModal) photoModal.hidden = false; // visibility handled by .open class
+
   const openModal = () => {
-    photoModal.hidden = false;
-    photoModal.classList.remove('closing');
+    if (!photoModal) return;
+    photoModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
   const closeModal = () => {
-    photoModal.classList.add('closing');
+    if (!photoModal) return;
+    photoModal.classList.remove('open');
     document.body.style.overflow = '';
-    setTimeout(() => { photoModal.hidden = true; }, 250);
   };
 
   if (avatarBtn) avatarBtn.addEventListener('click', openModal);
@@ -132,7 +134,7 @@
     });
   }
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && photoModal && !photoModal.hidden) closeModal();
+    if (e.key === 'Escape' && photoModal && photoModal.classList.contains('open')) closeModal();
   });
 
   /* ---------- Skill bar animation ---------- */

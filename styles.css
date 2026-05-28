@@ -785,13 +785,20 @@ footer {
   display: grid;
   place-items: center;
   padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+}
+.photo-modal.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .25s ease, visibility 0s linear 0s;
 }
 .pm-backdrop {
   position: absolute;
   inset: 0;
   background: radial-gradient(60% 50% at 50% 40%, rgba(139, 92, 246, 0.45), rgba(15, 12, 30, 0.85) 70%);
   backdrop-filter: blur(14px);
-  animation: pmFade .3s ease both;
   cursor: zoom-out;
 }
 .pm-content {
@@ -806,7 +813,13 @@ footer {
     0 0 0 1px rgba(255,255,255,0.10),
     0 50px 120px -20px rgba(236, 72, 153, 0.55),
     0 30px 80px -30px rgba(139, 92, 246, 0.55);
-  animation: pmPop .35s cubic-bezier(.2, .9, .25, 1.15) both, pmSpin 16s linear infinite;
+  transform: scale(.85);
+  opacity: 0;
+  transition: transform .35s cubic-bezier(.2, .9, .25, 1.15), opacity .25s ease;
+}
+.photo-modal.open .pm-content {
+  transform: scale(1);
+  opacity: 1;
 }
 .pm-content img {
   display: block;
@@ -816,7 +829,6 @@ footer {
   max-height: min(86vh, 720px);
   border-radius: 22px;
   background: #000;
-  animation: pmSpin 16s linear infinite reverse;
 }
 .pm-close {
   position: absolute;
@@ -840,16 +852,6 @@ footer {
   box-shadow: 0 18px 40px -6px rgba(236, 72, 153, 0.85);
 }
 .pm-close svg { pointer-events: none; }
-
-@keyframes pmFade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes pmPop {
-  from { opacity: 0; transform: scale(.82); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes pmSpin { to { transform: rotate(360deg); } }
-
-.photo-modal.closing .pm-backdrop { animation: pmFade .22s ease reverse both; }
-.photo-modal.closing .pm-content { animation: pmPop .22s ease reverse both; }
 
 @media (max-width: 480px) {
   .photo-modal { padding: 14px; }
