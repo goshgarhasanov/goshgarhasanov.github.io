@@ -258,11 +258,9 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   font-weight: 800;
   letter-spacing: -1px;
   text-shadow: 0 4px 24px rgba(0,0,0,0.25);
-  background: linear-gradient(180deg, #ffffff, rgba(255,255,255,0.85));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #ffffff;
   position: relative;
+  white-space: nowrap;
 }
 .dt-time::after {
   content: "";
