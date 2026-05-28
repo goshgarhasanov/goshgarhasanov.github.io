@@ -203,26 +203,31 @@
     if (e.key === 'Escape' && photoModal && photoModal.classList.contains('open')) closeModal();
   });
 
-  /* ---------- Ambient canvas: drifting particles + "GH" mouse trail ---------- */
+  /* ---------- Ambient canvas: drifting particles (bg) + "GH" mouse trail (fg) ---------- */
   (function ambient() {
-    const canvas = document.getElementById('bgCanvas');
-    if (!canvas) return;
+    const bgCanvas = document.getElementById('bgCanvas');
+    const fgCanvas = document.getElementById('fgCanvas');
+    if (!bgCanvas || !fgCanvas) return;
 
     const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isTouch || reduce) { canvas.remove(); return; }
+    if (isTouch || reduce) { bgCanvas.remove(); fgCanvas.remove(); return; }
 
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const bgCtx = bgCanvas.getContext('2d', { alpha: true });
+    const fgCtx = fgCanvas.getContext('2d', { alpha: true });
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0, h = 0;
     const resize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      [bgCanvas, fgCanvas].forEach((c) => {
+        c.width = w * dpr;
+        c.height = h * dpr;
+        c.style.width = w + 'px';
+        c.style.height = h + 'px';
+      });
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize, { passive: true });
@@ -261,11 +266,11 @@
     }, { passive: true });
 
     const frame = (now) => {
-      ctx.clearRect(0, 0, w, h);
       const dark = isDark();
       const glowAlpha = dark ? 1.0 : 0.85;
 
-      // Particles
+      // BG: drifting glow particles
+      bgCtx.clearRect(0, 0, w, h);
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -277,16 +282,17 @@
 
         const a = p.baseA * (0.55 + Math.sin(p.pulse) * 0.45) * glowAlpha;
         const R = p.r * 5;
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
+        const grad = bgCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
         grad.addColorStop(0, hexToRgba(p.color, a));
         grad.addColorStop(1, hexToRgba(p.color, 0));
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, R, 0, Math.PI * 2);
-        ctx.fill();
+        bgCtx.fillStyle = grad;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, R, 0, Math.PI * 2);
+        bgCtx.fill();
       }
 
-      // GH mouse trail — newest is sharpest at cursor, older fades behind
+      // FG: GH trail — drawn on top of everything via fg canvas
+      fgCtx.clearRect(0, 0, w, h);
       for (let i = trail.length - 1; i >= 0; i--) {
         const t = trail[i];
         const age = now - t.born;
@@ -295,19 +301,19 @@
         const size = 22 + (1 - life) * 28;
         const alpha = life * (dark ? 0.95 : 0.85);
 
-        ctx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const g = ctx.createLinearGradient(t.x - size, t.y - size / 2, t.x + size, t.y + size / 2);
+        fgCtx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
+        fgCtx.textAlign = 'center';
+        fgCtx.textBaseline = 'middle';
+        const g = fgCtx.createLinearGradient(t.x - size, t.y - size / 2, t.x + size, t.y + size / 2);
         g.addColorStop(0, hexToRgba('#ff6b6b', alpha));
         g.addColorStop(0.5, hexToRgba('#ec4899', alpha));
         g.addColorStop(1, hexToRgba('#8b5cf6', alpha));
-        ctx.shadowColor = hexToRgba('#ec4899', alpha * 0.6);
-        ctx.shadowBlur = 22 * life;
-        ctx.fillStyle = g;
-        ctx.fillText('GH', t.x, t.y);
+        fgCtx.shadowColor = hexToRgba('#ec4899', alpha * 0.6);
+        fgCtx.shadowBlur = 22 * life;
+        fgCtx.fillStyle = g;
+        fgCtx.fillText('GH', t.x, t.y);
       }
-      ctx.shadowBlur = 0;
+      fgCtx.shadowBlur = 0;
 
       requestAnimationFrame(frame);
     };
