@@ -109,8 +109,11 @@
     renderDateTime();
   }
 
-  applyLang(detect());
-  setInterval(renderDateTime, 1000);
+  // Render immediately so the banner never shows empty / placeholder text,
+  // even if applyLang fails for any reason.
+  try { renderDateTime(); } catch (_) {}
+  try { applyLang(detect()); } catch (_) {}
+  setInterval(() => { try { renderDateTime(); } catch (_) {} }, 1000);
 
   const btn = document.getElementById('langBtn');
   const menu = document.getElementById('langMenu');
