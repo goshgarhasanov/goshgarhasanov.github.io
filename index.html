@@ -48,9 +48,9 @@
     <section class="hero">
       <div class="hero-bg"></div>
       <div class="hero-inner">
-        <div class="avatar">
+        <button class="avatar" id="avatarBtn" type="button" aria-label="View profile photo">
           <img src="assets/profile.jpg" alt="Goshgar Hasanov" />
-        </div>
+        </button>
         <div class="hero-text">
           <p class="eyebrow" data-i18n="hero.eyebrow">Hello, I'm</p>
           <h1>Goshgar <span>Hasanov</span></h1>
@@ -297,6 +297,17 @@
       <p data-i18n-html="footer">© <span id="year"></span> Goshgar Hasanov · Built with HTML, CSS &amp; a little JS · Hosted on GitHub Pages</p>
     </footer>
   </main>
+
+  <!-- Photo modal -->
+  <div class="photo-modal" id="photoModal" hidden aria-modal="true" role="dialog">
+    <div class="pm-backdrop" data-close></div>
+    <div class="pm-content">
+      <button class="pm-close" id="pmClose" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img src="assets/profile.jpg" alt="Goshgar Hasanov" />
+    </div>
+  </div>
 
   <script src="i18n.js"></script>
   <script src="script.js"></script>

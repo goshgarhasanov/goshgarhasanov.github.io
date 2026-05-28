@@ -108,6 +108,33 @@
     if (!alreadyCounted) sessionStorage.setItem(visitedKey, '1');
   });
 
+  /* ---------- Photo modal ---------- */
+  const avatarBtn = document.getElementById('avatarBtn');
+  const photoModal = document.getElementById('photoModal');
+  const pmClose = document.getElementById('pmClose');
+
+  const openModal = () => {
+    photoModal.hidden = false;
+    photoModal.classList.remove('closing');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeModal = () => {
+    photoModal.classList.add('closing');
+    document.body.style.overflow = '';
+    setTimeout(() => { photoModal.hidden = true; }, 250);
+  };
+
+  if (avatarBtn) avatarBtn.addEventListener('click', openModal);
+  if (pmClose) pmClose.addEventListener('click', closeModal);
+  if (photoModal) {
+    photoModal.querySelectorAll('[data-close]').forEach((el) => {
+      el.addEventListener('click', closeModal);
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && photoModal && !photoModal.hidden) closeModal();
+  });
+
   /* ---------- Skill bar animation ---------- */
   const bars = document.querySelectorAll('.skill-fill');
   if ('IntersectionObserver' in window) {
