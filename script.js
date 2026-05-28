@@ -203,6 +203,117 @@
     if (e.key === 'Escape' && photoModal && photoModal.classList.contains('open')) closeModal();
   });
 
+  /* ---------- Ambient canvas: drifting particles + "GH" mouse trail ---------- */
+  (function ambient() {
+    const canvas = document.getElementById('bgCanvas');
+    if (!canvas) return;
+
+    const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouch || reduce) { canvas.remove(); return; }
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0;
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+    const palette = ['#ff6b6b', '#ffb84d', '#14b8a6', '#8b5cf6', '#3b82f6', '#ec4899'];
+    const hexToRgba = (hex, a) => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${a})`;
+    };
+
+    const COUNT = 38;
+    const particles = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 1.6 + Math.random() * 4,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      color: palette[(Math.random() * palette.length) | 0],
+      baseA: 0.18 + Math.random() * 0.22,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: 0.008 + Math.random() * 0.012,
+    }));
+
+    const trail = [];
+    const TRAIL_LIFE_MS = 1100;
+    let lastSpawn = 0;
+    window.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastSpawn < 28) return; // throttle ~36 spawns/sec max
+      lastSpawn = now;
+      trail.push({ x: e.clientX, y: e.clientY, born: now });
+      if (trail.length > 26) trail.shift();
+    }, { passive: true });
+
+    const frame = (now) => {
+      ctx.clearRect(0, 0, w, h);
+      const dark = isDark();
+      const glowAlpha = dark ? 1.0 : 0.85;
+
+      // Particles
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+        p.pulse += p.pulseSpeed;
+
+        const a = p.baseA * (0.55 + Math.sin(p.pulse) * 0.45) * glowAlpha;
+        const R = p.r * 5;
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
+        grad.addColorStop(0, hexToRgba(p.color, a));
+        grad.addColorStop(1, hexToRgba(p.color, 0));
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, R, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // GH mouse trail — newest is sharpest at cursor, older fades behind
+      for (let i = trail.length - 1; i >= 0; i--) {
+        const t = trail[i];
+        const age = now - t.born;
+        if (age > TRAIL_LIFE_MS) { trail.splice(i, 1); continue; }
+        const life = 1 - age / TRAIL_LIFE_MS;
+        const size = 22 + (1 - life) * 28;
+        const alpha = life * (dark ? 0.95 : 0.85);
+
+        ctx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const g = ctx.createLinearGradient(t.x - size, t.y - size / 2, t.x + size, t.y + size / 2);
+        g.addColorStop(0, hexToRgba('#ff6b6b', alpha));
+        g.addColorStop(0.5, hexToRgba('#ec4899', alpha));
+        g.addColorStop(1, hexToRgba('#8b5cf6', alpha));
+        ctx.shadowColor = hexToRgba('#ec4899', alpha * 0.6);
+        ctx.shadowBlur = 22 * life;
+        ctx.fillStyle = g;
+        ctx.fillText('GH', t.x, t.y);
+      }
+      ctx.shadowBlur = 0;
+
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  })();
+
   /* ---------- Skill bar animation ---------- */
   const bars = document.querySelectorAll('.skill-fill');
   if ('IntersectionObserver' in window) {
