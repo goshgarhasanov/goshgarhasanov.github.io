@@ -133,21 +133,19 @@ html[data-theme="dark"] body::after {
 }
 
 /* ===== Ambient particle canvas (desktop only) ===== */
-.bg-canvas, .fg-canvas {
+.bg-canvas {
   position: fixed;
   inset: 0;
+  z-index: -1;
   pointer-events: none;
   width: 100vw;
   height: 100vh;
 }
-.bg-canvas { z-index: -1; }   /* ambient particles behind everything */
-.fg-canvas { z-index: 9999; } /* GH mouse trail above everything */
-
 @media (hover: none) and (pointer: coarse) {
-  .bg-canvas, .fg-canvas { display: none; }
+  .bg-canvas { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bg-canvas, .fg-canvas { display: none; }
+  .bg-canvas { display: none; }
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
