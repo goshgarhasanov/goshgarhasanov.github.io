@@ -789,79 +789,73 @@ footer {
 .pm-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(15, 12, 30, 0.78);
-  backdrop-filter: blur(12px);
+  background: radial-gradient(60% 50% at 50% 40%, rgba(139, 92, 246, 0.45), rgba(15, 12, 30, 0.85) 70%);
+  backdrop-filter: blur(14px);
   animation: pmFade .3s ease both;
   cursor: zoom-out;
 }
 .pm-content {
   position: relative;
   z-index: 1;
-  max-width: min(90vw, 560px);
-  max-height: 90vh;
-  border-radius: 28px;
-  overflow: hidden;
-  background: var(--panel);
+  display: inline-block;
+  line-height: 0;
   padding: 6px;
-  box-shadow: 0 50px 120px -30px rgba(236, 72, 153, 0.6);
-  animation: pmPop .35s cubic-bezier(.2, .9, .25, 1.15) both;
-}
-.pm-content::before {
-  content: "";
-  position: absolute;
-  inset: 0;
   border-radius: 28px;
-  padding: 4px;
   background: conic-gradient(from 0deg, var(--c-coral), var(--c-amber), var(--c-mint), var(--c-sky), var(--c-violet), var(--c-rose), var(--c-coral));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.10),
+    0 50px 120px -20px rgba(236, 72, 153, 0.55),
+    0 30px 80px -30px rgba(139, 92, 246, 0.55);
+  animation: pmPop .35s cubic-bezier(.2, .9, .25, 1.15) both, pmSpin 16s linear infinite;
 }
 .pm-content img {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
-  max-height: calc(90vh - 12px);
-  object-fit: contain;
+  max-width: min(86vw, 520px);
+  max-height: min(86vh, 720px);
   border-radius: 22px;
+  background: #000;
+  animation: pmSpin 16s linear infinite reverse;
 }
 .pm-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 2;
-  width: 44px; height: 44px;
+  top: -16px;
+  right: -16px;
+  z-index: 3;
+  width: 46px; height: 46px;
   border-radius: 50%;
-  border: none;
+  border: 3px solid #ffffff;
   background: linear-gradient(135deg, var(--c-coral), var(--c-rose));
   color: #ffffff;
   cursor: pointer;
   display: grid;
   place-items: center;
-  box-shadow: 0 12px 28px -8px rgba(236, 72, 153, 0.7);
-  transition: transform .2s, box-shadow .2s, filter .2s;
+  box-shadow: 0 14px 30px -6px rgba(236, 72, 153, 0.7);
+  transition: transform .25s, box-shadow .25s, filter .2s;
 }
 .pm-close:hover {
-  transform: scale(1.1) rotate(90deg);
+  transform: scale(1.12) rotate(90deg);
   filter: saturate(1.15);
+  box-shadow: 0 18px 40px -6px rgba(236, 72, 153, 0.85);
 }
-@keyframes pmFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+.pm-close svg { pointer-events: none; }
+
+@keyframes pmFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pmPop {
-  from { opacity: 0; transform: scale(.85); }
+  from { opacity: 0; transform: scale(.82); }
   to { opacity: 1; transform: scale(1); }
 }
-.photo-modal.closing .pm-backdrop { animation: pmFade .25s ease reverse both; }
-.photo-modal.closing .pm-content { animation: pmPop .25s ease reverse both; }
+@keyframes pmSpin { to { transform: rotate(360deg); } }
+
+.photo-modal.closing .pm-backdrop { animation: pmFade .22s ease reverse both; }
+.photo-modal.closing .pm-content { animation: pmPop .22s ease reverse both; }
 
 @media (max-width: 480px) {
-  .photo-modal { padding: 12px; }
-  .pm-content { border-radius: 22px; }
-  .pm-content img { border-radius: 18px; }
-  .pm-close { width: 38px; height: 38px; top: 10px; right: 10px; }
+  .photo-modal { padding: 14px; }
+  .pm-content { padding: 5px; border-radius: 22px; }
+  .pm-content img { border-radius: 17px; max-width: 92vw; max-height: 80vh; }
+  .pm-close { width: 40px; height: 40px; top: -12px; right: -12px; border-width: 2px; }
 }
 
 /* ===== Animations ===== */
