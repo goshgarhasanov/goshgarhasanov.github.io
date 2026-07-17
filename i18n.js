@@ -2,7 +2,7 @@ window.I18N = {
   en: {
     "hero.eyebrow": "Hello, I'm",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "I build products across web, desktop and mobile. React and Next.js on the front, React Native on mobile, Electron, PyQt5 and Tkinter on desktop — all backed by Node and Python services on Linux.",
+    "hero.tagline": "Software engineer with 5+ years of experience and 20+ shipped products. I design and build systems end to end: production backends with Python (FastAPI) and Node.js, data layers on PostgreSQL, MongoDB and Redis, deployed with Docker and AWS — with web, mobile and desktop clients built in React, React Native and Electron.",
     "hero.cta.contact": "Get in touch",
     "hero.cta.cv": "Download CV",
 
@@ -71,7 +71,7 @@ window.I18N = {
   az: {
     "hero.eyebrow": "Salam, mən",
     "hero.role": "Fullstack · Web · Desktop · Mobil",
-    "hero.tagline": "Web, desktop və mobil — üç platforma üçün məhsul yazıram. Frontend-də React və Next.js, mobil tərəfdə React Native, desktop-da Electron, PyQt5 və Tkinter. Backend Node.js və Python üzərində qurulur, hər şey Linux serverdə çalışır.",
+    "hero.tagline": "5+ il təcrübəsi və 20+ tamamlanmış məhsulu olan proqram mühəndisiyəm. Sistemləri ideyadan istehsalata qədər qururam: Python (FastAPI) və Node.js ilə production backend-lər, PostgreSQL, MongoDB və Redis üzərində data qatı, Docker və AWS ilə deployment — React, React Native və Electron ilə web, mobil və desktop müştəri tətbiqləri.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
 
@@ -140,7 +140,7 @@ window.I18N = {
   ru: {
     "hero.eyebrow": "Привет, я",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Делаю продукты под три платформы — web, desktop и mobile. Фронт на React и Next.js, мобайл на React Native, десктоп на Electron, PyQt5 и Tkinter. Бэкенд — Node.js и Python, всё крутится на Linux.",
+    "hero.tagline": "Инженер-разработчик с 5+ годами опыта и 20+ выпущенными продуктами. Проектирую и строю системы целиком: production-бэкенды на Python (FastAPI) и Node.js, данные на PostgreSQL, MongoDB и Redis, деплой через Docker и AWS — клиенты для web, mobile и desktop на React, React Native и Electron.",
     "hero.cta.contact": "Связаться",
     "hero.cta.cv": "Скачать CV",
 
@@ -209,7 +209,7 @@ window.I18N = {
   tr: {
     "hero.eyebrow": "Merhaba, ben",
     "hero.role": "Fullstack · Web · Masaüstü · Mobil",
-    "hero.tagline": "Web, masaüstü ve mobil için ürünler geliştiriyorum. Frontend tarafında React ve Next.js, mobilde React Native, masaüstünde Electron, PyQt5 ve Tkinter. Backend tarafı Node.js ve Python — hepsi Linux sunucularda koşuyor.",
+    "hero.tagline": "5+ yıl deneyime ve 20+ yayınlanmış ürüne sahip bir yazılım mühendisiyim. Sistemleri uçtan uca tasarlayıp geliştiriyorum: Python (FastAPI) ve Node.js ile production backend'ler, PostgreSQL, MongoDB ve Redis üzerinde veri katmanı, Docker ve AWS ile dağıtım — React, React Native ve Electron ile web, mobil ve masaüstü istemciler.",
     "hero.cta.contact": "İletişime geç",
     "hero.cta.cv": "CV indir",
 
