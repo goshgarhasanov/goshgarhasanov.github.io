@@ -7,8 +7,8 @@ window.I18N = {
     "hero.cta.cv": "Download CV",
 
     "about.title": "About",
-    "about.p1": "Fullstack developer shipping end-to-end products across three surfaces — <b>web</b> (MERN + Next.js), <b>mobile</b> (React Native) and <b>desktop</b> (Electron, PyQt5, Tkinter). On the back end I'm equally at home in Node.js and Python.",
-    "about.p2": "My engineering background trained me to think in systems — which shows up in clean architectures, deliberate data layers (PostgreSQL, MongoDB, Redis) and software that just keeps running on Linux servers.",
+    "about.p1": "Software engineer building products end to end. I architect and ship production backends with <b>Python (FastAPI)</b> and <b>Node.js</b>, and deliver the full product surface — <b>web</b> (React, Next.js), <b>mobile</b> (React Native) and <b>desktop</b> (Electron, PyQt5) — with a single, coherent product vision.",
+    "about.p2": "My engineering background shapes how I work: systems thinking, clean architecture and deliberate data design on PostgreSQL, MongoDB and Redis. I own the full lifecycle — design, implementation, testing and operations on Docker, AWS and Linux.",
 
     "stats.years": "years of coding",
     "stats.projects": "shipped projects",
@@ -71,13 +71,13 @@ window.I18N = {
   az: {
     "hero.eyebrow": "Salam, mən",
     "hero.role": "Fullstack · Web · Desktop · Mobil",
-    "hero.tagline": "5+ il təcrübəsi və 20+ tamamlanmış məhsulu olan proqram mühəndisiyəm. Sistemləri ideyadan istehsalata qədər qururam: Python (FastAPI) və Node.js ilə production backend-lər, PostgreSQL, MongoDB və Redis üzərində data qatı, Docker və AWS ilə deployment — React, React Native və Electron ilə web, mobil və desktop müştəri tətbiqləri.",
+    "hero.tagline": "5 ildən artıq təcrübəyə və 20-dən çox hazır məhsula malik proqram mühəndisiyəm. Sistemləri əvvəldən sona qədər özüm qururam: Python (FastAPI) və Node.js ilə backend, PostgreSQL, MongoDB və Redis ilə verilənlər qatı, Docker və AWS ilə deploy — üstəlik React, React Native və Electron ilə web, mobil və desktop tətbiqlər.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
 
     "about.title": "Haqqımda",
-    "about.p1": "Fullstack developerəm. Üç platforma üçün məhsul yazıram: <b>web</b> (MERN + Next.js), <b>mobil</b> (React Native) və <b>desktop</b> (Electron, PyQt5, Tkinter). Backend-də həm Node.js, həm də Python ilə eyni rahatlıqla işləyirəm.",
-    "about.p2": "Mühəndislik təhsili məndə sistemli düşüncə formalaşdırıb — bu, təmiz arxitektura, düşünülmüş data qatları (PostgreSQL, MongoDB, Redis) və Linux serverlərdə stabil işləyən kod kimi özünü göstərir.",
+    "about.p1": "Məhsulu ideyadan hazır sistemə qədər tam şəkildə quran proqram mühəndisiyəm. <b>Python (FastAPI)</b> və <b>Node.js</b> ilə production səviyyəli backend-lər hazırlayıram; <b>web</b> (React, Next.js), <b>mobil</b> (React Native) və <b>desktop</b> (Electron, PyQt5) tətbiqlərini isə eyni məhsul baxışı ilə tamamlayıram.",
+    "about.p2": "Mühəndislik təhsilim mənə sistemli düşünməyi öyrədib: təmiz arxitektura, PostgreSQL, MongoDB və Redis üzərində düşünülmüş verilənlər dizaynı. Layihənin bütün mərhələlərinə — dizayndan koda, testdən Docker, AWS və Linux üzərində istismara qədər — özüm cavabdehəm.",
 
     "stats.years": "il kod yazıram",
     "stats.projects": "tamamlanmış layihə",
@@ -140,13 +140,13 @@ window.I18N = {
   ru: {
     "hero.eyebrow": "Привет, я",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Инженер-разработчик с 5+ годами опыта и 20+ выпущенными продуктами. Проектирую и строю системы целиком: production-бэкенды на Python (FastAPI) и Node.js, данные на PostgreSQL, MongoDB и Redis, деплой через Docker и AWS — клиенты для web, mobile и desktop на React, React Native и Electron.",
+    "hero.tagline": "Инженер-разработчик с более чем 5-летним опытом и 20+ выпущенными продуктами. Строю системы целиком: production-бэкенды на Python (FastAPI) и Node.js, данные в PostgreSQL, MongoDB и Redis, деплой в Docker и AWS, а также клиенты для веба, мобильных платформ и десктопа на React, React Native и Electron.",
     "hero.cta.contact": "Связаться",
     "hero.cta.cv": "Скачать CV",
 
     "about.title": "Обо мне",
-    "about.p1": "Fullstack-разработчик. Делаю end-to-end продукты под три платформы: <b>web</b> (MERN + Next.js), <b>mobile</b> (React Native) и <b>desktop</b> (Electron, PyQt5, Tkinter). На бэкенде одинаково уверенно работаю с Node.js и Python.",
-    "about.p2": "Инженерное образование приучило мыслить системно — отсюда чистая архитектура, продуманная работа со слоями данных (PostgreSQL, MongoDB, Redis) и стабильно работающий продакшен на Linux-серверах.",
+    "about.p1": "Создаю продукты от идеи до продакшена. Проектирую и запускаю production-бэкенды на <b>Python (FastAPI)</b> и <b>Node.js</b>, а клиентскую часть — <b>web</b> (React, Next.js), <b>mobile</b> (React Native) и <b>desktop</b> (Electron, PyQt5) — довожу до релиза в рамках единого продукта.",
+    "about.p2": "Инженерное образование научило меня мыслить системно: чистая архитектура, продуманная работа с данными в PostgreSQL, MongoDB и Redis. Отвечаю за весь цикл — от проектирования и разработки до тестирования и эксплуатации в Docker, AWS и Linux.",
 
     "stats.years": "лет в коде",
     "stats.projects": "готовых проектов",
@@ -209,13 +209,13 @@ window.I18N = {
   tr: {
     "hero.eyebrow": "Merhaba, ben",
     "hero.role": "Fullstack · Web · Masaüstü · Mobil",
-    "hero.tagline": "5+ yıl deneyime ve 20+ yayınlanmış ürüne sahip bir yazılım mühendisiyim. Sistemleri uçtan uca tasarlayıp geliştiriyorum: Python (FastAPI) ve Node.js ile production backend'ler, PostgreSQL, MongoDB ve Redis üzerinde veri katmanı, Docker ve AWS ile dağıtım — React, React Native ve Electron ile web, mobil ve masaüstü istemciler.",
+    "hero.tagline": "5 yılı aşkın deneyime ve 20'den fazla yayınlanmış ürüne sahip bir yazılım mühendisiyim. Sistemleri uçtan uca kuruyorum: Python (FastAPI) ve Node.js ile backend, PostgreSQL, MongoDB ve Redis ile veri katmanı, Docker ve AWS ile dağıtım; ayrıca React, React Native ve Electron ile web, mobil ve masaüstü uygulamalar.",
     "hero.cta.contact": "İletişime geç",
     "hero.cta.cv": "CV indir",
 
     "about.title": "Hakkımda",
-    "about.p1": "Fullstack geliştiriciyim. Üç platformda — <b>web</b> (MERN + Next.js), <b>mobil</b> (React Native) ve <b>masaüstü</b> (Electron, PyQt5, Tkinter) — uçtan uca ürünler geliştiriyorum. Backend tarafında Node.js ve Python ile eşit rahatlıkta çalışıyorum.",
-    "about.p2": "Mühendislik geçmişim sistemli düşünmeyi öğretti — bu da kendini temiz mimarilerde, düşünülmüş veri katmanlarında (PostgreSQL, MongoDB, Redis) ve Linux sunucularda kararlı çalışan yazılımda gösteriyor.",
+    "about.p1": "Ürünleri fikir aşamasından canlıya almaya kadar uçtan uca geliştiren bir yazılım mühendisiyim. <b>Python (FastAPI)</b> ve <b>Node.js</b> ile production seviyesinde backend'ler kuruyor; <b>web</b> (React, Next.js), <b>mobil</b> (React Native) ve <b>masaüstü</b> (Electron, PyQt5) uygulamalarını aynı ürün vizyonuyla hayata geçiriyorum.",
+    "about.p2": "Mühendislik eğitimim bana sistemli düşünmeyi kazandırdı: temiz mimari, PostgreSQL, MongoDB ve Redis üzerinde özenli veri tasarımı. Tasarımdan geliştirmeye, testten Docker, AWS ve Linux üzerindeki operasyona kadar tüm sürecin sorumluluğunu üstleniyorum.",
 
     "stats.years": "yıllık kod tecrübesi",
     "stats.projects": "tamamlanan proje",
