@@ -71,13 +71,13 @@ window.I18N = {
   az: {
     "hero.eyebrow": "Salam, mən",
     "hero.role": "Fullstack · Web · Desktop · Mobil",
-    "hero.tagline": "5 ildən artıq təcrübəyə və 20-dən çox hazır məhsula malik proqram mühəndisiyəm. Sistemləri əvvəldən sona qədər özüm qururam: Python (FastAPI) və Node.js ilə backend, PostgreSQL, MongoDB və Redis ilə verilənlər qatı, Docker və AWS ilə deploy — üstəlik React, React Native və Electron ilə web, mobil və desktop tətbiqlər.",
+    "hero.tagline": "5 ildən artıq təcrübəyə və 20-dən çox tamamlanmış layihəyə malik proqram mühəndisiyəm. Sistemləri tam dövrə üzrə qururam: Python (FastAPI) və Node.js əsaslı backend xidmətləri, PostgreSQL, MongoDB və Redis üzərində verilənlər qatı, Docker və AWS vasitəsilə deployment, həmçinin React, React Native və Electron ilə web, mobil və desktop tətbiqləri.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
 
     "about.title": "Haqqımda",
-    "about.p1": "Məhsulu ideyadan hazır sistemə qədər tam şəkildə quran proqram mühəndisiyəm. <b>Python (FastAPI)</b> və <b>Node.js</b> ilə production səviyyəli backend-lər hazırlayıram; <b>web</b> (React, Next.js), <b>mobil</b> (React Native) və <b>desktop</b> (Electron, PyQt5) tətbiqlərini isə eyni məhsul baxışı ilə tamamlayıram.",
-    "about.p2": "Mühəndislik təhsilim mənə sistemli düşünməyi öyrədib: təmiz arxitektura, PostgreSQL, MongoDB və Redis üzərində düşünülmüş verilənlər dizaynı. Layihənin bütün mərhələlərinə — dizayndan koda, testdən Docker, AWS və Linux üzərində istismara qədər — özüm cavabdehəm.",
+    "about.p1": "Məhsulları ideyadan hazır sistemə qədər tam dövrə üzrə inkişaf etdirən proqram mühəndisiyəm. <b>Python (FastAPI)</b> və <b>Node.js</b> ilə production səviyyəli backend sistemləri qururam; <b>web</b> (React, Next.js), <b>mobil</b> (React Native) və <b>desktop</b> (Electron, PyQt5) tətbiqlərini vahid məhsul konsepsiyası əsasında təqdim edirəm.",
+    "about.p2": "Mühəndislik təhsilim problemlərə sistemli və analitik yanaşma formalaşdırıb. Bu yanaşma təmiz arxitekturanın qurulmasında və PostgreSQL, MongoDB, Redis üzərində səmərəli verilənlər modelinin hazırlanmasında öz əksini tapır. Layihələrin dizayn, tərtibat və test mərhələlərindən Docker, AWS və Linux mühitində istismarına qədər bütün prosesdə tam məsuliyyət daşıyıram.",
 
     "stats.years": "il kod yazıram",
     "stats.projects": "tamamlanmış layihə",
