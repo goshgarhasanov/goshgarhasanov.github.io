@@ -2,7 +2,7 @@ window.I18N = {
   en: {
     "hero.eyebrow": "Hello, I'm",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Software engineer with 5+ years of experience and 20+ shipped products. I design and build systems end to end: production backends with Python (FastAPI) and Node.js, data layers on PostgreSQL, MongoDB and Redis, deployed with Docker and AWS — with web, mobile and desktop clients built in React, React Native and Electron.",
+    "hero.tagline": "Software engineer with 15+ years of experience and 20+ shipped products. I design and build systems end to end: production backends with Python (FastAPI) and Node.js, data layers on PostgreSQL, MongoDB and Redis, deployed with Docker and AWS — with web, mobile and desktop clients built in React, React Native and Electron.",
     "hero.cta.contact": "Get in touch",
     "hero.cta.cv": "Download CV",
 
@@ -65,13 +65,13 @@ window.I18N = {
     "vc.today": "Today",
     "vc.total": "Total",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Built with HTML, CSS &amp; a little JS · Hosted on GitHub Pages"
+    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · All rights reserved"
   },
 
   az: {
     "hero.eyebrow": "Salam, mən",
     "hero.role": "Fullstack · Web · Desktop · Mobil",
-    "hero.tagline": "5 ildən artıq təcrübəyə və 20-dən çox tamamlanmış layihəyə malik proqram mühəndisiyəm. Sistemləri tam dövrə üzrə qururam: Python (FastAPI) və Node.js əsaslı backend xidmətləri, PostgreSQL, MongoDB və Redis üzərində verilənlər qatı, Docker və AWS vasitəsilə deployment, həmçinin React, React Native və Electron ilə web, mobil və desktop tətbiqləri.",
+    "hero.tagline": "15 ildən artıq təcrübəyə və 20-dən çox tamamlanmış layihəyə malik proqram mühəndisiyəm. Sistemləri tam dövrə üzrə qururam: Python (FastAPI) və Node.js əsaslı backend xidmətləri, PostgreSQL, MongoDB və Redis üzərində verilənlər qatı, Docker və AWS vasitəsilə deployment, həmçinin React, React Native və Electron ilə web, mobil və desktop tətbiqləri.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
 
@@ -134,13 +134,13 @@ window.I18N = {
     "vc.today": "Bu gün",
     "vc.total": "Ümumi",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · HTML, CSS və bir az JS ilə · GitHub Pages-də"
+    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Bütün hüquqlar qorunur"
   },
 
   ru: {
     "hero.eyebrow": "Привет, я",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Инженер-разработчик с более чем 5-летним опытом и 20+ выпущенными продуктами. Строю системы целиком: production-бэкенды на Python (FastAPI) и Node.js, данные в PostgreSQL, MongoDB и Redis, деплой в Docker и AWS, а также клиенты для веба, мобильных платформ и десктопа на React, React Native и Electron.",
+    "hero.tagline": "Инженер-разработчик с более чем 15-летним опытом и 20+ выпущенными продуктами. Строю системы целиком: production-бэкенды на Python (FastAPI) и Node.js, данные в PostgreSQL, MongoDB и Redis, деплой в Docker и AWS, а также клиенты для веба, мобильных платформ и десктопа на React, React Native и Electron.",
     "hero.cta.contact": "Связаться",
     "hero.cta.cv": "Скачать CV",
 
@@ -203,13 +203,13 @@ window.I18N = {
     "vc.today": "Сегодня",
     "vc.total": "Всего",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · HTML, CSS и немного JS · GitHub Pages"
+    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Все права защищены"
   },
 
   tr: {
     "hero.eyebrow": "Merhaba, ben",
     "hero.role": "Fullstack · Web · Masaüstü · Mobil",
-    "hero.tagline": "5 yılı aşkın deneyime ve 20'den fazla yayınlanmış ürüne sahip bir yazılım mühendisiyim. Sistemleri uçtan uca kuruyorum: Python (FastAPI) ve Node.js ile backend, PostgreSQL, MongoDB ve Redis ile veri katmanı, Docker ve AWS ile dağıtım; ayrıca React, React Native ve Electron ile web, mobil ve masaüstü uygulamalar.",
+    "hero.tagline": "15 yılı aşkın deneyime ve 20'den fazla yayınlanmış ürüne sahip bir yazılım mühendisiyim. Sistemleri uçtan uca kuruyorum: Python (FastAPI) ve Node.js ile backend, PostgreSQL, MongoDB ve Redis ile veri katmanı, Docker ve AWS ile dağıtım; ayrıca React, React Native ve Electron ile web, mobil ve masaüstü uygulamalar.",
     "hero.cta.contact": "İletişime geç",
     "hero.cta.cv": "CV indir",
 
@@ -272,6 +272,6 @@ window.I18N = {
     "vc.today": "Bugün",
     "vc.total": "Toplam",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · HTML, CSS ve biraz JS ile · GitHub Pages'te"
+    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Tüm hakları saklıdır"
   }
 };
