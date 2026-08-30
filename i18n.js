@@ -65,7 +65,7 @@ window.I18N = {
     "vc.today": "Today",
     "vc.total": "Total",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · All rights reserved"
+    "footer": "© <span id=\"year\"></span> · All rights reserved · Developed by <span class=\"dev-by\">Goshgar Hasanov</span>"
   },
 
   az: {
@@ -134,7 +134,7 @@ window.I18N = {
     "vc.today": "Bu gün",
     "vc.total": "Ümumi",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Bütün hüquqlar qorunur"
+    "footer": "© <span id=\"year\"></span> · Bütün hüquqlar qorunur · Developed by <span class=\"dev-by\">Goshgar Hasanov</span>"
   },
 
   ru: {
@@ -203,7 +203,7 @@ window.I18N = {
     "vc.today": "Сегодня",
     "vc.total": "Всего",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Все права защищены"
+    "footer": "© <span id=\"year\"></span> · Все права защищены · Developed by <span class=\"dev-by\">Goshgar Hasanov</span>"
   },
 
   tr: {
@@ -272,6 +272,6 @@ window.I18N = {
     "vc.today": "Bugün",
     "vc.total": "Toplam",
 
-    "footer": "© <span id=\"year\"></span> Goshgar Hasanov · Tüm hakları saklıdır"
+    "footer": "© <span id=\"year\"></span> · Tüm hakları saklıdır · Developed by <span class=\"dev-by\">Goshgar Hasanov</span>"
   }
 };

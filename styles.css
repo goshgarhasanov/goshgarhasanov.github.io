@@ -286,10 +286,16 @@ html[data-theme="dark"] .dt-bg {
   gap: 24px;
   flex-wrap: wrap;
 }
+/* keep the greeting chip and the date chip stacked, each hugging its text */
+.dt-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .dt-greeting {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 1.8px;
+  font-size: 15px;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: #b9c1f5;
   margin-bottom: 8px;
@@ -300,11 +306,19 @@ html[data-theme="dark"] .dt-bg {
   border-radius: 999px;
   font-weight: 600;
 }
+@media (max-width: 560px) {
+  .dt-greeting { font-size: 13px; letter-spacing: 1.2px; }
+}
 .dt-date {
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.3px;
   color: #e7ebff;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 16px;
+  border-radius: 14px;
 }
 .dt-time {
   font-family: 'JetBrains Mono', monospace;
@@ -334,7 +348,7 @@ html[data-theme="dark"] .dt-bg {
 @media (max-width: 560px) {
   .datetime { padding: 22px 22px; border-radius: 20px; }
   .dt-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .dt-date { font-size: 17px; }
+  .dt-date { font-size: 17px; padding: 6px 12px; border-radius: 12px; }
   .dt-time { font-size: 40px; }
   .dt-time::after { right: -10px; }
 }
@@ -459,12 +473,13 @@ html[data-theme="dark"] .dt-bg {
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -1.5px;
-  color: var(--text);
-}
-.hero-text h1 span {
+  /* one gradient across the whole name, so both words read as one colour */
   background: linear-gradient(135deg, var(--c-coral), var(--c-amber), var(--c-rose));
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
+}
+.hero-text h1 span {
+  color: inherit;
 }
 .hero-text .role {
   color: var(--c-mint);
@@ -643,6 +658,7 @@ html[data-theme="dark"] .dt-bg {
   transition: transform .2s, border-color .2s, box-shadow .2s;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 .skill::before {
   content: "";
@@ -929,8 +945,15 @@ footer {
   padding-top: 28px;
   border-top: 1px solid var(--border);
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
   text-align: center;
+}
+/* signature in the footer picks up the same gradient as the hero name */
+.dev-by {
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--c-coral), var(--c-amber), var(--c-rose));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
 }
 .visitor-counter {
   display: inline-flex;
