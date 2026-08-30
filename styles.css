@@ -43,23 +43,6 @@
   --radius-xs: 10px;
 }
 
-html[data-theme="dark"] {
-  --bg: #161427;
-  --bg-grain: #1b1834;
-  --panel: #211e3a;
-  --panel-2: #2a2748;
-  --text: #f1ecff;
-  --text-dim: #b3afd6;
-  --muted: #7e7aa3;
-  --border: rgba(255, 255, 255, 0.10);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --t-peach: rgba(255, 184, 77, 0.10);
-  --t-mint: rgba(20, 184, 166, 0.12);
-  --t-lavender: rgba(139, 92, 246, 0.14);
-  --t-sky: rgba(59, 130, 246, 0.12);
-  --t-sun: rgba(255, 184, 77, 0.10);
-  --t-rose: rgba(236, 72, 153, 0.10);
-}
 /* ===========================================================
    Hack / cyber theme — hacker terminal, neon green on near-black
    =========================================================== */
@@ -149,18 +132,6 @@ body::after {
   animation: orbDriftB 32s ease-in-out infinite alternate;
 }
 
-/* Dark mode — cooler, deeper, slower, more contrast */
-html[data-theme="dark"] body::before {
-  background: radial-gradient(circle at 35% 35%, rgba(139, 92, 246, 0.55), rgba(236, 72, 153, 0.32) 55%, transparent 80%);
-  filter: blur(110px);
-  animation: orbDriftA 38s ease-in-out infinite alternate;
-}
-html[data-theme="dark"] body::after {
-  background: radial-gradient(circle at 65% 65%, rgba(20, 184, 166, 0.40), rgba(59, 130, 246, 0.28) 55%, transparent 80%);
-  filter: blur(110px);
-  animation: orbDriftB 44s ease-in-out infinite alternate;
-}
-
 @keyframes orbDriftA {
   0%   { transform: translate(0, 0)        scale(1)    rotate(0deg); }
   50%  { transform: translate(-4vw, 5vw)   scale(1.10) rotate(8deg); }
@@ -211,7 +182,7 @@ img { display: block; max-width: 100%; }
   align-items: center;
   gap: 10px;
 }
-.theme-toggle, .lang-btn {
+.lang-btn {
   height: 44px;
   border-radius: 22px;
   border: 1px solid var(--border);
@@ -225,13 +196,6 @@ img { display: block; max-width: 100%; }
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(8px);
 }
-.theme-toggle { width: 44px; color: var(--c-amber); }
-.theme-toggle:hover {
-  transform: translateY(-2px) rotate(20deg);
-  color: var(--c-coral);
-  border-color: var(--c-coral);
-  box-shadow: 0 12px 28px -10px rgba(255, 184, 77, 0.6);
-}
 .lang-btn { color: var(--c-violet); }
 .lang-btn:hover {
   transform: translateY(-2px);
@@ -239,10 +203,6 @@ img { display: block; max-width: 100%; }
   border-color: var(--c-rose);
   box-shadow: 0 12px 28px -10px rgba(139, 92, 246, 0.55);
 }
-.theme-toggle svg { width: 20px; height: 20px; }
-.theme-toggle .icon-sun { display: none; }
-html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* Language switcher */
 .lang-switcher { position: relative; }
@@ -313,45 +273,45 @@ html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
   100% { transform: translateX(2%)   scale(1.05); }
 }
 
-/* Dark mode — same family, just slightly deeper */
-html[data-theme="dark"] .datetime {
-  background: linear-gradient(135deg, #11132b 0%, #1b1d40 50%, #131532 100%);
-}
-html[data-theme="dark"] .dt-bg {
-  background:
-    radial-gradient(60% 80% at 15% 50%, rgba(99, 102, 241, 0.22), transparent 70%),
-    radial-gradient(60% 80% at 85% 50%, rgba(139, 92, 246, 0.18), transparent 70%);
-}
 
 .dt-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+/* the greeting gets its own centred line; date and clock share the one below */
+.dt-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
   flex-wrap: wrap;
 }
-/* keep the greeting chip and the date chip stacked, each hugging its text */
-.dt-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
 .dt-greeting {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
-  letter-spacing: 1.6px;
+  font-size: clamp(20px, 3.2vw, 30px);
+  letter-spacing: 2.4px;
   text-transform: uppercase;
   color: #b9c1f5;
-  margin-bottom: 8px;
-  display: inline-block;
+  align-self: center;
+  text-align: center;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  padding: 5px 12px;
+  padding: 10px 22px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
+  animation: dtGreetBlink 1.6s steps(1, end) infinite;
+}
+@keyframes dtGreetBlink {
+  0%, 62%  { opacity: 1; }
+  63%, 88% { opacity: 0.18; }
+  89%, 100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dt-greeting { animation: none; }
 }
 @media (max-width: 560px) {
-  .dt-greeting { font-size: 13px; letter-spacing: 1.2px; }
+  .dt-greeting { font-size: 18px; letter-spacing: 1.6px; padding: 8px 16px; }
 }
 .dt-date {
   font-size: 22px;
@@ -1045,7 +1005,6 @@ footer {
   .skills-grid { grid-template-columns: 1fr; }
   .section h2 { font-size: 20px; margin-bottom: 20px; }
   .top-controls { top: 12px; right: 12px; gap: 8px; }
-  .theme-toggle { width: 40px; height: 40px; }
   .lang-btn { height: 40px; padding: 0 12px; font-size: 12px; }
   .btn { padding: 12px 18px; font-size: 13.5px; }
   .skill { padding: 14px; }
@@ -1162,15 +1121,8 @@ footer {
 
 /* ===========================================================
    HACK / CYBER THEME — rules the variable swap alone can't do.
-   Additive: every selector is scoped to html[data-theme="hack"]
-   (except the one base rule that hides .icon-term by default).
+   Additive: every selector is scoped to html[data-theme="hack"].
    =========================================================== */
-
-/* ---- Theme-toggle icons: light = moon, dark = sun, hack = terminal ---- */
-.theme-toggle .icon-term { display: none; }
-html[data-theme="hack"] .theme-toggle .icon-sun,
-html[data-theme="hack"] .theme-toggle .icon-moon { display: none; }
-html[data-theme="hack"] .theme-toggle .icon-term { display: block; }
 
 /* ---- Ambient background: scanlines + green/cyan orbs ---- */
 html[data-theme="hack"] body {
@@ -1322,7 +1274,11 @@ html[data-theme="hack"] .dt-greeting {
   border: 1px solid rgba(0, 255, 140, 0.24);
   border-radius: 6px;
 }
+html[data-theme="hack"] .dt-greeting {
+  text-shadow: 0 0 18px rgba(0, 255, 136, 0.55);
+}
 html[data-theme="hack"] .dt-greeting::before { content: "> "; }
+html[data-theme="hack"] .dt-greeting::after { content: " _"; }
 html[data-theme="hack"] .dt-date {
   color: var(--text);
   background: rgba(0, 255, 140, 0.05);
@@ -1337,12 +1293,6 @@ html[data-theme="hack"] .dt-time {
 html[data-theme="hack"] .dt-time::after { background: var(--c-coral); opacity: 0.9; }
 
 /* ---- Top controls ---- */
-html[data-theme="hack"] .theme-toggle { color: var(--c-coral); }
-html[data-theme="hack"] .theme-toggle:hover {
-  color: var(--c-mint);
-  border-color: var(--c-mint);
-  box-shadow: 0 12px 28px -12px rgba(0, 212, 255, 0.7);
-}
 html[data-theme="hack"] .lang-btn { color: var(--c-coral); }
 html[data-theme="hack"] .lang-btn:hover {
   color: var(--c-mint);
@@ -1379,7 +1329,6 @@ html[data-theme="hack"] .tag,
 html[data-theme="hack"] .subhead,
 html[data-theme="hack"] .hc,
 html[data-theme="hack"] .visitor-counter { border-radius: 6px; }
-html[data-theme="hack"] .theme-toggle,
 html[data-theme="hack"] .lang-btn { border-radius: 10px; }
 html[data-theme="hack"] .lang-menu { border-radius: 10px; }
 html[data-theme="hack"] .lang-menu li { border-radius: 6px; }
