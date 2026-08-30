@@ -60,6 +60,50 @@ html[data-theme="dark"] {
   --t-sun: rgba(255, 184, 77, 0.10);
   --t-rose: rgba(236, 72, 153, 0.10);
 }
+/* ===========================================================
+   Hack / cyber theme — hacker terminal, neon green on near-black
+   =========================================================== */
+html[data-theme="hack"] {
+  --bg: #05080a;
+  --bg-grain: #070c0e;
+  --panel: #0a1210;
+  --panel-2: #0d1a16;
+  --text: #d7ffe4;
+  --text-dim: #6fdc9a;
+  --muted: #3f8f63;
+  --border: rgba(0, 255, 140, 0.18);
+  --border-strong: rgba(0, 255, 140, 0.35);
+
+  /* every --c-* accent remapped onto the green/cyan family, so all the
+     gradients in the page (buttons, bars, hero name, bullets, footer) go neon */
+  --c-coral:   #00ff88;
+  --c-amber:   #00e07a;
+  --c-mint:    #00d4ff;
+  --c-violet:  #00ffbf;
+  --c-sky:     #00b7ff;
+  --c-rose:    #4dffa6;
+  --c-lime:    #8dff5c;
+
+  /* soft tints → faint green/cyan washes over the near-black panels */
+  --t-peach:    rgba(0, 255, 136, 0.07);
+  --t-mint:     rgba(0, 212, 255, 0.07);
+  --t-lavender: rgba(0, 255, 191, 0.08);
+  --t-sky:      rgba(0, 183, 255, 0.07);
+  --t-sun:      rgba(0, 255, 136, 0.05);
+  --t-rose:     rgba(77, 255, 166, 0.07);
+
+  --accent: var(--c-coral);
+  --accent-2: var(--c-mint);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 12px 28px -16px rgba(0, 255, 136, 0.45);
+  --shadow-lg: 0 30px 60px -30px rgba(0, 255, 136, 0.40);
+
+  /* terminals have corners, not pills */
+  --radius: 10px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+}
 
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1113,3 +1157,229 @@ footer {
 .section:nth-child(4) { animation-delay: .15s; }
 .section:nth-child(5) { animation-delay: .20s; }
 .section:nth-child(6) { animation-delay: .25s; }
+
+/* ===========================================================
+   HACK / CYBER THEME — rules the variable swap alone can't do.
+   Additive: every selector is scoped to html[data-theme="hack"]
+   (except the one base rule that hides .icon-term by default).
+   =========================================================== */
+
+/* ---- Theme-toggle icons: light = moon, dark = sun, hack = terminal ---- */
+.theme-toggle .icon-term { display: none; }
+html[data-theme="hack"] .theme-toggle .icon-sun,
+html[data-theme="hack"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="hack"] .theme-toggle .icon-term { display: block; }
+
+/* ---- Ambient background: scanlines + green/cyan orbs ---- */
+html[data-theme="hack"] body {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0, 255, 140, 0.030) 0px,
+    rgba(0, 255, 140, 0.030) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  background-attachment: fixed;
+}
+html[data-theme="hack"] body::before {
+  background: radial-gradient(circle at 35% 35%, rgba(0, 255, 136, 0.22), rgba(0, 212, 255, 0.10) 55%, transparent 80%);
+  filter: blur(120px);
+  animation: orbDriftA 40s ease-in-out infinite alternate;
+}
+html[data-theme="hack"] body::after {
+  background: radial-gradient(circle at 65% 65%, rgba(0, 212, 255, 0.18), rgba(0, 255, 136, 0.12) 55%, transparent 80%);
+  filter: blur(120px);
+  animation: orbDriftB 46s ease-in-out infinite alternate;
+}
+
+/* ---- Monospace where it reads as "terminal" (body copy stays Inter) ---- */
+html[data-theme="hack"] h1,
+html[data-theme="hack"] h2,
+html[data-theme="hack"] h3,
+html[data-theme="hack"] .role,
+html[data-theme="hack"] .skill-name,
+html[data-theme="hack"] .skill-pct,
+html[data-theme="hack"] .period,
+html[data-theme="hack"] .tag,
+html[data-theme="hack"] .stat b,
+html[data-theme="hack"] .stat span,
+html[data-theme="hack"] .lang b,
+html[data-theme="hack"] .contact-item b,
+html[data-theme="hack"] .edu-degree,
+html[data-theme="hack"] .btn {
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+}
+html[data-theme="hack"] .hero-text h1 { letter-spacing: -1px; }
+html[data-theme="hack"] .section h2 { letter-spacing: 0; }
+html[data-theme="hack"] .card h3,
+html[data-theme="hack"] .edu-right h3 { letter-spacing: -0.2px; }
+
+/* ---- Soft green glow on headings / hero name ---- */
+html[data-theme="hack"] .hero-text h1 { text-shadow: 0 0 26px rgba(0, 255, 136, 0.35); }
+html[data-theme="hack"] .section h2 > span:last-child { text-shadow: 0 0 18px rgba(0, 255, 136, 0.28); }
+html[data-theme="hack"] .card h3,
+html[data-theme="hack"] .edu-right h3 { text-shadow: 0 0 14px rgba(0, 255, 136, 0.18); }
+html[data-theme="hack"] .bullet { box-shadow: 0 0 12px rgba(0, 255, 136, 0.55); }
+
+/* ---- Panels / cards: green rim + glow on hover ---- */
+html[data-theme="hack"] .hero {
+  border-color: var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 70px -35px rgba(0, 255, 136, 0.35), inset 0 0 0 1px rgba(0, 255, 140, 0.04);
+}
+html[data-theme="hack"] .skill:hover,
+html[data-theme="hack"] .card:hover,
+html[data-theme="hack"] .edu:hover,
+html[data-theme="hack"] .contact-item:hover,
+html[data-theme="hack"] .stat:hover {
+  border-color: var(--c-coral);
+  box-shadow: 0 0 0 1px rgba(0, 255, 140, 0.25), 0 16px 40px -18px rgba(0, 255, 136, 0.55);
+}
+html[data-theme="hack"] .about-grid p,
+html[data-theme="hack"] .visitor-counter { box-shadow: inset 0 0 0 1px rgba(0, 255, 140, 0.04); }
+html[data-theme="hack"] .about-grid p b { color: var(--c-coral); }
+html[data-theme="hack"] .skill-fill { box-shadow: 0 0 12px rgba(0, 255, 136, 0.55); }
+html[data-theme="hack"] .skill-bar { border: 1px solid rgba(0, 255, 140, 0.14); }
+html[data-theme="hack"] .card-icon { background: var(--panel-2); }
+html[data-theme="hack"] .lang-menu { box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 255, 140, 0.10); }
+
+/* ---- Chips & buttons: dark ink on neon, not white on neon ---- */
+html[data-theme="hack"] .btn,
+html[data-theme="hack"] .hero-text .eyebrow,
+html[data-theme="hack"] .period,
+html[data-theme="hack"] .tag { color: #03140c; }
+html[data-theme="hack"] .hero-text .eyebrow { box-shadow: 0 8px 22px -8px rgba(0, 255, 136, 0.65); }
+html[data-theme="hack"] .hero-text .eyebrow::before { content: "$ "; }
+html[data-theme="hack"] .btn.primary { box-shadow: 0 14px 32px -10px rgba(0, 255, 136, 0.50); }
+html[data-theme="hack"] .btn.primary:hover { box-shadow: 0 20px 42px -10px rgba(0, 255, 136, 0.75); }
+html[data-theme="hack"] .btn.ghost { box-shadow: 0 14px 32px -10px rgba(0, 212, 255, 0.45); }
+html[data-theme="hack"] .btn.ghost:hover { box-shadow: 0 20px 42px -10px rgba(0, 212, 255, 0.70); }
+html[data-theme="hack"] .btn.gh { box-shadow: 0 14px 32px -10px rgba(0, 255, 191, 0.45); }
+html[data-theme="hack"] .btn.gh:hover { box-shadow: 0 20px 42px -10px rgba(0, 255, 191, 0.70); }
+html[data-theme="hack"] .period { box-shadow: 0 8px 18px -8px rgba(0, 255, 136, 0.55); }
+html[data-theme="hack"] .tag { box-shadow: 0 6px 14px -6px rgba(0, 212, 255, 0.55); }
+html[data-theme="hack"] .subhead { border: 1px solid rgba(0, 255, 140, 0.20); }
+
+/* blinking terminal caret after the role line */
+html[data-theme="hack"] .hero-text .role::after {
+  content: "_";
+  margin-left: 2px;
+  animation: hackCaret 1.1s steps(1) infinite;
+}
+@keyframes hackCaret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="hack"] .hero-text .role::after { animation: none; }
+}
+
+/* ---- Stats: white-on-neon is unreadable, so make them terminal cards ---- */
+html[data-theme="hack"] .stat {
+  background: linear-gradient(180deg, rgba(0, 255, 140, 0.07), var(--panel) 70%);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  box-shadow: 0 16px 36px -20px rgba(0, 255, 136, 0.45);
+}
+html[data-theme="hack"] .stat:nth-child(2) { background: linear-gradient(180deg, rgba(0, 212, 255, 0.08), var(--panel) 70%); }
+html[data-theme="hack"] .stat:nth-child(3) { background: linear-gradient(180deg, rgba(0, 255, 191, 0.08), var(--panel) 70%); }
+html[data-theme="hack"] .stat b {
+  color: var(--c-coral);
+  text-shadow: 0 0 22px rgba(0, 255, 136, 0.45);
+}
+html[data-theme="hack"] .stat:nth-child(2) b { color: var(--c-mint); text-shadow: 0 0 22px rgba(0, 212, 255, 0.45); }
+html[data-theme="hack"] .stat:nth-child(3) b { color: var(--c-violet); text-shadow: 0 0 22px rgba(0, 255, 191, 0.45); }
+html[data-theme="hack"] .stat span { color: var(--text-dim); }
+
+/* ---- AI logos: hardcoded brand gradients would look off-palette ---- */
+html[data-theme="hack"] .ai-logo {
+  color: #03140c;
+  box-shadow: 0 6px 16px -6px rgba(0, 255, 136, 0.45);
+}
+html[data-theme="hack"] .ai-logo.claude { background: linear-gradient(135deg, #00ff88, #00a35c); }
+html[data-theme="hack"] .ai-logo.gpt    { background: linear-gradient(135deg, #00d4ff, #0084a8); }
+html[data-theme="hack"] .ai-logo.cursor {
+  background: linear-gradient(135deg, #0d1a16, #04120d);
+  color: var(--c-coral);
+  border: 1px solid rgba(0, 255, 140, 0.40);
+}
+
+/* ---- Date/time banner: it hardcodes its own blue in base + dark rules ---- */
+html[data-theme="hack"] .datetime {
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 255, 140, 0.22);
+  color: var(--text);
+  background: linear-gradient(135deg, #04100c 0%, #07190f 50%, #04120e 100%);
+  box-shadow: 0 20px 50px -28px rgba(0, 255, 136, 0.55), inset 0 1px 0 rgba(0, 255, 140, 0.10);
+}
+html[data-theme="hack"] .dt-bg {
+  background:
+    radial-gradient(60% 80% at 15% 50%, rgba(0, 255, 136, 0.16), transparent 70%),
+    radial-gradient(60% 80% at 85% 50%, rgba(0, 212, 255, 0.12), transparent 70%);
+}
+html[data-theme="hack"] .dt-greeting {
+  color: var(--c-coral);
+  background: rgba(0, 255, 140, 0.07);
+  border: 1px solid rgba(0, 255, 140, 0.24);
+  border-radius: 6px;
+}
+html[data-theme="hack"] .dt-greeting::before { content: "> "; }
+html[data-theme="hack"] .dt-date {
+  color: var(--text);
+  background: rgba(0, 255, 140, 0.05);
+  border: 1px solid rgba(0, 255, 140, 0.18);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+html[data-theme="hack"] .dt-time {
+  color: var(--c-coral);
+  text-shadow: 0 0 28px rgba(0, 255, 136, 0.45);
+}
+html[data-theme="hack"] .dt-time::after { background: var(--c-coral); opacity: 0.9; }
+
+/* ---- Top controls ---- */
+html[data-theme="hack"] .theme-toggle { color: var(--c-coral); }
+html[data-theme="hack"] .theme-toggle:hover {
+  color: var(--c-mint);
+  border-color: var(--c-mint);
+  box-shadow: 0 12px 28px -12px rgba(0, 212, 255, 0.7);
+}
+html[data-theme="hack"] .lang-btn { color: var(--c-coral); }
+html[data-theme="hack"] .lang-btn:hover {
+  color: var(--c-mint);
+  border-color: var(--c-mint);
+  box-shadow: 0 12px 28px -12px rgba(0, 212, 255, 0.7);
+}
+
+/* ---- Footer / misc ---- */
+html[data-theme="hack"] .dev-by { text-shadow: 0 0 18px rgba(0, 255, 136, 0.30); }
+html[data-theme="hack"] .vc-sep { color: rgba(0, 255, 140, 0.35); }
+html[data-theme="hack"] .hc:hover { border-color: rgba(0, 255, 140, 0.45); }
+
+/* ---- Photo modal (hardcoded violet backdrop + white ring) ---- */
+html[data-theme="hack"] .pm-backdrop {
+  background: radial-gradient(60% 50% at 50% 40%, rgba(0, 255, 136, 0.22), rgba(2, 8, 6, 0.93) 70%);
+}
+html[data-theme="hack"] .pm-content {
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 140, 0.25),
+    0 50px 120px -25px rgba(0, 255, 136, 0.45),
+    0 30px 80px -30px rgba(0, 212, 255, 0.35);
+}
+html[data-theme="hack"] .pm-close {
+  border: 3px solid rgba(0, 255, 140, 0.55);
+  color: #03140c;
+  box-shadow: 0 14px 30px -8px rgba(0, 255, 136, 0.7);
+}
+html[data-theme="hack"] .pm-close:hover { box-shadow: 0 18px 40px -8px rgba(0, 255, 136, 0.9); }
+
+/* ---- Squared-off chips: terminals have corners, not pills ---- */
+html[data-theme="hack"] .hero-text .eyebrow,
+html[data-theme="hack"] .period,
+html[data-theme="hack"] .tag,
+html[data-theme="hack"] .subhead,
+html[data-theme="hack"] .hc,
+html[data-theme="hack"] .visitor-counter { border-radius: 6px; }
+html[data-theme="hack"] .theme-toggle,
+html[data-theme="hack"] .lang-btn { border-radius: 10px; }
+html[data-theme="hack"] .lang-menu { border-radius: 10px; }
+html[data-theme="hack"] .lang-menu li { border-radius: 6px; }
+html[data-theme="hack"] .skill-bar,
+html[data-theme="hack"] .skill-fill { border-radius: 2px; }
