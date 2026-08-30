@@ -1,23 +1,6 @@
 (() => {
   const root = document.documentElement;
 
-  /* ---------- Theme ---------- */
-  const T_KEY = 'cv-theme-v3';
-  // light -> dark -> hack -> light. 'hack' is a DARK theme (never treat it as light).
-  const THEMES = ['light', 'dark', 'hack'];
-  const normTheme = (t) => (THEMES.indexOf(t) > -1 ? t : 'light');
-  // Inline head script already applied the theme; this just keeps it consistent.
-  if (!root.getAttribute('data-theme')) {
-    root.setAttribute('data-theme', normTheme(localStorage.getItem(T_KEY)));
-  }
-
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const cur = normTheme(root.getAttribute('data-theme'));
-    const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
-    root.setAttribute('data-theme', next);
-    localStorage.setItem(T_KEY, next);
-  });
-
   /* ---------- i18n ---------- */
   const L_KEY = 'cv-lang';
   const SUPPORTED = ['en', 'az', 'ru', 'tr'];
@@ -241,15 +224,6 @@
       layoutRain();
     };
 
-    /* ----- theme mode ----- */
-    const themeMode = () => {
-      const t = document.documentElement.getAttribute('data-theme');
-      return (t === 'dark' || t === 'hack') ? t : 'light';
-    };
-    // 'hack' is a dark theme too.
-    const isDark = () => themeMode() !== 'light';
-
-    const palette = ['#ff6b6b', '#ffb84d', '#14b8a6', '#8b5cf6', '#3b82f6', '#ec4899'];
     const hexToRgba = (hex, a) => {
       const r = parseInt(hex.slice(1, 3), 16);
       const g = parseInt(hex.slice(3, 5), 16);
@@ -339,52 +313,10 @@
       ctx.globalAlpha = 1;
     }
 
-    /* ----- Drifting particles ----- */
-    const COUNT = 38;
-    const particles = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: 1.6 + Math.random() * 4,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      color: palette[(Math.random() * palette.length) | 0],
-      baseA: 0.18 + Math.random() * 0.22,
-      pulse: Math.random() * Math.PI * 2,
-      pulseSpeed: 0.008 + Math.random() * 0.012,
-    }));
-
-    function drawParticles(glowAlpha) {
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -20) p.x = w + 20;
-        if (p.x > w + 20) p.x = -20;
-        if (p.y < -20) p.y = h + 20;
-        if (p.y > h + 20) p.y = -20;
-        p.pulse += p.pulseSpeed;
-
-        const a = p.baseA * (0.55 + Math.sin(p.pulse) * 0.45) * glowAlpha;
-        const R = p.r * 5;
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
-        grad.addColorStop(0, hexToRgba(p.color, a));
-        grad.addColorStop(1, hexToRgba(p.color, 0));
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, R, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
     /* ----- "GH" mouse trail ----- */
     const trail = [];
     const TRAIL_LIFE_MS = 1100;
-    // "GH" trail colours differ per theme: warm orange on light, cool cyan on
-    // dark, neon green on hack.
-    const TRAIL_COLORS = {
-      light: { from: '#f97316', mid: '#fb923c', to: '#f59e0b', glow: '#f97316' },
-      dark:  { from: '#22d3ee', mid: '#38bdf8', to: '#a78bfa', glow: '#22d3ee' },
-      hack:  { from: '#39ff14', mid: '#7bff5a', to: '#00ffa3', glow: '#39ff14' },
-    };
+    const TRAIL_COLOR = { from: '#39ff14', mid: '#7bff5a', to: '#00ffa3', glow: '#39ff14' };
     let lastSpawn = 0;
     window.addEventListener('mousemove', (e) => {
       const now = performance.now();
@@ -394,15 +326,15 @@
       if (trail.length > 26) trail.shift();
     }, { passive: true });
 
-    function drawTrail(now, mode) {
-      const c = TRAIL_COLORS[mode] || TRAIL_COLORS.light;
+    function drawTrail(now) {
+      const c = TRAIL_COLOR;
       for (let i = trail.length - 1; i >= 0; i--) {
         const t = trail[i];
         const age = now - t.born;
         if (age > TRAIL_LIFE_MS) { trail.splice(i, 1); continue; }
         const life = 1 - age / TRAIL_LIFE_MS;
         const size = 22 + (1 - life) * 28;
-        const alpha = life * (mode === 'light' ? 0.85 : 0.95);
+        const alpha = life * 0.95;
 
         ctx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
         ctx.textAlign = 'center';
@@ -423,24 +355,15 @@
     resize();
     window.addEventListener('resize', resize, { passive: true });
 
-    let mode = themeMode();
     let last = performance.now();
 
     const frame = (now) => {
       const dt = Math.min(64, now - last) || 16.7;
       last = now;
 
-      const m = themeMode();
-      if (m !== mode) {
-        mode = m;
-        // Hard swap: nothing of the previous mode survives into the next frame.
-        resetRain();
-      }
-
       ctx.clearRect(0, 0, w, h);
-      if (mode === 'hack') drawRain(now, dt);
-      else drawParticles(isDark() ? 1.0 : 0.85);
-      drawTrail(now, mode);
+      drawRain(now, dt);
+      drawTrail(now);
 
       requestAnimationFrame(frame);
     };
