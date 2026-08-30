@@ -251,6 +251,11 @@
 
     const trail = [];
     const TRAIL_LIFE_MS = 1100;
+    // "GH" trail colours differ per theme: warm orange on light, cool cyan on dark.
+    const TRAIL_COLORS = {
+      light: { from: '#f97316', mid: '#fb923c', to: '#f59e0b', glow: '#f97316' },
+      dark:  { from: '#22d3ee', mid: '#38bdf8', to: '#a78bfa', glow: '#22d3ee' },
+    };
     let lastSpawn = 0;
     window.addEventListener('mousemove', (e) => {
       const now = performance.now();
@@ -299,11 +304,12 @@
         ctx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        const c = TRAIL_COLORS[dark ? 'dark' : 'light'];
         const g = ctx.createLinearGradient(t.x - size, t.y - size / 2, t.x + size, t.y + size / 2);
-        g.addColorStop(0, hexToRgba('#ff6b6b', alpha));
-        g.addColorStop(0.5, hexToRgba('#ec4899', alpha));
-        g.addColorStop(1, hexToRgba('#8b5cf6', alpha));
-        ctx.shadowColor = hexToRgba('#ec4899', alpha * 0.6);
+        g.addColorStop(0, hexToRgba(c.from, alpha));
+        g.addColorStop(0.5, hexToRgba(c.mid, alpha));
+        g.addColorStop(1, hexToRgba(c.to, alpha));
+        ctx.shadowColor = hexToRgba(c.glow, alpha * 0.6);
         ctx.shadowBlur = 22 * life;
         ctx.fillStyle = g;
         ctx.fillText('GH', t.x, t.y);
