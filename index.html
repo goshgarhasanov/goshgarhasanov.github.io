@@ -10,13 +10,21 @@
   <title>Goshgar Hasanov — Fullstack Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.16.0/devicon.min.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2306b6d4'/%3E%3Ctext x='50' y='68' font-family='Inter,Arial' font-size='56' font-weight='800' fill='%230b1220' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="styles.css?v=19" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
+  <!-- Boot terminal: types itself out on every load, then hands over to the page -->
+  <div class="boot" id="bootScreen" role="presentation" aria-hidden="true">
+    <div class="boot-inner">
+      <pre class="boot-out" id="bootOut"></pre>
+      <p class="boot-skip">press any key to skip</p>
+    </div>
+  </div>
   <canvas class="bg-canvas" id="bgCanvas" aria-hidden="true"></canvas>
+  <div class="crt" aria-hidden="true"></div>
 
   <div class="top-controls">
     <div class="lang-switcher">
@@ -44,6 +52,13 @@
           <p class="dt-date" id="dtDate"></p>
           <div class="dt-time" id="dtTime"></div>
         </div>
+        <div class="dt-sys" id="dtSys">
+          <span class="sys-item"><span class="sys-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M3.5 9h17M3.5 15h17"/><path d="M12 3a13 13 0 0 1 0 18 13 13 0 0 1 0-18z"/></svg></span><span class="sys-k">NET</span><b id="sysNet">--</b></span>
+          <span class="sys-item"><span class="sys-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 8.5h19"/><path d="M8 15h8"/></svg></span><span class="sys-k">VIEWPORT</span><b id="sysView">--</b></span>
+          <span class="sys-item"><span class="sys-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></span><span class="sys-k">CLIENT</span><b id="sysUa">--</b></span>
+          <span class="sys-item"><span class="sys-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.3 1.9"/></svg></span><span class="sys-k">TZ</span><b id="sysTz">--</b></span>
+          <span class="sys-item"><span class="sys-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12h4l2.5-6 4 12 2.5-6h6"/></svg></span><span class="sys-k">UPTIME</span><b id="sysUp">00:00:00</b></span>
+        </div>
       </div>
     </section>
 
@@ -58,8 +73,8 @@
         </div>
         <div class="hero-text">
           <p class="eyebrow" data-i18n="hero.eyebrow">Hello, I'm</p>
-          <h1>Goshgar <span>Hasanov</span></h1>
-          <p class="role" data-i18n="hero.role">Fullstack · Web · Desktop · Mobile</p>
+          <h1><span class="hn">Goshgar</span> <span class="hn">Hasanov</span></h1>
+          <p class="role" data-i18n="hero.role" data-scramble="1">Fullstack · Web · Desktop · Mobile</p>
           <p class="tagline" data-i18n="hero.tagline">Software engineer. I have been writing code for over 15 years and have shipped 20+ projects. I write the backend mostly in Python and Node.js, and the frontend in React, React Native and Electron.</p>
           <div class="cta">
             <a class="btn primary" href="mailto:goshgarhasanov321@gmail.com">
@@ -99,21 +114,21 @@
 
     <!-- About -->
     <section class="section" id="about">
-      <h2><span class="bullet"></span><span data-i18n="about.title">About</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10v4a10 10 0 0 1-.7 3.7"/><path d="M8.5 10.5a3.5 3.5 0 0 1 7 0V13a13 13 0 0 0 .6 3.8"/><path d="M5 12a7 7 0 0 1 11.3-5.5"/><path d="M19 12v1.5a18 18 0 0 1-.4 3.6"/><path d="M6.6 18.6A9 9 0 0 0 8 14"/></svg></span><span data-i18n="about.title">About</span></h2>
       <div class="about-grid">
         <p data-i18n-html="about.p1">I usually run a project on my own: I build the database, the <b>API</b>, and the <b>web</b>, <b>mobile</b> or <b>desktop</b> app that calls it. That has one real advantage. When I write the API I already know how it will be used later, so nobody has to come back at the end and ask me to return that response some other way.</p>
         <p data-i18n="about.p2">Most of my time goes into the database. If the schema is wrong from the start, no amount of tidy API code on top of it saves you. I don't hand a project off at deploy either: I read the logs and I find and rewrite the slow queries. Almost everything I write runs on Docker and Linux.</p>
       </div>
       <div class="stats">
-        <div class="stat"><b>15+</b><span data-i18n="stats.years">years of coding experience</span></div>
-        <div class="stat"><b>20+</b><span data-i18n="stats.projects">shipped projects</span></div>
-        <div class="stat"><b>3</b><span data-i18n="stats.langs">spoken languages</span></div>
+        <div class="stat"><span class="stat-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.2 2.1"/></svg></span><b>15+</b><span data-i18n="stats.years">years of coding experience</span></div>
+        <div class="stat"><span class="stat-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7.3 9-4.3 9 4.3v9.4l-9 4.3-9-4.3z"/><path d="m3 7.3 9 4.3 9-4.3M12 11.6V21"/></svg></span><b>20+</b><span data-i18n="stats.projects">shipped projects</span></div>
+        <div class="stat"><span class="stat-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg></span><b>3</b><span data-i18n="stats.langs">spoken languages</span></div>
       </div>
     </section>
 
     <!-- Skills -->
     <section class="section" id="skills">
-      <h2><span class="bullet"></span><span data-i18n="skills.title">Tech Stack</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><span data-i18n="skills.title">Tech Stack</span></h2>
       <div class="skills-grid">
         <div class="skill" data-level="95"><i class="devicon-html5-plain colored"></i><div class="skill-body"><div class="skill-head"><span class="skill-name">HTML5</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" style="--pct:95%"></div></div></div></div>
         <div class="skill" data-level="90"><i class="devicon-css3-plain colored"></i><div class="skill-body"><div class="skill-head"><span class="skill-name">CSS3</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" style="--pct:90%"></div></div></div></div>
@@ -152,46 +167,46 @@
 
     <!-- Expertise -->
     <section class="section" id="expertise">
-      <h2><span class="bullet"></span><span data-i18n="expertise.title">What I do</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m6.5 9.5 3 3-3 3M13 15.5h4.5"/></svg></span><span data-i18n="expertise.title">What I do</span></h2>
       <div class="cards">
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M8 21h8M12 17v4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="15" rx="2"/><path d="M2 7.5h20"/><path d="M4.6 5.2h.01M7 5.2h.01M9.4 5.2h.01"/><path d="m9.5 11-1.8 1.8L9.5 15M14.5 11l1.8 1.8-1.8 2.2"/><path d="M8 21h8M12 18v3"/></svg>
           </div>
           <h3 data-i18n="card.frontend.title">Frontend</h3>
           <p data-i18n="card.frontend.body">I build interfaces with React and Next.js. I care about the page opening quickly on a phone, the HTML being written properly, and not shipping JavaScript the browser never needed.</p>
         </div>
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6H4zM4 14h16v6H4z"/><circle cx="7" cy="7" r="1" fill="currentColor"/><circle cx="7" cy="17" r="1" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="7" rx="1.5"/><rect x="3" y="13.5" width="18" height="7" rx="1.5"/><path d="M6.6 7h.01M6.6 17h.01"/><path d="M10.5 7h7M10.5 17h7"/></svg>
           </div>
           <h3 data-i18n="card.backend.title">Backend</h3>
           <p data-i18n="card.backend.body">I write APIs in Python (FastAPI, Flask) or Node.js. Login and sessions, validating what comes in, pushing long jobs onto a Celery queue, keeping frequently requested answers in Redis. These come up in almost every project.</p>
         </div>
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8.5" ry="3"/><path d="M3.5 5v14a8.5 3 0 0 0 17 0V5"/><path d="M3.5 12a8.5 3 0 0 0 17 0"/><path d="M6.6 8.6h.01M6.6 15.6h.01"/></svg>
           </div>
           <h3 data-i18n="card.db.title">Databases</h3>
           <p data-i18n="card.db.body">I work with PostgreSQL and MongoDB. I shape the schema around the project from the start, then go looking for the slow queries: some are only missing an index, others are easier to rewrite from scratch.</p>
         </div>
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10.4 18.6h3.2"/><path d="M9.4 7.6a4.2 4.2 0 0 1 5.2 0"/><path d="M11 10.2a1.7 1.7 0 0 1 2 0"/></svg>
           </div>
           <h3 data-i18n="card.mobile.title">Mobile · React Native</h3>
           <p data-i18n="card.mobile.body">With React Native I write one codebase for both iOS and Android. The business logic stays shared, and where React Native does not reach I write a native module.</p>
         </div>
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M2 7h20"/><path d="M4.6 5h.01M7 5h.01"/><path d="m6.5 11.2 2 1.8-2 1.8"/><path d="M11 15h5"/><path d="M8 21h8M12 17v4"/></svg>
           </div>
           <h3 data-i18n="card.desktop.title">Desktop Apps</h3>
           <p data-i18n="card.desktop.body">I build desktop apps with Electron that run on Windows, macOS and Linux. For lighter tools I use PyQt5 and Tkinter, which sit closer to the look of the system itself.</p>
         </div>
         <div class="card">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m6 8 2 2-2 2M11 12h4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="10" width="6" height="6" rx="1"/><rect x="9" y="10" width="6" height="6" rx="1"/><rect x="15.5" y="10" width="6" height="6" rx="1"/><rect x="9" y="3.5" width="6" height="6" rx="1"/><path d="M2.5 20h19"/></svg>
           </div>
           <h3 data-i18n="card.devops.title">DevOps · Linux</h3>
           <p data-i18n="card.devops.body">I package a project into Docker and put it on a Linux server or on AWS; when it is needed I reach for Kubernetes, Lambda, ECS and SQS. Nginx, process managers and deploying over Git are part of the daily routine.</p>
@@ -201,7 +216,7 @@
 
     <!-- Experience -->
     <section class="section" id="experience">
-      <h2><span class="bullet"></span><span data-i18n="exp.title">Experience</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M6 3v12.4"/><path d="M18 8.6a8.4 8.4 0 0 1-8.4 8.4"/></svg></span><span data-i18n="exp.title">Experience</span></h2>
       <div class="timeline">
         <div class="edu">
           <div class="edu-left">
@@ -209,7 +224,7 @@
             <span class="tag" data-i18n="exp.gurbanov.mode">Remote</span>
           </div>
           <div class="edu-right">
-            <h3 data-i18n="exp.gurbanov.company">Gurbanov Software Company</h3>
+            <div class="entry-head"><span class="entry-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="M9 6a3 3 0 0 1 6 0"/><path d="m19.5 7-3.2 2.1M4.5 7l3.2 2.1M19.5 19l-3.2-2.1M4.5 19l3.2-2.1M2.5 13H8M16 13h5.5"/></svg></span><h3 data-i18n="exp.gurbanov.company">Gurbanov Software Company</h3></div>
             <p class="edu-degree" data-i18n="exp.gurbanov.role">Python / Selenium Developer — Automation</p>
             <p data-i18n="exp.gurbanov.note">I automated with Python and Selenium the repetitive work that was being done by hand. I wrote tools that collected data from sites, filled in forms on their own and drove the browser without a screen (headless).</p>
           </div>
@@ -219,7 +234,7 @@
             <span class="period" data-i18n="exp.spm.period">2020 — 2022</span>
           </div>
           <div class="edu-right">
-            <h3 data-i18n="exp.spm.company">SPM — Sumgait Programming Center</h3>
+            <div class="entry-head"><span class="entry-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16.5 18 5.5-6-5.5-6"/><path d="M7.5 6 2 12l5.5 6"/><path d="M13.8 4 10.2 20"/></svg></span><h3 data-i18n="exp.spm.company">SPM — Sumgait Programming Center</h3></div>
             <p class="edu-degree" data-i18n="exp.spm.role">PHP Developer</p>
             <p data-i18n="exp.spm.note">I wrote the server side in PHP. I added new features, built the parts that talk to the database, and kept projects that were already running maintained and up to date.</p>
           </div>
@@ -229,13 +244,13 @@
 
     <!-- Education -->
     <section class="section" id="education">
-      <h2><span class="bullet"></span><span data-i18n="edu.title">Education</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a7.3 7.3 0 0 0 10 10Z"/><path d="m9.5 14.5 3-3"/><path d="M17 13a6 6 0 0 0-6-6"/><path d="M21 13A10 10 0 0 0 11 3"/></svg></span><span data-i18n="edu.title">Education</span></h2>
       <div class="edu">
         <div class="edu-left">
           <span class="period" data-i18n="edu.period">Aug 2015 — Jul 2019</span>
         </div>
         <div class="edu-right">
-          <h3 data-i18n="edu.school">Sumgait State University</h3>
+          <div class="entry-head"><span class="entry-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7.5-3.7 7.5-9.4V5.2L12 2.5 4.5 5.2v6.9c0 5.7 7.5 9.4 7.5 9.4z"/><path d="m9 12 2.2 2.2L15.3 10"/></svg></span><h3 data-i18n="edu.school">Sumgait State University</h3></div>
           <p class="edu-degree" data-i18n="edu.degree">Bachelor — Power Machinery Engineering</p>
           <p data-i18n="edu.note">My degree is in power machinery engineering, not programming. The main thing university taught me was how to take a big system apart and look at it piece by piece. I approach code the same way.</p>
         </div>
@@ -244,11 +259,11 @@
 
     <!-- Languages -->
     <section class="section" id="languages">
-      <h2><span class="bullet"></span><span data-i18n="langs.title">Languages</span></h2>
+      <h2><span class="bullet"></span><span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.6a11 11 0 0 1 14 0"/><path d="M1.5 9a16 16 0 0 1 21 0"/><path d="M8.6 16.1a6 6 0 0 1 6.8 0"/><path d="M12 19.5h.01"/></svg></span><span data-i18n="langs.title">Languages</span></h2>
       <div class="langs">
-        <div class="lang"><b data-i18n="langs.az">Azerbaijani</b><span data-i18n="langs.az.lvl">Native</span></div>
-        <div class="lang"><b data-i18n="langs.tr">Turkish</b><span data-i18n="langs.tr.lvl">C1 — Advanced</span></div>
-        <div class="lang"><b data-i18n="langs.en">English</b><span data-i18n="langs.en.lvl">B1 — Intermediate</span></div>
+        <div class="lang"><span class="lang-left"><span class="lang-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h11"/><path d="M7.5 2.5V5"/><path d="M11 5a11 11 0 0 1-7 9.5"/><path d="M6 10.5a9 9 0 0 0 5.5 4.5"/><path d="m13 21 4-9 4 9"/><path d="M14.6 18h4.8"/></svg></span><b data-i18n="langs.az">Azerbaijani</b></span><span data-i18n="langs.az.lvl">Native</span></div>
+        <div class="lang"><span class="lang-left"><span class="lang-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h11"/><path d="M7.5 2.5V5"/><path d="M11 5a11 11 0 0 1-7 9.5"/><path d="M6 10.5a9 9 0 0 0 5.5 4.5"/><path d="m13 21 4-9 4 9"/><path d="M14.6 18h4.8"/></svg></span><b data-i18n="langs.tr">Turkish</b></span><span data-i18n="langs.tr.lvl">C1 — Advanced</span></div>
+        <div class="lang"><span class="lang-left"><span class="lang-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h11"/><path d="M7.5 2.5V5"/><path d="M11 5a11 11 0 0 1-7 9.5"/><path d="M6 10.5a9 9 0 0 0 5.5 4.5"/><path d="m13 21 4-9 4 9"/><path d="M14.6 18h4.8"/></svg></span><b data-i18n="langs.en">English</b></span><span data-i18n="langs.en.lvl">B1 — Intermediate</span></div>
       </div>
     </section>
 
@@ -281,8 +296,8 @@
     </div>
   </div>
 
-  <script src="i18n.js?v=19"></script>
-  <script src="script.js?v=19"></script>
+  <script src="i18n.js?v=21"></script>
+  <script src="script.js?v=21"></script>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">

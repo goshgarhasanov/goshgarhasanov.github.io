@@ -1,6 +1,85 @@
 (() => {
   const root = document.documentElement;
 
+  /* ---------- Boot terminal ---------- */
+  (function boot() {
+    const screen = document.getElementById('bootScreen');
+    const out = document.getElementById('bootOut');
+    if (!screen || !out) return;
+
+    // Reduced motion: never play it, never block the page.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      screen.remove();
+      return;
+    }
+
+    document.body.classList.add('booting');
+
+    // [text, cssClass, msPerChar, pauseAfterMs]
+    const SCRIPT = [
+      ['$ ./init.sh',                          '',       15,  80],
+      ['loading modules ......... [ ok ]',     'b-dim',   6,  70],
+      ['',                                     '',        0,  30],
+      ['$ connect --host goshgarhasanov',      '',       15,  80],
+      ['connecting ...',                       'b-warn', 24, 200],
+      ['handshake complete',                   'b-dim',   6,  90],
+      ['',                                     '',        0,  30],
+      ['$ auth --user guest',                  '',       15, 110],
+      ['ACCESS GRANTED',                       'b-hit',  28, 300],
+      ['portfolio loaded successfully',        'b-ok',    8, 200],
+    ];
+
+    let finished = false;
+    const caret = document.createElement('span');
+    caret.className = 'boot-cursor';
+    caret.textContent = ' ';
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      window.removeEventListener('keydown', finish);
+      window.removeEventListener('click', finish);
+      screen.classList.add('done');
+      document.body.classList.remove('booting');
+      setTimeout(() => screen.remove(), 500);
+    }
+
+    window.addEventListener('keydown', finish);
+    window.addEventListener('click', finish);
+
+    let li = 0;
+    function line() {
+      if (finished) return;
+      if (li >= SCRIPT.length) { setTimeout(finish, 260); return; }
+
+      const [text, cls, speed, pause] = SCRIPT[li++];
+      const span = document.createElement('span');
+      if (cls) span.className = cls;
+      out.appendChild(span);
+
+      if (!text) {
+        out.appendChild(document.createTextNode('\n'));
+        setTimeout(line, pause);
+        return;
+      }
+
+      let ci = 0;
+      (function type() {
+        if (finished) return;
+        span.textContent = text.slice(0, ++ci);
+        caret.remove();
+        span.after(caret);
+        if (ci < text.length) {
+          setTimeout(type, speed);
+        } else {
+          out.appendChild(document.createTextNode('\n'));
+          setTimeout(line, pause);
+        }
+      })();
+    }
+    line();
+  })();
+
   /* ---------- i18n ---------- */
   const L_KEY = 'cv-lang';
   const SUPPORTED = ['en', 'az', 'ru', 'tr'];
@@ -11,13 +90,59 @@
     return SUPPORTED.includes(browser) ? browser : 'en';
   };
 
+  /* ---------- Decrypt / scramble text effect ----------
+     Every run ends by writing the exact target string, and starting a new run
+     on the same element cancels the previous one — so a language switch mid
+     animation can never leave garbled or stale text behind. */
+  const REDUCE_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SCRAMBLE_POOL = '!<>-_\\/[]{}=+*^?#%&01ｱｲｳｴｵｶｷｸ';
+  const scrambleJobs = new WeakMap();
+
+  const scrambleTo = (el, text) => {
+    const running = scrambleJobs.get(el);
+    if (running) cancelAnimationFrame(running);
+    scrambleJobs.delete(el);
+
+    const target = String(text);
+    if (REDUCE_MOTION || !target) { el.textContent = target; return; }
+
+    const chars = Array.from(target);
+    const n = chars.length;
+    const step = Math.max(9, Math.min(26, 520 / n));   // ms between reveals
+    const hold = 150;                                  // ms a char stays scrambled
+    const start = performance.now();
+
+    const tick = (now) => {
+      const t = now - start;
+      let out = '';
+      let pending = false;
+      for (let i = 0; i < n; i++) {
+        const c = chars[i];
+        const at = i * step;
+        if (c === ' ' || t >= at + hold) { out += c; continue; }
+        pending = true;
+        out += t >= at ? SCRAMBLE_POOL[(Math.random() * SCRAMBLE_POOL.length) | 0] : ' ';
+      }
+      if (!pending) {
+        el.textContent = target;
+        scrambleJobs.delete(el);
+        return;
+      }
+      el.textContent = out;
+      scrambleJobs.set(el, requestAnimationFrame(tick));
+    };
+    scrambleJobs.set(el, requestAnimationFrame(tick));
+  };
+
   const applyLang = (lang) => {
     const dict = (window.I18N && window.I18N[lang]) || window.I18N.en;
     root.lang = lang;
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
-      if (dict[key] !== undefined) el.textContent = dict[key];
+      if (dict[key] === undefined) return;
+      if (el.hasAttribute('data-scramble')) scrambleTo(el, dict[key]);
+      else el.textContent = dict[key];
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach((el) => {
@@ -100,6 +225,16 @@
   // even if applyLang fails for any reason.
   try { renderDateTime(); } catch (_) {}
   try { applyLang(detect()); } catch (_) {}
+
+  /* Hero name: not managed by i18n, so it can decrypt freely on load. */
+  try {
+    document.querySelectorAll('.hero-text h1 .hn').forEach((el, i) => {
+      const text = el.textContent;
+      if (REDUCE_MOTION) return;
+      el.textContent = '';
+      setTimeout(() => scrambleTo(el, text), 90 + i * 170);
+    });
+  } catch (_) {}
   setInterval(() => { try { renderDateTime(); } catch (_) {} }, 1000);
 
   const btn = document.getElementById('langBtn');
@@ -125,6 +260,69 @@
     if (!menu.contains(e.target) && !btn.contains(e.target)) closeMenu();
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+
+  /* ---------- System line: only things that are actually true ---------- */
+  (function telemetry() {
+    const netEl = document.getElementById('sysNet');
+    const viewEl = document.getElementById('sysView');
+    const uaEl = document.getElementById('sysUa');
+    const tzEl = document.getElementById('sysTz');
+    const upEl = document.getElementById('sysUp');
+    if (!netEl || !viewEl || !uaEl || !tzEl || !upEl) return;
+
+    const two = (n) => String(n).padStart(2, '0');
+
+    const clientLabel = () => {
+      const ua = navigator.userAgent;
+      let browser = 'Unknown';
+      let m;
+      if ((m = ua.match(/Firefox\/(\d+)/))) browser = 'Firefox ' + m[1];
+      else if ((m = ua.match(/Edg\/(\d+)/))) browser = 'Edge ' + m[1];
+      else if ((m = ua.match(/OPR\/(\d+)/))) browser = 'Opera ' + m[1];
+      else if ((m = ua.match(/Chrome\/(\d+)/))) browser = 'Chrome ' + m[1];
+      else if (/Safari\//.test(ua) && (m = ua.match(/Version\/(\d+)/))) browser = 'Safari ' + m[1];
+      let os = 'Unknown';
+      if (/Windows NT/.test(ua)) os = 'Windows';
+      else if (/Android/.test(ua)) os = 'Android';
+      else if (/(iPhone|iPad|iPod)/.test(ua)) os = 'iOS';
+      else if (/Mac OS X/.test(ua)) os = 'macOS';
+      else if (/CrOS/.test(ua)) os = 'ChromeOS';
+      else if (/Linux/.test(ua)) os = 'Linux';
+      return browser + ' / ' + os;
+    };
+
+    const tzLabel = () => {
+      const off = -new Date().getTimezoneOffset();
+      const sign = off < 0 ? '-' : '+';
+      const abs = Math.abs(off);
+      return 'UTC' + sign + two((abs / 60) | 0) + ':' + two(abs % 60);
+    };
+
+    const setNet = () => {
+      const on = navigator.onLine !== false;
+      netEl.textContent = on ? 'ONLINE' : 'OFFLINE';
+      netEl.className = on ? 'online' : 'offline';
+    };
+    const setView = () => {
+      viewEl.textContent = window.innerWidth + 'x' + window.innerHeight;
+    };
+    const setUptime = () => {
+      const s = Math.floor(performance.now() / 1000);
+      upEl.textContent = two((s / 3600) | 0) + ':' + two(((s / 60) | 0) % 60) + ':' + two(s % 60);
+    };
+
+    uaEl.textContent = clientLabel();
+    tzEl.textContent = tzLabel();
+    setNet();
+    setView();
+    setUptime();
+
+    window.addEventListener('online', setNet);
+    window.addEventListener('offline', setNet);
+    window.addEventListener('resize', setView, { passive: true });
+    setInterval(setUptime, 1000);
+  })();
 
   /* ---------- Visitor counter (Abacus) ---------- */
   const counterEl = document.getElementById('visitorCounter');
