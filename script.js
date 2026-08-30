@@ -3,13 +3,17 @@
 
   /* ---------- Theme ---------- */
   const T_KEY = 'cv-theme-v3';
+  // light -> dark -> hack -> light. 'hack' is a DARK theme (never treat it as light).
+  const THEMES = ['light', 'dark', 'hack'];
+  const normTheme = (t) => (THEMES.indexOf(t) > -1 ? t : 'light');
   // Inline head script already applied the theme; this just keeps it consistent.
   if (!root.getAttribute('data-theme')) {
-    root.setAttribute('data-theme', localStorage.getItem(T_KEY) === 'dark' ? 'dark' : 'light');
+    root.setAttribute('data-theme', normTheme(localStorage.getItem(T_KEY)));
   }
 
   document.getElementById('themeToggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const cur = normTheme(root.getAttribute('data-theme'));
+    const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
     root.setAttribute('data-theme', next);
     localStorage.setItem(T_KEY, next);
   });
@@ -203,7 +207,7 @@
     if (e.key === 'Escape' && photoModal && photoModal.classList.contains('open')) closeModal();
   });
 
-  /* ---------- Ambient canvas: drifting particles + "GH" mouse trail (behind content) ---------- */
+  /* ---------- Ambient canvas: drifting particles / matrix rain + "GH" mouse trail (behind content) ---------- */
   (function ambient() {
     const canvas = document.getElementById('bgCanvas');
     if (!canvas) return;
@@ -215,6 +219,13 @@
     const ctx = canvas.getContext('2d', { alpha: true });
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0, h = 0;
+
+    // Offscreen buffer for the matrix rain: it keeps its own persistent trail
+    // (faded by erasing, so the buffer stays transparent) and is composited
+    // onto the visible canvas once per frame.
+    const rain = document.createElement('canvas');
+    const rctx = rain.getContext('2d', { alpha: true });
+
     const resize = () => {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -223,11 +234,21 @@
       canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
 
-    const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+      rain.width = w * dpr;
+      rain.height = h * dpr;
+      rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      layoutRain();
+    };
+
+    /* ----- theme mode ----- */
+    const themeMode = () => {
+      const t = document.documentElement.getAttribute('data-theme');
+      return (t === 'dark' || t === 'hack') ? t : 'light';
+    };
+    // 'hack' is a dark theme too.
+    const isDark = () => themeMode() !== 'light';
+
     const palette = ['#ff6b6b', '#ffb84d', '#14b8a6', '#8b5cf6', '#3b82f6', '#ec4899'];
     const hexToRgba = (hex, a) => {
       const r = parseInt(hex.slice(1, 3), 16);
@@ -236,6 +257,89 @@
       return `rgba(${r},${g},${b},${a})`;
     };
 
+    /* ----- Matrix rain state ----- */
+    const RAIN_FONT = 15;               // px, also the column pitch
+    const RAIN_MIN_STEP = 50;           // ms per row  -> 20 rows/sec
+    const RAIN_MAX_STEP = 71;           // ms per row  -> ~14 rows/sec
+    const RAIN_ALPHA = 0.5;             // composite alpha: keep body text readable
+    const RAIN_HEAD = 'rgba(200,255,215,0.92)';
+    const RAIN_BODY = 'rgba(46,255,133,0.55)';
+    const RAIN_FADE = 0.085;            // per 16.7ms erase strength
+    // Katakana + digits + a few symbols.
+    const GLYPHS = ('ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
+                   '0123456789' + ':.=*+-<>|/#$%&_').split('');
+    const GLYPH_N = GLYPHS.length;
+
+    let cols = 0;
+    let colY = null;      // head row index per column
+    let colNext = null;   // next step timestamp per column
+    let colStep = null;   // ms per row per column
+
+    function layoutRain() {
+      const next = Math.max(1, Math.ceil(w / RAIN_FONT) + 1);
+      if (next !== cols || !colY) {
+        cols = next;
+        colY = new Int32Array(cols);
+        colNext = new Float64Array(cols);
+        colStep = new Float32Array(cols);
+        for (let i = 0; i < cols; i++) seedColumn(i, true);
+      }
+      rctx.font = `${RAIN_FONT}px 'JetBrains Mono', ui-monospace, monospace`;
+      rctx.textAlign = 'left';
+      rctx.textBaseline = 'top';
+    }
+
+    function seedColumn(i, scatter) {
+      const rows = Math.ceil(h / RAIN_FONT);
+      colY[i] = scatter ? -((Math.random() * rows) | 0) : -((Math.random() * 26) | 0);
+      colNext[i] = 0;
+      colStep[i] = RAIN_MIN_STEP + Math.random() * (RAIN_MAX_STEP - RAIN_MIN_STEP);
+    }
+
+    function resetRain() {
+      rctx.setTransform(1, 0, 0, 1, 0, 0);
+      rctx.clearRect(0, 0, rain.width, rain.height);
+      rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (colY) for (let i = 0; i < cols; i++) seedColumn(i, true);
+    }
+
+    function drawRain(now, dt) {
+      // Fade what is already there by erasing towards transparency, so the
+      // buffer never turns into an opaque black rectangle over the page bg.
+      const fade = Math.min(0.4, RAIN_FADE * (dt / 16.7));
+      rctx.globalCompositeOperation = 'destination-out';
+      rctx.fillStyle = `rgba(0,0,0,${fade})`;
+      rctx.fillRect(0, 0, w, h);
+      rctx.globalCompositeOperation = 'source-over';
+
+      const limit = h + RAIN_FONT * 2;
+      for (let i = 0; i < cols; i++) {
+        if (now < colNext[i]) continue;
+        colNext[i] = now + colStep[i];
+
+        const x = i * RAIN_FONT;
+        const prevY = colY[i] * RAIN_FONT;
+        // Old head becomes a dimmer body glyph (and mutates, as it should).
+        if (prevY >= -RAIN_FONT && prevY < limit) {
+          rctx.fillStyle = RAIN_BODY;
+          rctx.fillText(GLYPHS[(Math.random() * GLYPH_N) | 0], x, prevY);
+        }
+
+        colY[i]++;
+        const y = colY[i] * RAIN_FONT;
+        if (y > limit) { seedColumn(i, false); continue; }
+        if (y >= -RAIN_FONT) {
+          rctx.fillStyle = RAIN_HEAD;
+          rctx.fillText(GLYPHS[(Math.random() * GLYPH_N) | 0], x, y);
+        }
+      }
+
+      ctx.globalAlpha = RAIN_ALPHA;
+      ctx.drawImage(rain, 0, 0, w, h);
+      ctx.globalAlpha = 1;
+    }
+
+    /* ----- Drifting particles ----- */
     const COUNT = 38;
     const particles = Array.from({ length: COUNT }, () => ({
       x: Math.random() * w,
@@ -249,28 +353,7 @@
       pulseSpeed: 0.008 + Math.random() * 0.012,
     }));
 
-    const trail = [];
-    const TRAIL_LIFE_MS = 1100;
-    // "GH" trail colours differ per theme: warm orange on light, cool cyan on dark.
-    const TRAIL_COLORS = {
-      light: { from: '#f97316', mid: '#fb923c', to: '#f59e0b', glow: '#f97316' },
-      dark:  { from: '#22d3ee', mid: '#38bdf8', to: '#a78bfa', glow: '#22d3ee' },
-    };
-    let lastSpawn = 0;
-    window.addEventListener('mousemove', (e) => {
-      const now = performance.now();
-      if (now - lastSpawn < 28) return; // throttle ~36 spawns/sec max
-      lastSpawn = now;
-      trail.push({ x: e.clientX, y: e.clientY, born: now });
-      if (trail.length > 26) trail.shift();
-    }, { passive: true });
-
-    const frame = (now) => {
-      ctx.clearRect(0, 0, w, h);
-      const dark = isDark();
-      const glowAlpha = dark ? 1.0 : 0.85;
-
-      // Particles
+    function drawParticles(glowAlpha) {
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -290,21 +373,40 @@
         ctx.arc(p.x, p.y, R, 0, Math.PI * 2);
         ctx.fill();
       }
+    }
 
-      // GH mouse trail — drawn to same canvas so it sits behind content,
-      // visible only in empty / gap areas of the layout.
+    /* ----- "GH" mouse trail ----- */
+    const trail = [];
+    const TRAIL_LIFE_MS = 1100;
+    // "GH" trail colours differ per theme: warm orange on light, cool cyan on
+    // dark, neon green on hack.
+    const TRAIL_COLORS = {
+      light: { from: '#f97316', mid: '#fb923c', to: '#f59e0b', glow: '#f97316' },
+      dark:  { from: '#22d3ee', mid: '#38bdf8', to: '#a78bfa', glow: '#22d3ee' },
+      hack:  { from: '#39ff14', mid: '#7bff5a', to: '#00ffa3', glow: '#39ff14' },
+    };
+    let lastSpawn = 0;
+    window.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastSpawn < 28) return; // throttle ~36 spawns/sec max
+      lastSpawn = now;
+      trail.push({ x: e.clientX, y: e.clientY, born: now });
+      if (trail.length > 26) trail.shift();
+    }, { passive: true });
+
+    function drawTrail(now, mode) {
+      const c = TRAIL_COLORS[mode] || TRAIL_COLORS.light;
       for (let i = trail.length - 1; i >= 0; i--) {
         const t = trail[i];
         const age = now - t.born;
         if (age > TRAIL_LIFE_MS) { trail.splice(i, 1); continue; }
         const life = 1 - age / TRAIL_LIFE_MS;
         const size = 22 + (1 - life) * 28;
-        const alpha = life * (dark ? 0.95 : 0.85);
+        const alpha = life * (mode === 'light' ? 0.85 : 0.95);
 
         ctx.font = `800 ${size}px 'Inter', system-ui, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        const c = TRAIL_COLORS[dark ? 'dark' : 'light'];
         const g = ctx.createLinearGradient(t.x - size, t.y - size / 2, t.x + size, t.y + size / 2);
         g.addColorStop(0, hexToRgba(c.from, alpha));
         g.addColorStop(0.5, hexToRgba(c.mid, alpha));
@@ -315,6 +417,30 @@
         ctx.fillText('GH', t.x, t.y);
       }
       ctx.shadowBlur = 0;
+    }
+
+    /* ----- Single animation loop ----- */
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    let mode = themeMode();
+    let last = performance.now();
+
+    const frame = (now) => {
+      const dt = Math.min(64, now - last) || 16.7;
+      last = now;
+
+      const m = themeMode();
+      if (m !== mode) {
+        mode = m;
+        // Hard swap: nothing of the previous mode survives into the next frame.
+        resetRain();
+      }
+
+      ctx.clearRect(0, 0, w, h);
+      if (mode === 'hack') drawRain(now, dt);
+      else drawParticles(isDark() ? 1.0 : 0.85);
+      drawTrail(now, mode);
 
       requestAnimationFrame(frame);
     };
