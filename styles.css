@@ -1197,19 +1197,43 @@ html[data-theme="hack"] .skill-bar { border: 1px solid rgba(0, 255, 140, 0.14); 
 html[data-theme="hack"] .card-icon { background: var(--panel-2); }
 html[data-theme="hack"] .lang-menu { box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 255, 140, 0.10); }
 
-/* ---- Chips & buttons: dark ink on neon, not white on neon ---- */
-html[data-theme="hack"] .btn,
+/* ---- Chips: dark ink on neon, not white on neon ---- */
 html[data-theme="hack"] .hero-text .eyebrow,
 html[data-theme="hack"] .period,
 html[data-theme="hack"] .tag { color: #03140c; }
 html[data-theme="hack"] .hero-text .eyebrow { box-shadow: 0 8px 22px -8px rgba(0, 255, 136, 0.65); }
 html[data-theme="hack"] .hero-text .eyebrow::before { content: "$ "; }
-html[data-theme="hack"] .btn.primary { box-shadow: 0 14px 32px -10px rgba(0, 255, 136, 0.50); }
-html[data-theme="hack"] .btn.primary:hover { box-shadow: 0 20px 42px -10px rgba(0, 255, 136, 0.75); }
-html[data-theme="hack"] .btn.ghost { box-shadow: 0 14px 32px -10px rgba(0, 212, 255, 0.45); }
-html[data-theme="hack"] .btn.ghost:hover { box-shadow: 0 20px 42px -10px rgba(0, 212, 255, 0.70); }
-html[data-theme="hack"] .btn.gh { box-shadow: 0 14px 32px -10px rgba(0, 255, 191, 0.45); }
-html[data-theme="hack"] .btn.gh:hover { box-shadow: 0 20px 42px -10px rgba(0, 255, 191, 0.70); }
+
+/* ---- Buttons: neon outline + neon text on a dark panel.
+   A full neon fill with thin mono text washed out on phone screens. ---- */
+html[data-theme="hack"] .btn {
+  background: var(--panel-2);
+  border-color: currentColor;
+  letter-spacing: 0.4px;
+}
+html[data-theme="hack"] .btn::after {
+  background: linear-gradient(135deg, rgba(0, 255, 140, 0.14), transparent 60%);
+}
+html[data-theme="hack"] .btn.primary {
+  color: var(--c-coral);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.35);
+  box-shadow: inset 0 0 18px -6px rgba(0, 255, 136, 0.45), 0 12px 28px -14px rgba(0, 255, 136, 0.60);
+}
+html[data-theme="hack"] .btn.ghost {
+  color: var(--c-mint);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.35);
+  box-shadow: inset 0 0 18px -6px rgba(0, 212, 255, 0.40), 0 12px 28px -14px rgba(0, 212, 255, 0.55);
+}
+html[data-theme="hack"] .btn.gh {
+  color: var(--c-violet);
+  text-shadow: 0 0 8px rgba(0, 255, 191, 0.35);
+  box-shadow: inset 0 0 18px -6px rgba(0, 255, 191, 0.40), 0 12px 28px -14px rgba(0, 255, 191, 0.55);
+}
+@media (hover: hover) {
+  html[data-theme="hack"] .btn.primary:hover { box-shadow: inset 0 0 22px -4px rgba(0, 255, 136, 0.55), 0 18px 38px -12px rgba(0, 255, 136, 0.75); }
+  html[data-theme="hack"] .btn.ghost:hover   { box-shadow: inset 0 0 22px -4px rgba(0, 212, 255, 0.50), 0 18px 38px -12px rgba(0, 212, 255, 0.70); }
+  html[data-theme="hack"] .btn.gh:hover      { box-shadow: inset 0 0 22px -4px rgba(0, 255, 191, 0.50), 0 18px 38px -12px rgba(0, 255, 191, 0.70); }
+}
 html[data-theme="hack"] .period { box-shadow: 0 8px 18px -8px rgba(0, 255, 136, 0.55); }
 html[data-theme="hack"] .tag { box-shadow: 0 6px 14px -6px rgba(0, 212, 255, 0.55); }
 html[data-theme="hack"] .subhead { border: 1px solid rgba(0, 255, 140, 0.20); }
