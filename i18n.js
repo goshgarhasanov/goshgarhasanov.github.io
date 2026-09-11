@@ -2,13 +2,13 @@ window.I18N = {
   en: {
     "hero.eyebrow": "Hello, I'm",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Software engineer. I have been writing code for over 15 years and have shipped 20+ projects. I write the backend mostly in Python and Node.js, and the frontend in React, React Native and Electron.",
+    "hero.tagline": "I'm a software engineer and have been writing code for over 15 years. In that time I've built more than 20 projects from scratch and taken each of them all the way to launch. What I care about most is software that is easy to use, fast and reliable.",
     "hero.cta.contact": "Get in touch",
     "hero.cta.cv": "Download CV",
 
     "about.title": "About",
-    "about.p1": "I usually run a project on my own: I build the database, the <b>API</b>, and the <b>web</b>, <b>mobile</b> or <b>desktop</b> app that calls it. That has one real advantage. When I write the API I already know how it will be used later, so nobody has to come back at the end and ask me to return that response some other way.",
-    "about.p2": "Most of my time goes into the database. If the schema is wrong from the start, no amount of tidy API code on top of it saves you. I don't hand a project off at deploy either: I read the logs and I find and rewrite the slow queries. Almost everything I write runs on Docker and Linux.",
+    "about.p1": "I was born in 1997 in the Shamkir district of Azerbaijan. I got interested in programming in 2010: I spent my time on web and WAP forums trying to learn <b>PHP</b>, and started changing existing scripts to understand how they worked.",
+    "about.p2": "I started university in 2015 and graduated in 2019. While I was still a student, I delivered 10–15 projects to clients.",
 
     "stats.years": "years of coding experience",
     "stats.projects": "shipped projects",
@@ -71,13 +71,13 @@ window.I18N = {
   az: {
     "hero.eyebrow": "Salam, mən",
     "hero.role": "Fullstack · Web · Desktop · Mobil",
-    "hero.tagline": "Proqram mühəndisiyəm. 15 ildən çoxdur kod yazıram, 20-dən artıq layihə işə salmışam. Backend tərəfini əsasən Python və Node.js ilə yazıram, frontend tərəfini isə React, React Native və Electron ilə.",
+    "hero.tagline": "Proqram mühəndisiyəm və 15 ildən çoxdur kod yazıram. Bu müddətdə 20-dən artıq layihəni sıfırdan qurub istifadəyə vermişəm. İşimdə ən çox önəm verdiyim şey məhsulun rahat, sürətli və etibarlı işləməsidir.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
 
     "about.title": "Haqqımda",
-    "about.p1": "Layihəni adətən tək aparıram: bazanı da mən qururam, <b>API</b>-ni də, onu çağıran <b>web</b>, <b>mobil</b> və ya <b>masaüstü</b> tətbiqi də. Bunun bir üstünlüyü var. API-ni yazanda onun sonra necə işlədiləcəyini artıq bilirəm, ona görə iş bitəndən sonra «bu cavabı belə yox, elə qaytar» deyib hər şeyi yenidən yazmaq lazım gəlmir.",
-    "about.p2": "Vaxtımın çoxunu verilənlər bazasına sərf edirəm. Sxem əvvəldən düzgün qurulmasa, üstündəki API nə qədər səliqəli olsa da fayda vermir. Deploy-dan sonra da layihədən əl çəkmirəm: logları oxuyuram, ləng işləyən sorğuları tapıb düzəldirəm. Yazdıqlarımın demək olar ki, hamısı Docker və Linux üzərində işləyir.",
+    "about.p1": "1997-ci ildə Şəmkir rayonunda anadan olmuşam. Proqramlaşdırmaya marağım 2010-cu ildə yarandı: o vaxtlar web və wap forumlarda gəzərək <b>PHP</b> öyrənməyə çalışır, hazır skriptlərdə dəyişikliklər edib onların necə işlədiyini anlamağa başlayırdım.",
+    "about.p2": "2015-ci ildə ali təhsil almağa başladım və 2019-cu ildə bitirdim. Tələbə olduğum illərdə 10–15 layihəni sifarişçilərə təhvil vermişəm.",
 
     "stats.years": "illik proqramlaşdırma təcrübəsi",
     "stats.projects": "tamamlanmış layihə",
@@ -140,13 +140,13 @@ window.I18N = {
   ru: {
     "hero.eyebrow": "Привет, я",
     "hero.role": "Fullstack · Web · Desktop · Mobile",
-    "hero.tagline": "Инженер-программист. Пишу код больше 15 лет, выпустил больше 20 проектов. Бэкенд пишу в основном на Python и Node.js, фронтенд — на React, React Native и Electron.",
+    "hero.tagline": "Я инженер-программист и пишу код больше 15 лет. За это время создал с нуля и запустил более 20 проектов. Для меня главное — чтобы продукт был удобным, быстрым и надёжным.",
     "hero.cta.contact": "Связаться",
     "hero.cta.cv": "Скачать CV",
 
     "about.title": "Обо мне",
-    "about.p1": "Обычно веду проект один: сам делаю базу, сам <b>API</b>, сам <b>web</b>-, <b>мобильное</b> или <b>десктопное</b> приложение, которое к нему обращается. В этом есть один плюс. Когда я пишу API, я уже знаю, как им потом будут пользоваться, поэтому в конце не приходится переделывать половину из-за того, что ответ нужен в другом виде.",
-    "about.p2": "Больше всего времени у меня уходит на базу данных. Если схема с самого начала кривая, никакой аккуратный API сверху её не спасёт. После деплоя проект тоже не бросаю: читаю логи, нахожу и переписываю медленные запросы. Почти всё, что я пишу, работает на Docker и Linux.",
+    "about.p1": "Я родился в 1997 году в Шамкирском районе Азербайджана. Программированием заинтересовался в 2010 году: сидел на web- и wap-форумах, пытался изучать <b>PHP</b> и начал вносить изменения в готовые скрипты, чтобы понять, как они устроены.",
+    "about.p2": "В 2015 году поступил в университет и окончил его в 2019-м. Ещё будучи студентом, сдал заказчикам 10–15 проектов.",
 
     "stats.years": "лет опыта в разработке",
     "stats.projects": "готовых проектов",
@@ -209,13 +209,13 @@ window.I18N = {
   tr: {
     "hero.eyebrow": "Merhaba, ben",
     "hero.role": "Fullstack · Web · Masaüstü · Mobil",
-    "hero.tagline": "Yazılım mühendisiyim. 15 yılı aşkın süredir kod yazıyorum, 20'den fazla proje çıkardım. Backend tarafını çoğunlukla Python ve Node.js ile, frontend tarafını React, React Native ve Electron ile yazıyorum.",
+    "hero.tagline": "Yazılım mühendisiyim ve 15 yılı aşkın süredir kod yazıyorum. Bu sürede 20'den fazla projeyi sıfırdan geliştirip yayına aldım. İşimde en çok önem verdiğim şey, ürünün kullanışlı, hızlı ve güvenilir olmasıdır.",
     "hero.cta.contact": "İletişime geç",
     "hero.cta.cv": "CV indir",
 
     "about.title": "Hakkımda",
-    "about.p1": "Projeyi genelde tek başıma yürütüyorum: veritabanını da ben kuruyorum, <b>API</b>'yi de, ona istek atan <b>web</b>, <b>mobil</b> ya da <b>masaüstü</b> uygulamayı da. Bunun bir faydası var. API'yi yazarken sonradan nasıl kullanılacağını zaten biliyorum, o yüzden iş bittikten sonra «bu cevabı şöyle değil böyle döndür» deyip her şeyi baştan yazmak gerekmiyor.",
-    "about.p2": "Vaktimin çoğu veritabanına gidiyor. Şema baştan yanlış kurulduysa, üstündeki API ne kadar temiz olursa olsun işe yaramıyor. Deploy'dan sonra da projeyi bırakmıyorum: logları okuyorum, yavaş sorguları bulup düzeltiyorum. Yazdıklarımın neredeyse tamamı Docker ve Linux üzerinde çalışıyor.",
+    "about.p1": "1997'de Azerbaycan'ın Şemkir ilçesinde doğdum. Programlamaya ilgim 2010'da başladı: web ve wap forumlarını gezerek <b>PHP</b> öğrenmeye çalışıyor, hazır scriptlerde değişiklikler yaparak nasıl çalıştıklarını anlamaya başlıyordum.",
+    "about.p2": "2015'te üniversiteye başladım ve 2019'da mezun oldum. Öğrencilik yıllarımda müşterilere 10–15 proje teslim ettim.",
 
     "stats.years": "yıllık yazılım deneyimi",
     "stats.projects": "tamamlanan proje",
