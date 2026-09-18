@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Goshgar Hasanov — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ==========================================================================
+   Printable CV — same design language as the site: one accent colour, Inter,
+   a date gutter beside each entry, no skill percentage bars.
+   Rendered to PDF by scripts/build-cv.mjs.
+   ========================================================================== */
+
+:root {
+  --ink: #16202b;
+  --ink-soft: #3d4c5a;
+  --muted: #6b7a89;
+  --line: #e3e8ee;
+  --accent: #1f5f9e;
+  --accent-soft: #eef4fa;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; background: #fff; }
+
+body {
+  color: var(--ink);
+  font-family: Inter, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm 14mm;
+  background: #fff;
+}
+
+h1, h2, h3 { margin: 0; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: var(--accent); text-decoration: none; }
+
+/* ---------- header ---------- */
+.head {
+  display: grid;
+  grid-template-columns: 26mm 1fr;
+  gap: 8mm;
+  align-items: start;
+  padding-bottom: 5mm;
+  border-bottom: 1.5px solid var(--accent);
+}
+.photo {
+  width: 26mm; height: 26mm;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--line);
+}
+.head h1 { font-size: 22pt; font-weight: 700; line-height: 1.1; }
+.role {
+  margin-top: 1.5mm;
+  font-size: 11pt; font-weight: 600; color: var(--accent);
+}
+.contacts {
+  margin-top: 3.5mm;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 1mm 7mm;
+  justify-content: start;
+  font-size: 9.2pt;
+  color: var(--ink-soft);
+}
+.contacts span { white-space: nowrap; }
+.contacts b { color: var(--muted); font-weight: 600; }
+
+/* ---------- sections ---------- */
+section { margin-top: 5.6mm; }
+section > h2 {
+  font-size: 8.6pt;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 1.2mm;
+  margin-bottom: 3mm;
+  border-bottom: 1px solid var(--line);
+}
+.lead { color: var(--ink-soft); }
+
+/* ---------- experience ---------- */
+.entry {
+  display: grid;
+  grid-template-columns: 30mm 1fr;
+  gap: 5mm;
+  align-items: baseline;
+  padding-bottom: 2.7mm;
+  margin-bottom: 2.7mm;
+  border-bottom: 1px solid var(--line);
+  break-inside: avoid;
+}
+.entry:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+.role-line { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6mm 5mm; flex-wrap: wrap; }
+/* Education has one long qualification rather than a short job title, so it
+   reads better stacked than pushed to the right margin. */
+.entry.stack .role-line { display: block; }
+.entry.stack .what { white-space: normal; margin-top: 0.8mm; }
+.place { font-weight: 400; color: var(--muted); }
+.entry:last-child { margin-bottom: 0; }
+.when {
+  font-size: 9pt; font-weight: 600; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.tag {
+  display: inline-block;
+  margin-left: 1.5mm;
+  padding: .4mm 2mm;
+  font-size: 7.6pt; font-weight: 600;
+  color: var(--accent); background: var(--accent-soft);
+  border-radius: 2mm;
+}
+.entry h3 { font-size: 10.6pt; font-weight: 650; }
+.entry .what {
+  font-size: 9.6pt; font-weight: 600; color: var(--accent);
+  white-space: nowrap;
+}
+.entry p { font-size: 9.5pt; color: var(--ink-soft); }
+
+/* ---------- skills ---------- */
+.skills { display: grid; gap: 1.8mm; }
+.skill-row {
+  display: grid;
+  grid-template-columns: 34mm 1fr;
+  gap: 4mm;
+  font-size: 9.5pt;
+}
+.skill-row b { color: var(--ink); font-weight: 600; }
+.skill-row span { color: var(--ink-soft); }
+
+/* ---------- languages ---------- */
+.langs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3mm;
+}
+.lang {
+  padding: 2.5mm 3mm;
+  border: 1px solid var(--line);
+  border-radius: 2mm;
+}
+.lang b { display: block; font-size: 9.6pt; font-weight: 600; }
+.lang span { font-size: 8.6pt; color: var(--muted); }
+
+/* ---------- print ---------- */
+@page { size: A4; margin: 0; }
+@media print {
+  .page { margin: 0; padding: 12mm 14mm; min-height: auto; }
+  section { break-inside: auto; }
+  section > h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="head">
+    <img class="photo" src="assets/profile.jpg" alt="Goshgar Hasanov" />
+    <div>
+      <h1>Goshgar Hasanov</h1>
+      <p class="role">Fullstack Developer — Web, Desktop, Mobile</p>
+      <div class="contacts">
+        <span><b>Phone</b> &nbsp;+994 55 486 99 21</span>
+        <span><b>Email</b> &nbsp;goshgarhasanov321@gmail.com</span>
+        <span><b>Location</b> &nbsp;Baku, Azerbaijan</span>
+        <span><b>GitHub</b> &nbsp;github.com/goshgarhasanov</span>
+        <span><b>Website</b> &nbsp;goshgarhasanov.github.io</span>
+        <span><b>Born</b> &nbsp;1997</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p class="lead">Software engineer with 15+ years of hands-on experience, writing code since 2010.
+    I build the backend in Python and Node.js, and the frontend in React, React Native and Electron.
+    I have worked across frontend, backend and automation — as a freelancer, in local companies, and
+    remotely with a team abroad for six years. What I care about most is software that is easy to use,
+    fast and reliable.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <article class="entry">
+      <div class="when">2019 — 2025</div>
+      <div class="role-line">
+        <h3>Gurbanov Software Company <span class="place">— Poland</span></h3>
+        <p class="what">Python Developer <span class="tag">Remote</span></p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when">2017 — 2019</div>
+      <div class="role-line">
+        <h3>Robotics Company</h3>
+        <p class="what">Python Developer</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when">2015 — 2017</div>
+      <div class="role-line">
+        <h3>Sumgait Programming Center (SPM)</h3>
+        <p class="what">Python Developer</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when">2013 — 2015</div>
+      <div class="role-line">
+        <h3>Freelance</h3>
+        <p class="what">Web Developer</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when">2012 — 2013</div>
+      <div class="role-line">
+        <h3>GameHub</h3>
+        <p class="what">Frontend Developer</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="when">2010 — 2012</div>
+      <div class="role-line">
+        <h3>wapusta.net</h3>
+        <p class="what">Junior PHP Developer</p>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <article class="entry stack">
+      <div class="when">2015 — 2019</div>
+      <div class="role-line">
+        <h3>Sumgait State University <span class="place">— Sumgait, Azerbaijan</span></h3>
+        <p class="what">Bachelor — Power Machinery Engineering</p>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <div class="skill-row"><b>Frontend</b><span>HTML5, CSS3, JavaScript, TypeScript, React, Next.js</span></div>
+      <div class="skill-row"><b>Backend</b><span>Node.js, Python, FastAPI, Flask, Express, PHP</span></div>
+      <div class="skill-row"><b>Databases</b><span>PostgreSQL, MySQL, MongoDB, Redis, SQLite</span></div>
+      <div class="skill-row"><b>DevOps &amp; Tools</b><span>Linux, Docker, Kubernetes, AWS, Nginx, Git</span></div>
+      <div class="skill-row"><b>Desktop &amp; Mobile</b><span>React Native, Electron, PyQt5, Tkinter</span></div>
+      <div class="skill-row"><b>Automation</b><span>Selenium, Playwright, headless browsers, web scraping</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <div class="langs">
+      <div class="lang"><b>Azerbaijani</b><span>Native</span></div>
+      <div class="lang"><b>Turkish</b><span>C1 — Advanced</span></div>
+      <div class="lang"><b>Russian</b><span>B2 — Upper-int.</span></div>
+      <div class="lang"><b>English</b><span>B1 — Intermediate</span></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
