@@ -1,0 +1,20 @@
+{
+  "name": "goshgarhasanov.github.io",
+  "description": "Personal CV site and the printable CV it is generated from.",
+  "scripts": {
+    "cv": "node scripts/build-cv.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goshgarhasanov/goshgarhasanov.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/goshgarhasanov/goshgarhasanov.github.io/issues"
+  },
+  "homepage": "https://github.com/goshgarhasanov/goshgarhasanov.github.io#readme",
+  "dependencies": {
+    "playwright-core": "^1.63.0"
+  },
+  "private": true,
+  "version": "1.0.0"
+}

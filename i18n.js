@@ -6,7 +6,7 @@ window.I18N = {
     "hero.tagline": "Software engineer with 15+ years of hands-on experience. I build the backend in Python and Node.js, and the frontend in React, React Native and Electron. What I care about most is software that is easy to use, fast and reliable.",
     "hero.cta.contact": "Get in touch",
     "hero.cta.cv": "Download CV",
-    "contact.location": "Azerbaijan",
+    "contact.location": "Baku, Azerbaijan",
 
     "about.title": "Profile",
     "about.p1": "I was born in 1997 in the Shamkir district of Azerbaijan. I got interested in programming in 2010: I spent my time on web and WAP forums trying to learn <b>PHP</b>, and started changing existing scripts to understand how they worked.",
@@ -91,7 +91,7 @@ window.I18N = {
     "hero.tagline": "15 ildən artıq təcrübəsi olan proqram mühəndisiyəm. Backend tərəfini Python və Node.js, frontend tərəfini React, React Native və Electron ilə yazıram. Mənim üçün ən vacibi proqramın rahat, sürətli və etibarlı olmasıdır.",
     "hero.cta.contact": "Əlaqə saxla",
     "hero.cta.cv": "CV-ni yüklə",
-    "contact.location": "Azərbaycan",
+    "contact.location": "Bakı, Azərbaycan",
 
     "about.title": "Haqqımda",
     "about.p1": "1997-ci ildə Azərbaycanın Şəmkir rayonunda anadan olmuşam. Proqramlaşdırmaya 2010-cu ildə maraq göstərdim: vaxtımı veb və WAP forumlarında <b>PHP</b> öyrənməyə çalışaraq keçirir, necə işlədiyini anlamaq üçün hazır skriptləri dəyişirdim.",
@@ -176,7 +176,7 @@ window.I18N = {
     "hero.tagline": "Инженер-программист с опытом более 15 лет. Бэкенд пишу на Python и Node.js, фронтенд — на React, React Native и Electron. Для меня важнее всего, чтобы программа была удобной, быстрой и надёжной.",
     "hero.cta.contact": "Связаться",
     "hero.cta.cv": "Скачать CV",
-    "contact.location": "Азербайджан",
+    "contact.location": "Баку, Азербайджан",
 
     "about.title": "О себе",
     "about.p1": "Родился в 1997 году в Шамкирском районе Азербайджана. Программированием заинтересовался в 2010-м: сидел на веб- и WAP-форумах, пытался разобраться в <b>PHP</b> и правил готовые скрипты, чтобы понять, как они работают.",
@@ -261,7 +261,7 @@ window.I18N = {
     "hero.tagline": "15 yılı aşkın deneyime sahip bir yazılım mühendisiyim. Backend tarafını Python ve Node.js, frontend tarafını React, React Native ve Electron ile yazıyorum. Benim için en önemlisi yazılımın kullanışlı, hızlı ve güvenilir olması.",
     "hero.cta.contact": "İletişime geç",
     "hero.cta.cv": "CV indir",
-    "contact.location": "Azerbaycan",
+    "contact.location": "Bakü, Azerbaycan",
 
     "about.title": "Hakkımda",
     "about.p1": "1997'de Azerbaycan'ın Şemkir rayonunda doğdum. Programlamaya 2010'da ilgi duydum: vaktimi web ve WAP forumlarında <b>PHP</b> öğrenmeye çalışarak geçiriyor, nasıl çalıştığını anlamak için hazır scriptleri değiştiriyordum.",
