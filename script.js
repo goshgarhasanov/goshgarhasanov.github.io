@@ -215,6 +215,7 @@
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
     external: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/>',
     code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
   };
 
@@ -349,12 +350,15 @@
     linkBox.textContent = '';
     Object.entries(p.links || {}).forEach(([kind, url]) => {
       if (!url) return;
-      const a = el('a', kind === 'demo' ? 'btn primary' : 'btn');
+      const a = el('a', kind === 'demo' || (kind === 'download' && !p.links.demo) ? 'btn primary' : 'btn');
       a.href = url;
       a.target = '_blank';
       a.rel = 'noopener';
-      const label = kind === 'demo' ? t('projects.demo') : kind === 'source' ? t('projects.source') : t('projects.link');
-      a.append(icon(kind === 'source' ? 'code' : 'external', 17), el('span', null, label));
+      const label = kind === 'demo' ? t('projects.demo')
+        : kind === 'source' ? t('projects.source')
+          : kind === 'download' ? t('projects.download') : t('projects.link');
+      const glyph = kind === 'source' ? 'code' : kind === 'download' ? 'download' : 'external';
+      a.append(icon(glyph, 17), el('span', null, label));
       linkBox.append(a);
     });
 
