@@ -549,6 +549,14 @@ b, strong { color: var(--ink); font-weight: 600; }
   color: var(--accent);
   background: linear-gradient(135deg, var(--accent-soft), var(--surface));
 }
+.project-cover .placeholder .project-logo {
+  width: 30%;
+  height: auto;
+  max-height: 60%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(22, 32, 43, .18));
+}
+.project:hover .project-cover .project-logo { transform: scale(1.08); }
 .project-shots {
   position: absolute;
   right: 10px;

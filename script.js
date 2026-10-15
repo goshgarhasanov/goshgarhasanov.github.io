@@ -250,6 +250,14 @@
         img.alt = title;
         img.loading = 'lazy';
         coverBox.append(img);
+      } else if (p.logo) {
+        const ph = el('div', 'placeholder');
+        const img = el('img', 'project-logo');
+        img.src = p.logo;
+        img.alt = title;
+        img.loading = 'lazy';
+        ph.append(img);
+        coverBox.append(ph);
       } else {
         coverBox.append(el('div', 'placeholder', initials(title)));
       }
