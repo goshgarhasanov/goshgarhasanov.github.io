@@ -34,12 +34,20 @@ detail left to the site.
 ├── styles.css
 ├── script.js
 ├── i18n.js          # EN / AZ / RU / TR strings
+├── projects.js      # the Projects section (empty until projects are added)
 ├── scripts/
 │   └── build-cv.mjs # renders cv.html to PDF
 └── assets/
     ├── profile.jpg
     └── Goshgar_Hasanov_CV.pdf
 ```
+
+## Adding a project
+Open `projects.js`, copy the template at the top of the file into the list and fill it in.
+Put the images in `assets/projects/<id>/`. Each project becomes a card (cover, title,
+short summary); clicking it opens a window with the full description, a screenshot
+gallery and the demo / source links. While the list is empty the section shows a
+"coming soon" note.
 
 ## Local preview
 Just open `index.html` in a browser, or:
