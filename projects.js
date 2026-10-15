@@ -64,6 +64,44 @@ window.PROJECTS = [
     },
   },
   {
+    id: "phoenix-recover",
+    title: "Phoenix Recover",
+    summary: {
+      "en": "Cross-platform data-recovery tool in Rust: deep-scan file carving and named recovery from FAT, exFAT and NTFS — desktop GUI and CLI.",
+      "az": "Rust ilə yazılmış çoxplatformalı məlumat bərpası aləti: dərin skan (file carving) və FAT, exFAT, NTFS-dən adı ilə bərpa — masaüstü GUI və CLI.",
+      "ru": "Кроссплатформенный инструмент восстановления данных на Rust: глубокое сканирование (carving) и восстановление с именами из FAT, exFAT и NTFS — GUI и CLI.",
+      "tr": "Rust ile yazılmış çok platformlu veri kurtarma aracı: derin tarama (file carving) ve FAT, exFAT, NTFS'ten isimli kurtarma — masaüstü GUI ve CLI."
+    },
+    description: {
+      "en": "Phoenix Recover brings back deleted and lost files from disks, USB drives and disk images, with two complementary methods. Deep scan reads the medium byte by byte and finds 37 file types by their signatures — images, video, audio, documents and archives — even when the drive was formatted or has no filesystem; each file's end is found from its footer, a size field or by parsing its structure (GIF, MP4 / MOV / HEIC, RIFF). Filesystem recovery parses FAT12/16/32, exFAT and NTFS metadata and restores deleted files with their original names and folders.\n\nIt never writes to the source: recovered files only go to a separate folder you choose, and a structured log records what was read, found and recovered. MBR and GPT partition tables are understood, so a single partition inside a whole-disk image can be scanned.\n\nOne Rust engine drives both a Tauri 2 + React desktop app with live progress and image thumbnails and a coloured CLI with an interactive menu and JSON output. Both are available in Azerbaijani, Turkish, Russian and English. The engine has unit tests plus end-to-end tests that recover deleted files from real FAT32, exFAT and NTFS volumes and check them byte for byte.",
+      "az": "Phoenix Recover disklərdən, USB fləşlərdən və disk obrazlarından silinmiş və itmiş faylları iki bir-birini tamamlayan üsulla geri qaytarır. Dərin skan daşıyıcını bayt-bayt oxuyur və 37 fayl tipini imzasına görə tapır — şəkil, video, səs, sənəd və arxivlər — disk formatlansa və ya fayl sistemi olmasa belə; hər faylın sonu footer-dən, ölçü sahəsindən və ya strukturunu təhlil etməklə (GIF, MP4 / MOV / HEIC, RIFF) müəyyən edilir. Fayl sistemi bərpası FAT12/16/32, exFAT və NTFS metadatasını oxuyur və silinmiş faylları orijinal adları və qovluqları ilə qaytarır.\n\nMənbəyə heç vaxt yazmır: bərpa olunan fayllar yalnız seçdiyiniz ayrı qovluğa yazılır, strukturlaşdırılmış log isə nəyin oxunduğunu, tapıldığını və bərpa edildiyini qeyd edir. MBR və GPT bölmə cədvəllərini tanıyır, ona görə bütöv disk obrazının içindəki tək bir bölməni də skan etmək olur.\n\nTək Rust mühərriki həm canlı irəliləyiş və şəkil önizləmələri olan Tauri 2 + React masaüstü tətbiqini, həm də interaktiv menyulu və JSON çıxışlı rəngli CLI-ı idarə edir. Hər ikisi Azərbaycan, türk, rus və ingilis dillərindədir. Mühərrikin unit testləri, bir də real FAT32, exFAT və NTFS bölmələrindən silinmiş faylları bərpa edib bayt-bayt yoxlayan end-to-end testləri var.",
+      "ru": "Phoenix Recover возвращает удалённые и потерянные файлы с дисков, флешек и образов дисков двумя дополняющими друг друга способами. Глубокое сканирование читает носитель побайтно и находит 37 типов файлов по сигнатурам — изображения, видео, аудио, документы и архивы — даже если диск отформатирован или файловой системы нет; конец каждого файла определяется по футеру, полю размера или разбором структуры (GIF, MP4 / MOV / HEIC, RIFF). Восстановление по файловой системе разбирает метаданные FAT12/16/32, exFAT и NTFS и возвращает удалённые файлы с исходными именами и папками.\n\nИсточник никогда не изменяется: восстановленные файлы пишутся только в отдельную выбранную папку, а структурированный лог фиксирует, что было прочитано, найдено и восстановлено. Поддерживаются таблицы разделов MBR и GPT, поэтому можно сканировать отдельный раздел внутри образа целого диска.\n\nОдин движок на Rust обслуживает и десктопное приложение на Tauri 2 + React с живым прогрессом и миниатюрами изображений, и цветной CLI с интерактивным меню и выводом в JSON. Оба доступны на азербайджанском, турецком, русском и английском. У движка есть юнит-тесты и сквозные тесты, которые восстанавливают удалённые файлы с настоящих томов FAT32, exFAT и NTFS и сверяют их побайтно.",
+      "tr": "Phoenix Recover, disklerden, USB belleklerden ve disk imajlarından silinmiş ve kayıp dosyaları birbirini tamamlayan iki yöntemle geri getirir. Derin tarama ortamı bayt bayt okur ve 37 dosya türünü imzasından bulur — görsel, video, ses, belge ve arşivler — disk biçimlendirilmiş ya da dosya sistemi olmasa bile; her dosyanın sonu footer'ından, boyut alanından ya da yapısı çözümlenerek (GIF, MP4 / MOV / HEIC, RIFF) belirlenir. Dosya sistemi kurtarması FAT12/16/32, exFAT ve NTFS meta verisini çözümler ve silinmiş dosyaları özgün adları ve klasörleriyle geri getirir.\n\nKaynağa asla yazmaz: kurtarılan dosyalar yalnızca seçtiğiniz ayrı bir klasöre yazılır, yapılandırılmış log ise neyin okunduğunu, bulunduğunu ve kurtarıldığını kaydeder. MBR ve GPT bölüm tablolarını tanır, böylece tüm diskin imajı içindeki tek bir bölüm de taranabilir.\n\nTek bir Rust motoru hem canlı ilerleme ve görsel önizlemeli Tauri 2 + React masaüstü uygulamasını hem de etkileşimli menülü, JSON çıktılı renkli CLI'ı çalıştırır. İkisi de Azerbaycan Türkçesi, Türkçe, Rusça ve İngilizce. Motorun birim testleri ve gerçek FAT32, exFAT ve NTFS bölümlerinden silinmiş dosyaları kurtarıp bayt bayt doğrulayan uçtan uca testleri var."
+    },
+    year: "2026",
+    role: {
+      "en": "Desktop app",
+      "az": "Masaüstü proqram",
+      "ru": "Десктопное приложение",
+      "tr": "Masaüstü uygulama"
+    },
+    screenshots: [
+      "assets/projects/phoenix/results-az.png",
+      "assets/projects/phoenix/source-en.png",
+      "assets/projects/phoenix/scan-en.png"
+    ],
+    tags: [
+      "Rust",
+      "Tauri 2",
+      "React",
+      "TypeScript",
+      "Tailwind"
+    ],
+    links: {
+      "source": "https://github.com/goshgarhasanov/phoenix-recover"
+    },
+  },
+  {
     id: "kamera-izleme-sistemi",
     title: { en: "Camera Monitoring System (NVR)", az: "Kamera İzləmə Sistemi (NVR)", ru: "Система видеонаблюдения (NVR)", tr: "Kamera İzleme Sistemi (NVR)" },
     summary: {
@@ -89,6 +127,147 @@ window.PROJECTS = [
     tags: ["Node.js", "Express", "ffmpeg", "ONVIF", "Transformers.js"],
     links: {
       source: "https://github.com/goshgarhasanov/kamera-izleme-sistemi",
+    },
+  },
+  {
+    id: "barkod-az",
+    title: "BarKod AZ",
+    summary: {
+      "en": "Barcode-based POS, inventory and sales system for shops — Next.js 15, PostgreSQL and Prisma.",
+      "az": "Mağazalar üçün barkod əsaslı kassa (POS), anbar və satış sistemi — Next.js 15, PostgreSQL və Prisma.",
+      "ru": "Кассовая (POS), складская и торговая система для магазинов на основе штрихкодов — Next.js 15, PostgreSQL и Prisma.",
+      "tr": "Mağazalar için barkod tabanlı POS, stok ve satış sistemi — Next.js 15, PostgreSQL ve Prisma."
+    },
+    description: {
+      "en": "BarKod AZ is a point-of-sale and inventory system for retail shops built around barcodes: scan to sell, scan to put stock in. The checkout prints thermal receipts and handles partial payments and customer debt; goods receipts track weighted-average cost, production and expiry dates, and waste.\n\nLabels are printed in TSPL with an on-screen preview and EAN-13 barcodes, and a networked label scale's weight barcodes are understood. Every report can be viewed on screen and downloaded as Excel. There are staff accounts with roles and a PIN gate for operations that involve money, and the database is backed up automatically every 24 hours without stopping the shop.\n\nThe shop till is an ordinary laptop, so setup needs no database administrator: one command creates the configuration, starts a bundled PostgreSQL, applies the schema and opens the app in the browser. It is written in Next.js 15, React 19 and TypeScript with Prisma, Tailwind and shadcn/ui, and is tested end to end with Playwright, including phone and tablet layouts. The interface is in Azerbaijani.\n\nThe source code is private.",
+      "az": "BarKod AZ mağazalar üçün barkod üzərində qurulmuş kassa və anbar sistemidir: skan et — sat, skan et — anbara qəbul et. Kassa termal çek çap edir, hissə-hissə ödənişi və müştəri borcunu idarə edir; mal qəbulunda orta çəkili maya dəyəri, istehsal və son istifadə tarixləri, itki (silinmə) izlənir.\n\nEtiketlər ekranda önizləmə və EAN-13 barkodları ilə TSPL-də çap olunur, şəbəkəyə qoşulmuş etiket tərəzisinin çəki barkodları tanınır. Bütün hesabatlara ekranda baxmaq və Excel kimi yükləmək olur. Rollu işçi hesabları və pulla bağlı əməliyyatlar üçün PIN qoruması var, verilənlər bazası isə hər 24 saatdan bir mağazanı dayandırmadan avtomatik ehtiyat nüsxəyə alınır.\n\nMağaza kassası adi noutbukdur, ona görə qurulum üçün verilənlər bazası administratoru lazım deyil: tək əmr konfiqurasiyanı yaradır, daxili PostgreSQL-i işə salır, sxemi tətbiq edir və proqramı brauzerdə açır. Next.js 15, React 19 və TypeScript ilə, Prisma, Tailwind və shadcn/ui istifadə edilərək yazılıb, Playwright ilə — telefon və planşet görünüşləri də daxil — end-to-end test olunur. İnterfeys Azərbaycan dilindədir.\n\nMənbə kodu private-dır.",
+      "ru": "BarKod AZ — кассовая и складская система для розничных магазинов, построенная вокруг штрихкодов: сканируй — продавай, сканируй — оприходуй. Касса печатает термочеки, поддерживает частичную оплату и долги клиентов; при приёмке товара учитываются средневзвешенная себестоимость, даты производства и срока годности, а также списания.\n\nЭтикетки печатаются на TSPL с предпросмотром на экране и штрихкодами EAN-13, распознаются весовые штрихкоды сетевых весов. Любой отчёт можно посмотреть на экране и скачать в Excel. Есть учётные записи сотрудников с ролями и PIN-защита денежных операций, а база данных автоматически резервируется каждые 24 часа без остановки работы магазина.\n\nКасса магазина — обычный ноутбук, поэтому для установки не нужен администратор БД: одна команда создаёт конфигурацию, запускает встроенный PostgreSQL, применяет схему и открывает приложение в браузере. Написано на Next.js 15, React 19 и TypeScript с Prisma, Tailwind и shadcn/ui; сквозные тесты на Playwright, включая раскладки для телефона и планшета. Интерфейс на азербайджанском.\n\nИсходный код закрыт.",
+      "tr": "BarKod AZ, perakende mağazalar için barkod üzerine kurulmuş bir POS ve stok sistemidir: okut — sat, okut — stoğa al. Kasa termal fiş basar, kısmi ödemeyi ve müşteri borcunu yönetir; mal kabulünde ağırlıklı ortalama maliyet, üretim ve son kullanma tarihleri ve fireler takip edilir.\n\nEtiketler ekran önizlemesi ve EAN-13 barkodlarıyla TSPL'de basılır, ağa bağlı etiket terazisinin ağırlık barkodları tanınır. Tüm raporlar ekranda görüntülenip Excel olarak indirilebilir. Rollere sahip personel hesapları ve parayla ilgili işlemler için PIN koruması var; veritabanı her 24 saatte bir mağazayı durdurmadan otomatik yedeklenir.\n\nMağaza kasası sıradan bir dizüstü bilgisayar, bu yüzden kurulum için veritabanı yöneticisi gerekmez: tek komut yapılandırmayı oluşturur, gömülü PostgreSQL'i başlatır, şemayı uygular ve uygulamayı tarayıcıda açar. Next.js 15, React 19 ve TypeScript ile, Prisma, Tailwind ve shadcn/ui kullanılarak yazıldı; telefon ve tablet görünümleri dahil Playwright ile uçtan uca test ediliyor. Arayüz Azerbaycan Türkçesi.\n\nKaynak kodu gizlidir."
+    },
+    year: "2026",
+    role: {
+      "en": "Web app",
+      "az": "Veb tətbiq",
+      "ru": "Веб-приложение",
+      "tr": "Web uygulaması"
+    },
+    logo: "assets/projects/barkod/logo.png",
+    tags: [
+      "Next.js 15",
+      "React 19",
+      "PostgreSQL",
+      "Prisma",
+      "Playwright"
+    ],
+    links: {},
+  },
+  {
+    id: "postaz",
+    title: "Postaz",
+    summary: {
+      "en": "A fully offline, Postman-style desktop API client — collections, environments, history, cURL import — in Python, PySide6 and SQLite.",
+      "az": "Tam oflayn işləyən, Postman tipli masaüstü API klienti — kolleksiyalar, mühitlər, tarixçə, cURL importu — Python, PySide6 və SQLite ilə.",
+      "ru": "Полностью офлайн-клиент для API в духе Postman — коллекции, окружения, история, импорт cURL — на Python, PySide6 и SQLite.",
+      "tr": "Tamamen çevrimdışı çalışan, Postman tarzı masaüstü API istemcisi — koleksiyonlar, ortamlar, geçmiş, cURL içe aktarma — Python, PySide6 ve SQLite ile."
+    },
+    description: {
+      "en": "Postaz is a lightweight alternative to Postman that works entirely offline: no account, no cloud sync and no telemetry — one app and one SQLite file on your own disk.\n\nIt sends GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS requests with Bearer, Basic or API-key auth and JSON, raw or form bodies. Requests are kept in a tree of collections, the last 200 calls can be replayed from history, environments substitute variables such as {{baseUrl}} and {{token}} when the request is sent, and a pasted cURL command becomes a ready request. Requests run on a worker thread, so the interface never freezes.\n\nIt is written in Python with PySide6 (Qt 6), has dark and light themes and is available in English, Azerbaijani and Turkish. A Windows installer is published on GitHub and installs without administrator rights.",
+      "az": "Postaz tam oflayn işləyən yüngül Postman alternatividir: hesab, bulud sinxronu və telemetriya yoxdur — öz diskinizdə bir proqram və bir SQLite faylı.\n\nGET, POST, PUT, PATCH, DELETE, HEAD və OPTIONS sorğularını Bearer, Basic və ya API açarı ilə, JSON, raw və ya form gövdəsi ilə göndərir. Sorğular kolleksiya ağacında saxlanılır, son 200 sorğunu tarixçədən təkrar göndərmək olur, mühitlər {{baseUrl}} və {{token}} kimi dəyişənləri göndərmə anında yerinə qoyur, yapışdırılan cURL əmri hazır sorğuya çevrilir. Sorğular ayrı axında işləyir, ona görə interfeys heç vaxt donmur.\n\nPython və PySide6 (Qt 6) ilə yazılıb, tünd və açıq mövzusu var, ingilis, Azərbaycan və türk dillərindədir. Windows quraşdırıcısı GitHub-da yayımlanıb və administrator hüququ olmadan quraşdırılır.",
+      "ru": "Postaz — лёгкая альтернатива Postman, работающая полностью офлайн: без аккаунта, облачной синхронизации и телеметрии — одно приложение и один файл SQLite на вашем диске.\n\nОтправляет запросы GET, POST, PUT, PATCH, DELETE, HEAD и OPTIONS с авторизацией Bearer, Basic или API-ключом и телом JSON, raw или form. Запросы хранятся в дереве коллекций, последние 200 вызовов можно повторить из истории, окружения подставляют переменные вроде {{baseUrl}} и {{token}} при отправке, а вставленная команда cURL превращается в готовый запрос. Запросы выполняются в отдельном потоке, поэтому интерфейс никогда не зависает.\n\nНаписано на Python с PySide6 (Qt 6), есть тёмная и светлая темы, интерфейс на английском, азербайджанском и турецком. Установщик для Windows опубликован на GitHub и ставится без прав администратора.",
+      "tr": "Postaz, tamamen çevrimdışı çalışan hafif bir Postman alternatifidir: hesap, bulut senkronizasyonu ve telemetri yok — kendi diskinizde tek bir uygulama ve tek bir SQLite dosyası.\n\nGET, POST, PUT, PATCH, DELETE, HEAD ve OPTIONS isteklerini Bearer, Basic ya da API anahtarıyla, JSON, raw ya da form gövdesiyle gönderir. İstekler koleksiyon ağacında saklanır, son 200 çağrı geçmişten yeniden gönderilebilir, ortamlar {{baseUrl}} ve {{token}} gibi değişkenleri gönderim anında yerine koyar, yapıştırılan cURL komutu hazır bir isteğe dönüşür. İstekler ayrı bir iş parçacığında çalışır, bu yüzden arayüz asla donmaz.\n\nPython ve PySide6 (Qt 6) ile yazıldı, koyu ve açık teması var; İngilizce, Azerbaycan Türkçesi ve Türkçe. Windows kurulum dosyası GitHub'da yayımlandı ve yönetici hakkı olmadan kurulur."
+    },
+    year: "2026",
+    role: {
+      "en": "Desktop app",
+      "az": "Masaüstü proqram",
+      "ru": "Десктопное приложение",
+      "tr": "Masaüstü uygulama"
+    },
+    screenshots: [
+      "assets/projects/postaz/request-az.png",
+      "assets/projects/postaz/request-en.png"
+    ],
+    tags: [
+      "Python",
+      "PySide6",
+      "Qt 6",
+      "SQLite"
+    ],
+    links: {
+      "download": "https://github.com/goshgarhasanov/postaz_api_tester/releases/latest",
+      "source": "https://github.com/goshgarhasanov/postaz_api_tester"
+    },
+  },
+  {
+    id: "pixelforge-studio",
+    title: "PixelForge Studio",
+    summary: {
+      en: "Desktop image converter, resizer and compressor with batch processing and an Azerbaijani interface — Python and CustomTkinter.",
+      az: "Toplu emal imkanı olan, Azərbaycan dilində interfeysli masaüstü şəkil çevirici, ölçü dəyişdirici və sıxışdırıcı — Python və CustomTkinter.",
+      ru: "Десктопный конвертер, ресайзер и компрессор изображений с пакетной обработкой и интерфейсом на азербайджанском — Python и CustomTkinter.",
+      tr: "Toplu işleme destekli, Azerbaycan Türkçesi arayüzlü masaüstü görsel dönüştürücü, boyutlandırıcı ve sıkıştırıcı — Python ve CustomTkinter.",
+    },
+    description: {
+      en: "PixelForge Studio is a desktop app for everyday image work: converting between formats, resizing and compressing — for many files at once. Images are dragged into the window or picked from a dialog; JPG, PNG, WEBP, GIF, BMP, TIFF and HEIC are supported.\n\nIn the settings panel you choose the output format, the resize mode, a target file size in kilobytes and the output folder, then process the whole queue with one click. Each file in the queue shows its size before and after and its status, and a file that fails opens an error dialog with the details. A built-in log viewer shows what the app is doing, filtered by level.\n\nIt is written in Python with a CustomTkinter interface and Pillow for image processing, the code is split into a core (converter, resizer, compressor, pipeline) and a UI layer, and the core is covered by unit and integration tests run in CI. The interface is in Azerbaijani, with English and Turkish translations.",
+      az: "PixelForge Studio gündəlik şəkil işləri üçün masaüstü tətbiqidir: formatlar arasında çevirmə, ölçü dəyişmə və sıxışdırma — eyni anda çoxlu fayl üçün. Şəkillər pəncərəyə sürüklənir və ya dialoqdan seçilir; JPG, PNG, WEBP, GIF, BMP, TIFF və HEIC dəstəklənir.\n\nTənzimləmələr panelində çıxış formatını, ölçü rejimini, kilobaytla hədəf fayl ölçüsünü və çıxış qovluğunu seçib bütün növbəni bir kliklə emal edirsiniz. Növbədəki hər faylın əvvəlki və sonrakı ölçüsü və vəziyyəti görünür, alınmayan fayl üçün təfərrüatlı xəta pəncərəsi açılır. Daxili qeydlər paneli tətbiqin nə etdiyini səviyyəyə görə filtrlə göstərir.\n\nPython ilə yazılıb: interfeys CustomTkinter, şəkil emalı Pillow ilədir. Kod nüvəyə (çevirici, ölçü dəyişdirici, sıxışdırıcı, emal axını) və interfeys qatına bölünüb, nüvə CI-da işləyən unit və inteqrasiya testləri ilə yoxlanılır. İnterfeys Azərbaycan dilindədir, ingilis və türk tərcümələri də var.",
+      ru: "PixelForge Studio — десктопное приложение для повседневной работы с изображениями: конвертация между форматами, изменение размера и сжатие — сразу для многих файлов. Изображения перетаскиваются в окно или выбираются в диалоге; поддерживаются JPG, PNG, WEBP, GIF, BMP, TIFF и HEIC.\n\nВ панели настроек выбираются выходной формат, режим изменения размера, целевой размер файла в килобайтах и папка вывода, после чего вся очередь обрабатывается одним нажатием. Для каждого файла в очереди виден размер до и после и статус, а при ошибке открывается окно с подробностями. Встроенный просмотрщик логов показывает работу приложения с фильтром по уровню.\n\nНаписано на Python: интерфейс на CustomTkinter, обработка изображений — Pillow. Код разделён на ядро (конвертер, ресайзер, компрессор, конвейер) и слой интерфейса, ядро покрыто юнит- и интеграционными тестами, которые запускаются в CI. Интерфейс на азербайджанском, есть переводы на английский и турецкий.",
+      tr: "PixelForge Studio günlük görsel işleri için bir masaüstü uygulaması: formatlar arası dönüştürme, yeniden boyutlandırma ve sıkıştırma — aynı anda birçok dosya için. Görseller pencereye sürüklenir ya da bir iletişim kutusundan seçilir; JPG, PNG, WEBP, GIF, BMP, TIFF ve HEIC desteklenir.\n\nAyarlar panelinde çıktı formatını, boyutlandırma modunu, kilobayt cinsinden hedef dosya boyutunu ve çıktı klasörünü seçip tüm kuyruğu tek tıkla işlersiniz. Kuyruktaki her dosyanın önceki ve sonraki boyutu ile durumu görünür, başarısız olan dosya için ayrıntılı bir hata penceresi açılır. Yerleşik günlük görüntüleyici uygulamanın ne yaptığını seviyeye göre filtreleyerek gösterir.\n\nPython ile yazıldı: arayüz CustomTkinter, görsel işleme Pillow ile. Kod bir çekirdek (dönüştürücü, boyutlandırıcı, sıkıştırıcı, işlem hattı) ve arayüz katmanına ayrıldı; çekirdek CI'da çalışan birim ve entegrasyon testleriyle doğrulanıyor. Arayüz Azerbaycan Türkçesi, İngilizce ve Türkçe çevirileri de var.",
+    },
+    year: "2026",
+    role: { en: "Desktop app", az: "Masaüstü proqram", ru: "Десктопное приложение", tr: "Masaüstü uygulama" },
+    screenshots: [
+      "assets/projects/pixelforge/04-results.png",
+      "assets/projects/pixelforge/01-empty.png",
+      "assets/projects/pixelforge/02-queue-loaded.png",
+      "assets/projects/pixelforge/03-logs-active.png",
+      "assets/projects/pixelforge/05-error-dialog.png",
+    ],
+    tags: ["Python", "CustomTkinter", "Pillow", "pytest"],
+    links: {
+      source: "https://github.com/goshgarhasanov/pixelforge-studio",
+    },
+  },
+  {
+    id: "manat-converter",
+    title: {
+      "en": "Çevir — Currency & Crypto Converter",
+      "az": "Çevir — Valyuta və Kripto Çevirici",
+      "ru": "Çevir — конвертер валют и криптовалют",
+      "tr": "Çevir — Döviz ve Kripto Çevirici"
+    },
+    summary: {
+      "en": "Live converter between 170+ world currencies and major cryptocurrencies, built on the Azerbaijani manat — Next.js, fully in Azerbaijani.",
+      "az": "Manat əsasında 170-dən çox dünya valyutası və əsas kriptovalyutalar arasında canlı çevirici — Next.js, tam Azərbaycan dilində.",
+      "ru": "Живой конвертер между 170+ мировыми валютами и основными криптовалютами на базе азербайджанского маната — Next.js, полностью на азербайджанском.",
+      "tr": "Azerbaycan manatı temelli, 170'ten fazla dünya para birimi ve başlıca kripto paralar arasında canlı çevirici — Next.js, tamamen Azerbaycan Türkçesi."
+    },
+    description: {
+      "en": "Çevir converts any amount between 170+ world currencies and major cryptocurrencies with live rates. Any currency — crypto included — can be the base, and the results update as you type.\n\nAll rates are normalised to one pivot, the Azerbaijani manat: fiat rates come from open.er-api.com and crypto prices from CoinGecko in dollars, converted to the same pivot, so converting between any two currencies is a single exact division. Up to five favourite currencies are kept for a focused view and remembered in the browser, and the full list can be searched. Each amount is also written out in words.\n\nIt is a fully static site with no backend and no API keys: Next.js 15 with static export, TypeScript and Tailwind CSS v4, deployed to GitHub Pages by GitHub Actions. The interface is mobile-first and in Azerbaijani.",
+      "az": "Çevir istənilən məbləği 170-dən çox dünya valyutası və əsas kriptovalyutalar arasında canlı məzənnə ilə çevirir. İstənilən valyuta — kripto da daxil — əsas ola bilər, nəticələr yazdıqca yenilənir.\n\nBütün məzənnələr tək bir dayağa — Azərbaycan manatına gətirilir: fiat məzənnələr open.er-api.com-dan, kripto qiymətləri isə CoinGecko-dan dollarla gəlir və eyni dayağa çevrilir, ona görə istənilən iki valyuta arasında çevirmə tək dəqiq bölmədir. Diqqəti cəmləmək üçün beşə qədər seçilmiş valyuta saxlanılır və brauzerdə yadda qalır, tam siyahıda axtarış etmək olur. Hər məbləğ sözlə də yazılır.\n\nBackend-i və API açarı olmayan tam statik saytdır: statik export ilə Next.js 15, TypeScript və Tailwind CSS v4, GitHub Actions ilə GitHub Pages-ə yayımlanır. İnterfeys əvvəlcə mobil üçün düşünülüb və Azərbaycan dilindədir.",
+      "ru": "Çevir пересчитывает любую сумму между 170+ мировыми валютами и основными криптовалютами по живому курсу. Базой может быть любая валюта, включая криптовалюту, а результаты обновляются по мере ввода.\n\nВсе курсы приводятся к одной опорной валюте — азербайджанскому манату: фиатные курсы берутся с open.er-api.com, цены криптовалют — с CoinGecko в долларах и переводятся к той же опоре, поэтому конвертация между любыми двумя валютами — это одно точное деление. До пяти избранных валют сохраняются в браузере для быстрого просмотра, по полному списку есть поиск. Каждая сумма также пишется прописью.\n\nПолностью статический сайт без бэкенда и API-ключей: Next.js 15 со статическим экспортом, TypeScript и Tailwind CSS v4, деплой на GitHub Pages через GitHub Actions. Интерфейс адаптирован в первую очередь под телефон и на азербайджанском.",
+      "tr": "Çevir, herhangi bir tutarı 170'ten fazla dünya para birimi ve başlıca kripto paralar arasında canlı kurla çevirir. Kripto dahil her para birimi temel olabilir, sonuçlar yazdıkça güncellenir.\n\nTüm kurlar tek bir pivota — Azerbaycan manatına — getirilir: itibari kurlar open.er-api.com'dan, kripto fiyatları CoinGecko'dan dolar cinsinden gelir ve aynı pivota çevrilir; böylece iki para birimi arasındaki dönüşüm tek bir kesin bölmedir. Beşe kadar favori para birimi odaklı görünüm için tarayıcıda saklanır, tam listede arama yapılabilir. Her tutar yazıyla da gösterilir.\n\nBackend'i ve API anahtarı olmayan tamamen statik bir site: statik export ile Next.js 15, TypeScript ve Tailwind CSS v4, GitHub Actions ile GitHub Pages'e yayımlanıyor. Arayüz önce mobil düşünülerek hazırlandı ve Azerbaycan Türkçesi."
+    },
+    year: "2026",
+    role: {
+      "en": "Web app",
+      "az": "Veb tətbiq",
+      "ru": "Веб-приложение",
+      "tr": "Web uygulaması"
+    },
+    screenshots: [
+      "assets/projects/manat/desktop.png",
+      "assets/projects/manat/mobile.png",
+      "assets/projects/manat/mobile-all.png"
+    ],
+    tags: [
+      "Next.js 15",
+      "TypeScript",
+      "Tailwind CSS",
+      "GitHub Actions"
+    ],
+    links: {
+      "demo": "https://goshgarhasanov.github.io/manat-converter/",
+      "source": "https://github.com/goshgarhasanov/manat-converter"
     },
   },
   {
