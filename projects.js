@@ -33,6 +33,38 @@
 
 window.PROJECTS = [
   {
+    id: "bootaz",
+    title: "BootAz",
+    summary: {
+      en: "Rufus-style bootable USB creator for Windows and Linux: write Windows and Linux ISOs to a flash drive from either OS — modern GUI and CLI.",
+      az: "Windows və Linux üçün Rufus tipli yüklənən fləş yaradıcısı: Windows və Linux ISO-larını istənilən sistemdən fləşə yazır — müasir GUI və CLI.",
+      ru: "Создание загрузочных флешек в стиле Rufus для Windows и Linux: запись ISO Windows и Linux на флешку из любой ОС — современный GUI и CLI.",
+      tr: "Windows ve Linux için Rufus tarzı önyüklenebilir USB oluşturucu: Windows ve Linux ISO'larını her iki sistemden de flash belleğe yazar — modern GUI ve CLI.",
+    },
+    description: {
+      en: "BootAz turns an ISO or disk image into a bootable USB drive. It covers what Rufus does — ISO and DD modes, GPT / MBR, UEFI and BIOS, FAT32 (without the 32 GB limit), NTFS, exFAT and ext4, UEFI:NTFS, Linux persistence, bad-block checks and checksums — and also runs on Linux.\n\nA Windows 11 USB written on Linux with BootAz boots on both UEFI and BIOS and installs all the way to the desktop. There are three ways to handle an install.wim over 4 GB: NTFS with UEFI:NTFS, FAT32 plus NTFS, or a split WIM. Windows setup can be customised too: skip the TPM / Secure Boot / RAM checks, install without a Microsoft account, create a local account and turn off automatic BitLocker. The drive gets a label that names the system on it, such as \"WIN11 X64\".\n\nBeyond Rufus it has a fake-capacity check (a full test and a quick one that keeps your files), read-back verification after every write, an early warning for boot loaders signed only with the 2011 Secure Boot certificate, writing to several drives at once, ISO downloads from official sources with checksum verification, saving a drive as an image and restoring a drive to normal use.\n\nIt is written in C++20 with a pure-C++ core shared by a Qt 6 GUI and a scriptable CLI with JSON output. Elevated privileges are taken only for the write itself, and system disks are detected and protected. Unit, integration and QEMU boot tests cover it, along with a security review. The interface is in Azerbaijani and English.",
+      az: "BootAz ISO və ya disk obrazını yüklənən USB fləşə çevirir. Rufus-un etdiklərini edir — ISO və DD rejimləri, GPT / MBR, UEFI və BIOS, FAT32 (32 GB limiti olmadan), NTFS, exFAT və ext4, UEFI:NTFS, Linux persistence, bad block yoxlaması və hash-lar — üstəlik Linux-da da işləyir.\n\nLinux-da BootAz ilə yazılmış Windows 11 fləşi həm UEFI, həm BIOS-da açılır və masaüstünə qədər tam quraşdırılır. 4 GB-dan böyük install.wim üçün üç üsul var: NTFS + UEFI:NTFS, FAT32 + NTFS və ya bölünmüş WIM. Windows quraşdırmasını da tənzimləmək olur: TPM / Secure Boot / RAM yoxlamalarını keçmək, Microsoft hesabı olmadan quraşdırmaq, lokal hesab yaratmaq və avtomatik BitLocker-i söndürmək. Fləşin adı üzərindəki sistemə görə verilir, məsələn \"WIN11 X64\".\n\nRufus-dan artıq olaraq saxta tutum yoxlaması (tam test və faylları silməyən sürətli test), hər yazmadan sonra geri oxuyub yoxlama, yalnız 2011 Secure Boot sertifikatı ilə imzalanmış yükləyicilər üçün əvvəlcədən xəbərdarlıq, eyni anda bir neçə fləşə yazma, rəsmi mənbələrdən ISO yükləyib checksum ilə yoxlama, fləşi obraz kimi saxlama və fləşi adi vəziyyətə qaytarma var.\n\nC++20 ilə yazılıb: sırf C++ nüvəsini həm Qt 6 GUI, həm də JSON çıxışlı, skriptlər üçün uyğun CLI istifadə edir. Yüksək imtiyaz yalnız yazma işinin özü üçün alınır, sistem diskləri tanınır və qorunur. Unit, inteqrasiya və QEMU yükləmə testləri, həmçinin təhlükəsizlik review-u aparılıb. İnterfeys Azərbaycan və ingilis dillərindədir.",
+      ru: "BootAz превращает ISO или образ диска в загрузочную флешку. Он умеет то же, что Rufus — режимы ISO и DD, GPT / MBR, UEFI и BIOS, FAT32 (без ограничения в 32 ГБ), NTFS, exFAT и ext4, UEFI:NTFS, persistence для Linux, проверку на битые блоки и контрольные суммы — и при этом работает и в Linux.\n\nФлешка с Windows 11, записанная BootAz в Linux, загружается и в UEFI, и в BIOS и устанавливает систему до рабочего стола. Для install.wim больше 4 ГБ есть три способа: NTFS + UEFI:NTFS, FAT32 + NTFS или разбитый WIM. Установку Windows можно настроить: обойти проверки TPM / Secure Boot / RAM, установить без учётной записи Microsoft, создать локальную учётную запись и отключить автоматический BitLocker. Метка флешки называет систему на ней, например «WIN11 X64».\n\nСверх Rufus: проверка на поддельный объём (полный тест и быстрый, сохраняющий файлы), проверка чтением после каждой записи, заблаговременное предупреждение о загрузчиках, подписанных только сертификатом Secure Boot 2011 года, запись на несколько флешек одновременно, загрузка ISO с официальных источников с проверкой контрольной суммы, сохранение флешки в образ и возврат флешки в обычное состояние.\n\nНаписано на C++20: ядро на чистом C++ используют и GUI на Qt 6, и CLI для скриптов с выводом в JSON. Повышенные права берутся только на саму запись, системные диски распознаются и защищены. Есть юнит-, интеграционные тесты и тесты загрузки в QEMU, а также обзор безопасности. Интерфейс на азербайджанском и английском.",
+      tr: "BootAz bir ISO ya da disk imajını önyüklenebilir USB belleğe dönüştürür. Rufus'un yaptıklarını yapar — ISO ve DD modları, GPT / MBR, UEFI ve BIOS, FAT32 (32 GB sınırı olmadan), NTFS, exFAT ve ext4, UEFI:NTFS, Linux persistence, bozuk blok kontrolü ve sağlama toplamları — üstelik Linux'ta da çalışır.\n\nLinux'ta BootAz ile yazılan Windows 11 belleği hem UEFI hem BIOS'ta açılır ve masaüstüne kadar kurulum tamamlanır. 4 GB'tan büyük install.wim için üç yol var: NTFS + UEFI:NTFS, FAT32 + NTFS ya da bölünmüş WIM. Windows kurulumu da özelleştirilebilir: TPM / Secure Boot / RAM kontrollerini atlamak, Microsoft hesabı olmadan kurmak, yerel hesap oluşturmak ve otomatik BitLocker'ı kapatmak. Belleğin etiketi üzerindeki sistemi adlandırır, örneğin \"WIN11 X64\".\n\nRufus'tan fazlası olarak sahte kapasite kontrolü (tam test ve dosyaları silmeyen hızlı test), her yazmadan sonra geri okuyarak doğrulama, yalnızca 2011 Secure Boot sertifikasıyla imzalı önyükleyiciler için önceden uyarı, aynı anda birden fazla belleğe yazma, resmi kaynaklardan ISO indirip sağlama toplamıyla doğrulama, belleği imaj olarak kaydetme ve belleği normal kullanıma döndürme var.\n\nC++20 ile yazıldı: saf C++ çekirdeğini hem Qt 6 GUI hem de JSON çıktılı, betiklere uygun CLI kullanır. Yükseltilmiş yetki yalnızca yazma işinin kendisi için alınır, sistem diskleri tanınır ve korunur. Birim, entegrasyon ve QEMU önyükleme testleri ile bir güvenlik incelemesi yapıldı. Arayüz Azerbaycan Türkçesi ve İngilizce.",
+    },
+    year: "2026",
+    role: { en: "Desktop app", az: "Masaüstü proqram", ru: "Десктопное приложение", tr: "Masaüstü uygulama" },
+    cover: "assets/projects/bootaz/main-az-linux.png",
+    logo: "assets/projects/bootaz/logo.png",
+    screenshots: [
+      "assets/projects/bootaz/main-az-linux.png",
+      "assets/projects/bootaz/main-en-light.png",
+      "assets/projects/bootaz/main-az-windows.png",
+      "assets/projects/bootaz/windows11-setup-uefi.png",
+      "assets/projects/bootaz/windows11-installed.jpg",
+      "assets/projects/bootaz/alpine-bios.png",
+    ],
+    tags: ["C++20", "Qt 6", "CMake", "Linux", "Windows", "UEFI"],
+    links: {
+      source: "https://github.com/goshgarhasanov/BootAz",
+    },
+  },
+  {
     id: "sysinspector",
     title: "SysInspector.az",
     summary: {
