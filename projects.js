@@ -183,7 +183,18 @@ window.PROJECTS = [
       "ru": "Веб-приложение",
       "tr": "Web uygulaması"
     },
+    cover: "assets/projects/barkod/pos-cart.jpg",
     logo: "assets/projects/barkod/logo.png",
+    screenshots: [
+      "assets/projects/barkod/pos-cart.jpg",
+      "assets/projects/barkod/dashboard.jpg",
+      "assets/projects/barkod/statistics.jpg",
+      "assets/projects/barkod/stock.jpg",
+      "assets/projects/barkod/sales.jpg",
+      "assets/projects/barkod/reports.jpg",
+      "assets/projects/barkod/scale.jpg",
+      "assets/projects/barkod/login.jpg",
+    ],
     tags: [
       "Next.js 15",
       "React 19",
