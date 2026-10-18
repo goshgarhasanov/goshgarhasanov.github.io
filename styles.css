@@ -691,6 +691,7 @@ b, strong { color: var(--ink); font-weight: 600; }
 .gallery[hidden] { display: none; }
 .gallery-stage {
   position: relative;
+  width: 100%;
   aspect-ratio: 16 / 9;
   max-height: 56vh;
   max-height: 56dvh;
@@ -811,6 +812,29 @@ footer {
 footer p { color: inherit; }
 .visits { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 6px; font-weight: 600; }
 .visits[hidden] { display: none; }
+
+/* ---------- Back to top ---------- */
+.to-top {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 65;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  color: #fff;
+  background: var(--grad-strong);
+  border-radius: 50%;
+  box-shadow: var(--glow), 0 8px 20px rgba(22, 32, 43, .25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .25s, visibility .25s, transform .3s var(--ease);
+}
+.to-top.show { opacity: 1; visibility: visible; transform: none; }
+body:has(.project-modal.open, .lightbox.open) .to-top { opacity: 0; visibility: hidden; }
+.to-top:hover { transform: translateY(-3px); }
 
 /* ---------- Full-screen image viewer ---------- */
 .gallery-stage img[src], .avatar { cursor: zoom-in; }
@@ -1303,6 +1327,7 @@ footer::before {
   .prm-body h3 { font-size: 21px; }
   .gallery-nav { width: 34px; height: 34px; }
   .lb-btn { width: 40px; height: 40px; }
+  .to-top { width: 50px; height: 50px; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); }
   .lb-nav.prev { left: 8px; }
   .lb-nav.next { right: 8px; }
 }
@@ -1328,7 +1353,7 @@ footer::before {
   }
   @page { margin: 14mm; }
   body { font-size: 11pt; line-height: 1.5; }
-  .topbar, .cta, .skip-link, .lightbox, .project-modal, #projects { display: none !important; }
+  .topbar, .cta, .skip-link, .lightbox, .to-top, .project-modal, #projects { display: none !important; }
   body::before, body::after, .h-icon, .stat-icon, .socials, .timeline::before, .timeline .entry::after,
   .stat::before, .skill-group::before, .lang-meter, .lang-flag, .sg-icon, .section > h2::after { display: none !important; }
   .timeline { padding-left: 0; }

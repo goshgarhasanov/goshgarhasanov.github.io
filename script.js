@@ -617,6 +617,17 @@
     if (p) openProjectModal(p);
   }
 
+  /* ---------- Back to top ---------- */
+  // Appears once the intro has scrolled out of view.
+  const toTop = document.getElementById('toTop');
+  const updateToTop = () => toTop.classList.toggle('show', window.scrollY > 400);
+  window.addEventListener('scroll', updateToTop, { passive: true });
+  toTop.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+  updateToTop();
+
   /* ---------- Full-screen image viewer ---------- */
   document.getElementById('avatarBtn').addEventListener('click', (e) => {
     const img = e.currentTarget.querySelector('img');

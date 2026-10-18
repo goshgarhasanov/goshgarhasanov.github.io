@@ -484,6 +484,10 @@ window.PROJECTS = [
     year: "2026",
     role: { en: "Desktop app", az: "Masaüstü proqram", ru: "Десктопное приложение", tr: "Masaüstü uygulama" },
     logo: "assets/projects/udolor/logo.png",
+    screenshots: [
+      "assets/projects/udolor/01-settings.png",
+      "assets/projects/udolor/02-about.png",
+    ],
     tags: ["Electron", "JavaScript", "Node.js", "i18n"],
     links: {
       source: "https://github.com/goshgarhasanov/udolor_az",
