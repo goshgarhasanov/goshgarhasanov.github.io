@@ -1013,7 +1013,9 @@ body::after {
 .avatar img { border-radius: 50%; border: 3px solid var(--bg); }
 .avatar:hover { box-shadow: 0 0 0 6px var(--accent-soft), var(--glow); }
 .intro h1 {
-  background: linear-gradient(90deg, var(--ink) 35%, var(--accent) 75%, var(--accent-2));
+  /* Shrink to the text so the whole gradient falls on the name, not on empty space. */
+  display: inline-block;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
