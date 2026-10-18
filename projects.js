@@ -314,6 +314,35 @@ window.PROJECTS = [
     },
   },
   {
+    id: "fotoroom-az",
+    title: "FotoRoom.Az",
+    summary: {
+      en: "Free image search across Pixabay, Unsplash and Pexels in one place — masonry grid, filters, favourites and multi-size downloads, built with React.",
+      az: "Pixabay, Unsplash və Pexels-də pulsuz şəkilləri bir yerdə axtarın — masonry grid, filtrlər, seçilmişlər və müxtəlif ölçüdə yükləmə, React ilə.",
+      ru: "Поиск бесплатных изображений сразу по Pixabay, Unsplash и Pexels — masonry-сетка, фильтры, избранное и загрузка в разных размерах, на React.",
+      tr: "Pixabay, Unsplash ve Pexels'te ücretsiz görselleri tek yerden arayın — masonry grid, filtreler, favoriler ve farklı boyutlarda indirme, React ile.",
+    },
+    description: {
+      en: "FotoRoom.Az searches free, high-quality photos from Pixabay, Unsplash and Pexels at once. Each API's response is normalised into one format, so the results share a single Pinterest-style masonry grid with infinite scroll and skeleton loading.\n\nResults can be filtered by dominant colour and orientation and sorted by popularity or date. A photo opens in a full-size viewer with its author, likes, views, downloads, resolution and tags, and can be downloaded in medium, large or original size, copied as a link or shared through the Web Share API. Keyboard shortcuts cover search, browsing and favourites.\n\nFavourites, search history, theme, grid size and language are kept in localStorage. The interface is in Azerbaijani and English, with dark and light themes and a mobile-first layout. It is written in React 18 with Axios and react-masonry-css and deployed to GitHub Pages.",
+      az: "FotoRoom.Az Pixabay, Unsplash və Pexels-dən pulsuz, yüksək keyfiyyətli şəkilləri eyni anda axtarır. Hər API-nin cavabı vahid formata gətirilir, ona görə nəticələr infinite scroll və skeleton yüklənmə ilə tək Pinterest tipli masonry grid-də göstərilir.\n\nNəticələri əsas rəngə və istiqamətə görə filtrləmək, populyarlığa və ya tarixə görə sıralamaq olur. Şəkil müəllifi, bəyənmə, baxış, yükləmə sayı, ölçüsü və etiketləri ilə tam ölçülü baxışda açılır; orta, böyük və ya orijinal ölçüdə yükləmək, linkini kopyalamaq və ya Web Share API ilə paylaşmaq mümkündür. Axtarış, keçid və seçilmişlər üçün klaviatura qısayolları var.\n\nSeçilmişlər, axtarış tarixçəsi, tema, grid ölçüsü və dil localStorage-da saxlanılır. İnterfeys Azərbaycan və ingilis dillərindədir, qaranlıq və işıqlı tema var, dizayn əvvəlcə mobil üçün düşünülüb. React 18, Axios və react-masonry-css ilə yazılıb və GitHub Pages-də yayımlanır.",
+      ru: "FotoRoom.Az ищет бесплатные качественные фотографии сразу на Pixabay, Unsplash и Pexels. Ответ каждого API приводится к единому формату, поэтому результаты выводятся в одной masonry-сетке в стиле Pinterest с бесконечной прокруткой и skeleton-загрузкой.\n\nРезультаты можно фильтровать по основному цвету и ориентации и сортировать по популярности или дате. Фото открывается в полноразмерном просмотре с автором, лайками, просмотрами, загрузками, разрешением и тегами; его можно скачать в среднем, большом или исходном размере, скопировать ссылку или поделиться через Web Share API. Для поиска, навигации и избранного есть горячие клавиши.\n\nИзбранное, история поиска, тема, размер сетки и язык хранятся в localStorage. Интерфейс на азербайджанском и английском, есть тёмная и светлая темы, вёрстка mobile-first. Написано на React 18 с Axios и react-masonry-css, деплой на GitHub Pages.",
+      tr: "FotoRoom.Az, Pixabay, Unsplash ve Pexels'teki ücretsiz, yüksek kaliteli fotoğrafları aynı anda arar. Her API'nin yanıtı tek bir formata getirilir; böylece sonuçlar sonsuz kaydırma ve skeleton yüklemeyle tek bir Pinterest tarzı masonry grid'de gösterilir.\n\nSonuçlar baskın renge ve yöne göre filtrelenip popülerliğe ya da tarihe göre sıralanabilir. Fotoğraf; yazarı, beğeni, görüntülenme, indirme sayısı, çözünürlüğü ve etiketleriyle tam boyutlu görüntüleyicide açılır; orta, büyük ya da orijinal boyutta indirilebilir, bağlantısı kopyalanabilir veya Web Share API ile paylaşılabilir. Arama, gezinme ve favoriler için klavye kısayolları var.\n\nFavoriler, arama geçmişi, tema, grid boyutu ve dil localStorage'da saklanır. Arayüz Azerbaycan Türkçesi ve İngilizce; koyu ve açık tema var, tasarım önce mobil düşünülerek hazırlandı. React 18, Axios ve react-masonry-css ile yazıldı ve GitHub Pages'te yayımlanıyor.",
+    },
+    year: "2026",
+    role: { en: "Web app", az: "Veb tətbiq", ru: "Веб-приложение", tr: "Web uygulaması" },
+    screenshots: [
+      "assets/projects/fotoroom/desktop-dark.jpg",
+      "assets/projects/fotoroom/modal.jpg",
+      "assets/projects/fotoroom/desktop-light.jpg",
+      "assets/projects/fotoroom/mobile.jpg",
+    ],
+    tags: ["React 18", "JavaScript", "REST API", "GitHub Pages"],
+    links: {
+      demo: "https://goshgarhasanov.github.io/search-image-react-app/",
+      source: "https://github.com/goshgarhasanov/search-image-react-app",
+    },
+  },
+  {
     id: "marble-shooter",
     title: "Marble Shooter",
     summary: {
