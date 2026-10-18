@@ -51,6 +51,7 @@
     });
 
     renderProjects();
+    showVisitors();
     if (openProject) fillProjectModal(openProject, galleryIndex);
     moveIndicator();
   };
@@ -196,6 +197,9 @@
   const projects = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
   const grid = document.getElementById('projectGrid');
   const emptyNote = document.getElementById('projectsEmpty');
+  // How many people have opened each project, by id; filled in from the counter service.
+  const views = {};
+  const viewBadges = {};
 
   // A text field is either a string or { en, az, ru, tr }.
   const pick = (value) => {
@@ -217,6 +221,7 @@
     code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
     download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
+    eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   };
 
   const icon = (name, size = 16) => {
@@ -267,6 +272,10 @@
         badge.append(icon('image', 13), document.createTextNode(String(shots.length)));
         coverBox.append(badge);
       }
+      const viewBadge = el('span', 'project-views');
+      viewBadges[p.id] = viewBadge;
+      showViews(p.id);
+      coverBox.append(viewBadge);
 
       const body = el('div', 'project-body');
       body.append(el('h3', null, title));
@@ -334,7 +343,7 @@
     const title = pick(p.title);
 
     document.getElementById('pmTitle').textContent = title;
-    document.getElementById('pmMeta').textContent = [p.year, pick(p.role)].filter(Boolean).join(' · ');
+    fillProjectMeta(p);
 
     const tags = document.getElementById('pmTags');
     tags.textContent = '';
@@ -384,8 +393,14 @@
     showShot(index, false);
   }
 
+  function fillProjectMeta(p) {
+    const seen = views[p.id] != null ? t('projects.views').replace('{n}', fmt(views[p.id])) : '';
+    document.getElementById('pmMeta').textContent = [p.year, pick(p.role), seen].filter(Boolean).join(' · ');
+  }
+
   function openProjectModal(p) {
     lastFocus = document.activeElement;
+    countView(p);
     fillProjectModal(p);
     dialog.scrollTop = 0;
     modal.classList.add('open');
@@ -408,6 +423,93 @@
   modal.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeProjectModal));
   prevBtn.addEventListener('click', () => showShot(galleryIndex - 1));
   nextBtn.addEventListener('click', () => showShot(galleryIndex + 1));
+
+  /* ---------- Full-screen image viewer ---------- */
+  const lightbox = document.getElementById('lightbox');
+  const lbImage = document.getElementById('lbImage');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbCount = document.getElementById('lbCount');
+  let lbShots = [];
+  let lbIndex = 0;
+  let lbTitle = '';
+  let lbFocus = null;
+  let lbTimer = 0;
+  const lightboxOpen = () => lightbox.classList.contains('open');
+
+  const showLightbox = (index, animate = true) => {
+    lbIndex = (index + lbShots.length) % lbShots.length;
+    const swap = () => {
+      lbImage.src = lbShots[lbIndex];
+      lbImage.alt = lbShots.length > 1 ? `${lbTitle} — ${lbIndex + 1}` : lbTitle;
+      lbImage.classList.remove('swap');
+    };
+    clearTimeout(lbTimer);
+    if (animate && !reduceMotion) {
+      lbImage.classList.add('swap');
+      lbTimer = setTimeout(swap, 150);
+    } else {
+      swap();
+    }
+    lbCount.textContent = lbShots.length > 1 ? `${lbIndex + 1} / ${lbShots.length}` : '';
+  };
+
+  function openLightbox(shots, index, title) {
+    lbShots = shots;
+    lbTitle = title;
+    lbFocus = document.activeElement;
+    lbPrev.hidden = lbNext.hidden = shots.length < 2;
+    showLightbox(index, false);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbClose').focus({ preventScroll: true });
+  }
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    // The project modal underneath keeps the page locked.
+    if (!openProject) document.body.style.overflow = '';
+    // Keep the project gallery on the screenshot the viewer ended on.
+    if (openProject && openProject.screenshots === lbShots) showShot(lbIndex, false);
+    if (lbFocus) lbFocus.focus({ preventScroll: true });
+  };
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => showLightbox(lbIndex - 1));
+  lbNext.addEventListener('click', () => showLightbox(lbIndex + 1));
+  // A tap on the dark area around the image closes the viewer.
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+  let lbTouch = null;
+  lightbox.addEventListener('touchstart', (e) => {
+    lbTouch = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (!lbTouch) return;
+    const dx = e.changedTouches[0].clientX - lbTouch.x;
+    const dy = e.changedTouches[0].clientY - lbTouch.y;
+    lbTouch = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) && lbShots.length > 1) showLightbox(lbIndex + (dx < 0 ? 1 : -1));
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightboxOpen()) return;
+    // The viewer sits above the project modal, so it owns these keys while open.
+    e.stopImmediatePropagation();
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft' && lbShots.length > 1) showLightbox(lbIndex - 1);
+    else if (e.key === 'ArrowRight' && lbShots.length > 1) showLightbox(lbIndex + 1);
+    else if (e.key === 'Tab') {
+      const focusables = Array.from(lightbox.querySelectorAll('button')).filter((n) => !n.hidden);
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 
   document.addEventListener('keydown', (e) => {
     if (!openProject) return;
@@ -437,8 +539,68 @@
     if (Math.abs(dx) > 40) showShot(galleryIndex + (dx < 0 ? 1 : -1));
   });
 
+  /* ---------- Visitor counters ---------- */
+  // Counts are kept by a free counter service. Each browser is counted once per
+  // counter, so the numbers mean people rather than page loads.
+  const COUNTER = 'https://abacus.jasoncameron.dev';
+  const COUNTER_NS = 'goshgarhasanov-github-io';
+  const visitsEl = document.getElementById('visits');
+  let visitors = null;
+
+  function fmt(n) {
+    return new Intl.NumberFormat(currentLang).format(n);
+  }
+
+  // True the first time this browser asks for a key, false afterwards.
+  const firstTime = (key) => {
+    try {
+      if (localStorage.getItem('cv-seen-' + key)) return false;
+      localStorage.setItem('cv-seen-' + key, '1');
+    } catch (e) { /* storage blocked: count every visit */ }
+    return true;
+  };
+
+  // A counter nobody has hit yet answers 404, which means zero.
+  const counter = (key, hit) => fetch(`${COUNTER}/${hit ? 'hit' : 'get'}/${COUNTER_NS}/${key}`)
+    .then((r) => (r.status === 404 ? { value: 0 } : r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+    .then((d) => d.value);
+
+  function showViews(id) {
+    const badge = viewBadges[id];
+    if (!badge) return;
+    badge.hidden = views[id] == null;
+    badge.textContent = '';
+    if (views[id] != null) badge.append(icon('eye', 13), document.createTextNode(fmt(views[id])));
+  }
+
+  function showVisitors() {
+    visitsEl.hidden = visitors == null;
+    visitsEl.textContent = '';
+    if (visitors != null) visitsEl.append(icon('eye', 15), el('span', null, t('stats.visitors').replace('{n}', fmt(visitors))));
+  }
+
+  function countView(p) {
+    const key = 'project-' + p.id;
+    counter(key, firstTime(key)).then((n) => {
+      views[p.id] = n;
+      showViews(p.id);
+      if (openProject === p) fillProjectMeta(p);
+    }).catch(() => {});
+  }
+
   /* ---------- Start ---------- */
   applyLang(detect());
+
+  counter('site-visitors', firstTime('site-visitors')).then((n) => {
+    visitors = n;
+    showVisitors();
+  }).catch(() => {});
+  projects.forEach((p) => {
+    counter('project-' + p.id, false).then((n) => {
+      if (views[p.id] == null) views[p.id] = n;
+      showViews(p.id);
+    }).catch(() => {});
+  });
 
   reveal(Array.from(document.querySelectorAll('.intro > *')), 120);
   reveal(Array.from(document.querySelectorAll(
@@ -455,30 +617,14 @@
     if (p) openProjectModal(p);
   }
 
-  /* ---------- Photo modal ---------- */
-  const avatarBtn = document.getElementById('avatarBtn');
-  const photoModal = document.getElementById('photoModal');
-  const pmClose = document.getElementById('pmClose');
-
-  const openModal = () => {
-    photoModal.classList.add('open');
-    photoModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  };
-  const closeModal = () => {
-    photoModal.classList.remove('open');
-    photoModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
-
-  if (avatarBtn && photoModal) {
-    avatarBtn.addEventListener('click', openModal);
-    if (pmClose) pmClose.addEventListener('click', closeModal);
-    photoModal.querySelectorAll('[data-close]').forEach((node) => {
-      node.addEventListener('click', closeModal);
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && photoModal.classList.contains('open')) closeModal();
-    });
-  }
+  /* ---------- Full-screen image viewer ---------- */
+  document.getElementById('avatarBtn').addEventListener('click', (e) => {
+    const img = e.currentTarget.querySelector('img');
+    openLightbox([img.getAttribute('src')], 0, img.alt);
+  });
+  stageImg.addEventListener('click', () => {
+    if (openProject && stageImg.getAttribute('src')) {
+      openLightbox(openProject.screenshots, galleryIndex, pick(openProject.title));
+    }
+  });
 })();

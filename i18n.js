@@ -101,6 +101,8 @@ window.I18N = {
     "projects.link": "Open link",
     "projects.prev": "Previous screenshot",
     "projects.next": "Next screenshot",
+    "projects.views": "{n} views",
+    "stats.visitors": "{n} visitors",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov",
   },
@@ -207,6 +209,8 @@ window.I18N = {
     "projects.link": "Linki aç",
     "projects.prev": "Əvvəlki şəkil",
     "projects.next": "Növbəti şəkil",
+    "projects.views": "{n} baxış",
+    "stats.visitors": "{n} ziyarətçi",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov",
   },
@@ -313,6 +317,8 @@ window.I18N = {
     "projects.link": "Открыть ссылку",
     "projects.prev": "Предыдущий скриншот",
     "projects.next": "Следующий скриншот",
+    "projects.views": "Просмотров: {n}",
+    "stats.visitors": "Посетителей: {n}",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov",
   },
@@ -419,6 +425,8 @@ window.I18N = {
     "projects.link": "Bağlantıyı aç",
     "projects.prev": "Önceki görsel",
     "projects.next": "Sonraki görsel",
+    "projects.views": "{n} görüntülenme",
+    "stats.visitors": "{n} ziyaretçi",
 
     "footer": "© <span id=\"year\"></span> Goshgar Hasanov",
   },

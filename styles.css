@@ -572,6 +572,22 @@ b, strong { color: var(--ink); font-weight: 600; }
   border-radius: 999px;
   backdrop-filter: blur(4px);
 }
+.project-views {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(12, 18, 24, .6);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+.project-views[hidden] { display: none; }
 .project-body {
   display: flex;
   flex-direction: column;
@@ -793,42 +809,72 @@ footer {
   text-align: center;
 }
 footer p { color: inherit; }
+.visits { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 6px; font-weight: 600; }
+.visits[hidden] { display: none; }
 
-/* ---------- Photo modal ---------- */
-.photo-modal {
+/* ---------- Full-screen image viewer ---------- */
+.gallery-stage img[src], .avatar { cursor: zoom-in; }
+.lightbox {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 90;
   display: grid;
   place-items: center;
-  padding: 24px;
+  background: #05080c;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .18s, visibility .18s;
+  transition: opacity .2s, visibility .2s;
+  touch-action: pan-y pinch-zoom;
 }
-.photo-modal.open { opacity: 1; visibility: visible; }
-.pm-backdrop { position: absolute; inset: 0; background: rgba(12, 18, 24, .72); }
-.pm-content { position: relative; max-width: 420px; }
-.pm-content img {
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox img {
   display: block;
-  width: 100%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: scale(.97);
+  transition: transform .3s var(--ease), opacity .18s;
 }
-.pm-close {
+.lightbox.open img { transform: none; }
+.lightbox img.swap { opacity: 0; }
+.lb-btn {
   position: absolute;
-  top: -14px;
-  right: -14px;
-  width: 36px;
-  height: 36px;
   display: grid;
   place-items: center;
-  background: var(--bg);
-  color: var(--ink);
-  border: 1px solid var(--line-strong);
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .22);
   border-radius: 50%;
   cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background .2s, transform .25s var(--ease);
 }
+.lb-btn:hover { background: rgba(255, 255, 255, .24); }
+.lb-btn[hidden] { display: none; }
+.lb-close { top: max(14px, env(safe-area-inset-top)); right: 14px; }
+.lb-close:hover { transform: rotate(90deg); }
+.lb-nav { top: 50%; transform: translateY(-50%); }
+.lb-nav:hover { transform: translateY(-50%) scale(1.08); }
+.lb-nav.prev { left: 14px; }
+.lb-nav.next { right: 14px; }
+.lb-count {
+  position: absolute;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(255, 255, 255, .12);
+  border-radius: 999px;
+}
+.lb-count:empty { display: none; }
 
 /* ==========================================================================
    Vivid layer: colour, icons, borders and depth on top of the base layout
@@ -1254,6 +1300,9 @@ footer::before {
   .prm-body { padding: 18px 18px 24px; }
   .prm-body h3 { font-size: 21px; }
   .gallery-nav { width: 34px; height: 34px; }
+  .lb-btn { width: 40px; height: 40px; }
+  .lb-nav.prev { left: 8px; }
+  .lb-nav.next { right: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1277,7 +1326,7 @@ footer::before {
   }
   @page { margin: 14mm; }
   body { font-size: 11pt; line-height: 1.5; }
-  .topbar, .cta, .skip-link, .photo-modal, .project-modal, #projects { display: none !important; }
+  .topbar, .cta, .skip-link, .lightbox, .project-modal, #projects { display: none !important; }
   body::before, body::after, .h-icon, .stat-icon, .socials, .timeline::before, .timeline .entry::after,
   .stat::before, .skill-group::before, .lang-meter, .lang-flag, .sg-icon, .section > h2::after { display: none !important; }
   .timeline { padding-left: 0; }
